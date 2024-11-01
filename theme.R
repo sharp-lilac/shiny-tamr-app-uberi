@@ -1,7 +1,9 @@
 ## theme.R
 
+# Load packages ---------------------------
+library(fresh) # custom themes for dashboard
+
 # Define shiny dashboard theme ---------------------------
-library(fresh)
 dash_theme <- create_theme(
     adminlte_color(
         light_blue = "#5E81AC",
