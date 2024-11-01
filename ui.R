@@ -24,33 +24,8 @@ ui <- dashboardPage(
         )
     ),
     dashboardBody(
+        tags$head(tags$link(rel = "stylesheet", type = "text/css", href = "custom_styles.css")),
         use_theme(dash_theme),
-        tags$style(HTML("
-            .bttn, .bttn-lg, .bttn-md, .bttn-sm, .bttn-xs {
-                background-color: #88C0D0;
-                color: #FFFFFF;
-            }
-            .bttn-jelly.bttn-primary {
-                background-color: #88C0D0;
-                color: #FFFFFF;
-            }
-            .bttn-jelly.bttn-warning {
-                background-color: #D08770;
-                color: #FFFFFF;
-            }
-            .bttn-jelly.bttn-danger {
-                background-color: #BF616A;
-                color: #FFFFFF;
-            }
-            .bttn-jelly.bttn-success {
-                background-color: #A3BE8C;
-                color: #FFFFFF;
-            }
-            .bttn-jelly.bttn-royal {
-                background-color: #5E81AC;
-                color: #FFFFFF;
-            }
-        ")),
         fluidRow(column(width = 12, div(style = "height: 20px;"))),
         tabItems(
             tabItem(

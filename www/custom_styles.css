@@ -1,0 +1,36 @@
+/* custom_styles.css */
+
+/* Custom colors for shinywidget buttons */
+.bttn,
+.bttn-lg,
+.bttn-md,
+.bttn-sm,
+.bttn-xs {
+    background-color: #88C0D0;
+    color: #FFFFFF;
+}
+
+.bttn-jelly.bttn-primary {
+    background-color: #88C0D0;
+    color: #FFFFFF;
+}
+
+.bttn-jelly.bttn-warning {
+    background-color: #D08770;
+    color: #FFFFFF;
+}
+
+.bttn-jelly.bttn-danger {
+    background-color: #BF616A;
+    color: #FFFFFF;
+}
+
+.bttn-jelly.bttn-success {
+    background-color: #A3BE8C;
+    color: #FFFFFF;
+}
+
+.bttn-jelly.bttn-royal {
+    background-color: #5E81AC;
+    color: #FFFFFF;
+}
