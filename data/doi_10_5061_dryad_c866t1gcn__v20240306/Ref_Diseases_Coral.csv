@@ -1,0 +1,15 @@
+﻿Disease,Name,Notes
+ASP,Aspergillosis,
+BBD,Black Band Disease,
+BS,Blue Spots,Not tied to a specific disease; just an observation
+DS,Dark Spots Disease,Unknown if type I or II
+DSI,Dark Spots Disease I,
+DSII,Dark Spots Disease II,
+MISSING,Data on disease is missing,"Data may be lost, or never collected"
+None,No disease,There is no disease observed
+SCTLD,Stony coral tissue loss disease,
+UNKNOWN,Unknown disease,"A disease is present, but the exact disease is unknown"
+WBD,White Band Disease,
+WSD,White Spot Patch Disease,
+WPD,White Plague Disease,
+YBD,Yellow Band Disease,

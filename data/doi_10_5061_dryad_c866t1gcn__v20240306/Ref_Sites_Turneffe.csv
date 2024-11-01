@@ -1,0 +1,30 @@
+﻿Site,Locality,Zone,Area,Latitude,Longitude,Notes
+1062BR,1062,Backreef,Atoll,17.25613,-87.95623,
+1062DFR,1062,Deep_Forereef,Atoll,17.2603,-87.96102,
+1062SFR,1062,Shallow_Forereef,Atoll,17.25871,-87.95925,
+1071DFR,1071,Deep_Forereef,SpecialManagement,17.476681,-87.784268,Discontinued
+1071SFR,1071,Shallow_Forereef,SpecialManagement,17.477654,-87.785632,Discontinued
+1206BR,1206,Backreef,Atoll,17.24913,-87.83865,
+1206DFR,1206,Deep_Forereef,Atoll,17.24799,-87.83336,
+1206SFR,1206,Shallow_Forereef,Atoll,17.2486,-87.83705,
+2226SFR,2226,Shallow_Forereef,Conservation,17.58376,-87.8077,Discontinued
+CBBR,Caye Bokel,Backreef,Conservation,17.15853,-87.91022,
+CBDFR,Caye Bokel,Deep_Forereef,Conservation,17.157033,-87.907857,
+CBSFR,Caye Bokel,Shallow_Forereef,Conservation,17.15698,-87.90921,
+CZ2DFR,Cockroach Zone 2,Deep_Forereef,Conservation,17.51001,-87.74921,
+CZ2SFR,Cockroach Zone 2,Shallow_Forereef,Conservation,17.510145,-87.749942,
+MPBR,Mauger Point,Backreef,Conservation,MISSING,MISSING,Discontinued
+MPDFR,Mauger Point,Deep_Forereef,Conservation,17.62112,-87.78891,
+MPSFR,Mauger Point,Shallow_Forereef,Conservation,17.62051,-87.78842,
+SPBR,Soldier Point,Backreef,Atoll,MISSING,MISSING,Discontinued
+SPDFR,Soldier Point,Deep_Forereef,Conservation,17.33406,-87.78709,
+SPSFR,Soldier Point,Shallow_Forereef,Conservation,17.334354,-87.787666,
+WP4BR,West Point 4,Backreef,Atoll,17.38659,-87.93578,
+WP4DFR,West Point 4,Deep_Forereef,Atoll,17.38347,-87.93974,
+WP4SFR,West Point 4,Shallow_Forereef,Atoll,17.38359,-87.93821,
+WP5BR,West Point 5,Backreef,Atoll,17.54707,-87.82041,
+WP5DFR,West Point 5,Backreef,Atoll,17.54654,-87.82282,
+WP5SFR,West Point 5,Shallow_Forereef,Atoll,17.54674,-87.82186,
+WP6BR,West Point 6,Backreef,Atoll,MISSING,MISSING,Discontinued
+WP6DFR,West Point 6,Deep_Forereef,Atoll,17.59191,-87.7441,Discontinued
+WP6SFR,West Point 6,Shallow_Forereef,Atoll,MISSING,MISSING,Discontinued
