@@ -83,216 +83,172 @@ ui <- dashboardPage(
             ),
             tabItem(
                 tabName = "page_1-1",
-                h3("Coral Community Explorer"),
+                h2("Coral Community Explorer"),
                 tabsetPanel(
                     tabPanel(
-                        h2("By Year"),
+                        h3("By Year"),
                         fluidRow(column(width = 12, div(style = "height: 20px;"))),
-                        fluidRow(
-                            p("Coral size, depth, functional group by year")
-                        )
+                        p("Coral size, depth, functional group by year")
                     ),
                     tabPanel(
-                        h2("By Locality"),
+                        h3("By Locality"),
                         fluidRow(column(width = 12, div(style = "height: 20px;"))),
-                        fluidRow(
-                            p("Coral size, depth, functional group by locality")
-                        )
+                        p("Coral size, depth, functional group by locality")
                     ),
                     tabPanel(
-                        h2("By Species"),
+                        h3("By Species"),
                         fluidRow(column(width = 12, div(style = "height: 20px;"))),
-                        fluidRow(
-                            p("Coral size, depth, functional group by species")
-                        )
+                        p("Coral size, depth, functional group by species")
                     )
                 )
             ),
             tabItem(
                 tabName = "page_1-2",
-                h3("Coral Health Explorer"),
+                h2("Coral Health Explorer"),
                 tabsetPanel(
                     tabPanel(
-                        h2("By Year"),
+                        h3("By Year"),
                         fluidRow(column(width = 12, div(style = "height: 20px;"))),
-                        fluidRow(
-                            p("Bleaching and disease by year")
-                        )
+                        p("Bleaching and disease by year")
                     ),
                     tabPanel(
-                        h2("By Locality"),
+                        h3("By Locality"),
                         fluidRow(column(width = 12, div(style = "height: 20px;"))),
-                        fluidRow(
-                            p("Bleaching and disease by locality")
-                        )
+                        p("Bleaching and disease by locality")
                     ),
                     tabPanel(
-                        h2("By Species"),
+                        h3("By Species"),
                         fluidRow(column(width = 12, div(style = "height: 20px;"))),
-                        fluidRow(
-                            p("Bleaching and disease by species")
-                        )
+                        p("Bleaching and disease by species")
                     )
                 )
             ),
             tabItem(
                 tabName = "page_1-3",
-                h3("Coral Cover Explorer"),
+                h2("Coral Cover Explorer"),
                 tabsetPanel(
                     tabPanel(
-                        h2("By Year"),
+                        h3("By Year"),
                         fluidRow(column(width = 12, div(style = "height: 20px;"))),
-                        fluidRow(
-                            p("Percent coral cover by year")
-                        )
+                        p("Percent coral cover by year")
                     ),
                     tabPanel(
-                        h2("By Locality"),
+                        h3("By Locality"),
                         fluidRow(column(width = 12, div(style = "height: 20px;"))),
-                        fluidRow(
-                            p("Percent coral cover by locality")
-                        )
+                        p("Percent coral cover by locality")
                     ),
                     tabPanel(
-                        h2("By Species"),
+                        h3("By Species"),
                         fluidRow(column(width = 12, div(style = "height: 20px;"))),
-                        fluidRow(
-                            p("Percent coral cover by species")
-                        )
+                        p("Percent coral cover by species")
                     )
                 )
             ),
             tabItem(
                 tabName = "page_2-1",
-                h3("Macroalgae Species Explorer"),
+                h2("Macroalgae Species Explorer"),
                 tabsetPanel(
                     tabPanel(
-                        h2("By Year"),
+                        h3("By Year"),
                         fluidRow(column(width = 12, div(style = "height: 20px;"))),
-                        fluidRow(
-                            p("Macroalgae species by year")
-                        )
+                        p("Macroalgae species by year")
                     ),
                     tabPanel(
-                        h2("By Locality"),
+                        h3("By Locality"),
                         fluidRow(column(width = 12, div(style = "height: 20px;"))),
-                        fluidRow(
-                            p("Macroalgae species by locality")
-                        )
+                        p("Macroalgae species by locality")
                     )
                 )
             ),
             tabItem(
                 tabName = "page_2-2",
-                h3("Macroalgae Cover Explorer"),
+                h2("Macroalgae Cover Explorer"),
                 tabsetPanel(
                     tabPanel(
-                        h2("By Year"),
+                        h3("By Year"),
                         fluidRow(column(width = 12, div(style = "height: 20px;"))),
-                        fluidRow(
-                            p("Macroalgae percent cover by year")
-                        )
+                        p("Macroalgae percent cover by year")
                     ),
                     tabPanel(
-                        h2("By Locality"),
+                        h3("By Locality"),
                         fluidRow(column(width = 12, div(style = "height: 20px;"))),
-                        fluidRow(
-                            p("Macroalgae percent cover by locality")
-                        )
+                        p("Macroalgae percent cover by locality")
                     ),
                     tabPanel(
-                        h2("By Species"),
+                        h3("By Species"),
                         fluidRow(column(width = 12, div(style = "height: 20px;"))),
-                        fluidRow(
-                            p("Macroalgae percent cover by species")
-                        )
+                        p("Macroalgae percent cover by species")
                     )
                 )
             ),
             tabItem(
                 tabName = "page_3-1",
-                h3("Fish Size Explorer"),
+                h2("Fish Size Explorer"),
                 tabsetPanel(
                     tabPanel(
-                        h2("By Year"),
+                        h3("By Year"),
                         fluidRow(column(width = 12, div(style = "height: 20px;"))),
-                        fluidRow(
-                            p("Fish size by year and family")
-                        )
+                        p("Fish size by year and family")
                     ),
                     tabPanel(
-                        h2("By Locality"),
+                        h3("By Locality"),
                         fluidRow(column(width = 12, div(style = "height: 20px;"))),
-                        fluidRow(
-                            p("Fish size by locality and family")
-                        )
+                        p("Fish size by locality and family")
                     ),
                     tabPanel(
-                        h2("By Species"),
+                        h3("By Species"),
                         fluidRow(column(width = 12, div(style = "height: 20px;"))),
-                        fluidRow(
-                            p("Fish size by species")
-                        )
+                        p("Fish size by species")
                     ),
                     tabPanel(
-                        h2("By Time of Day"),
+                        h3("By Time of Day"),
                         fluidRow(column(width = 12, div(style = "height: 20px;"))),
-                        fluidRow(
-                            p("Fish size by time of day")
-                        )
+                        p("Fish size by time of day")
                     )
                 )
             ),
             tabItem(
                 tabName = "page_3-2",
-                h3("Fish Biomass Explorer"),
+                h2("Fish Biomass Explorer"),
                 tabsetPanel(
                     tabPanel(
-                        h2("By Year"),
+                        h3("By Year"),
                         fluidRow(column(width = 12, div(style = "height: 20px;"))),
-                        fluidRow(
-                            p("Fish biomass by year and group")
-                        )
+                        p("Fish biomass by year and group")
                     ),
                     tabPanel(
-                        h2("By Locality"),
+                        h3("By Locality"),
                         fluidRow(column(width = 12, div(style = "height: 20px;"))),
-                        fluidRow(
-                            p("Fish biomass by locality and group")
-                        )
+                        p("Fish biomass by locality and group")
                     )
                 )
             ),
             tabItem(
                 tabName = "page_3-3",
-                h3("Fish Observations Explorer"),
+                h2("Fish Observations Explorer"),
                 tabsetPanel(
                     tabPanel(
-                        h2("By Year"),
+                        h3("By Year"),
                         fluidRow(column(width = 12, div(style = "height: 20px;"))),
-                        fluidRow(
-                            p("Fish count and richness by year and group")
-                        )
+                        p("Fish count and richness by year and group")
                     ),
                     tabPanel(
-                        h2("By Locality"),
+                        h3("By Locality"),
                         fluidRow(column(width = 12, div(style = "height: 20px;"))),
-                        fluidRow(
-                            p("Fish count and richness by locality and group")
-                        )
+                        p("Fish count and richness by locality and group")
                     ),
                     tabPanel(
-                        h2("By Time of Day"),
+                        h3("By Time of Day"),
                         fluidRow(column(width = 12, div(style = "height: 20px;"))),
-                        fluidRow(
-                            p("Fish count and richness by time of day and group")
-                        )
+                        p("Fish count and richness by time of day and group")
                     )
                 )
             ),
             tabItem(
                 tabName = "page_4",
-                h3("Map of Turneffe Atoll Marine Reserve")
+                h2("Map of Turneffe Atoll Marine Reserve"),
+                fluidRow(column(width = 12, div(style = "height: 20px;"))),
+                p("Map and caption of TAMR")
             )
         )
     )
