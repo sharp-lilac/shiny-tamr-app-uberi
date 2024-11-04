@@ -57,7 +57,7 @@ df_master_fish_biomass <- df_master_fish_clean %>%
 create_tran_org_summary <- function(bucket, organism, df = df_master_benthic_clean) {
     bucket_col <- sym(bucket)
     df %>%
-        group_by(Year, Site, Uniq_Transect) %>%
+        group_by(Year, Locality, Site, Uniq_Transect) %>%
         summarize(
             Percent = sum(!!bucket_col == organism & ND_A.x != "ND") / n() * 100,
             .groups = "drop"
@@ -68,7 +68,7 @@ create_site_org_summary <- function(bucket, organism, df = df_master_benthic_cle
     df <- create_tran_org_summary(bucket, organism, df)
     df %>%
         ungroup() %>%
-        group_by(Year, Site) %>%
+        group_by(Year, Locality, Site) %>%
         summarize(
             Percent_Mean = mean(Percent),
             .groups = "drop"
@@ -85,3 +85,9 @@ create_year_org_summary <- function(bucket, organism, df = df_master_benthic_cle
             .groups = "drop"
         )
 }
+
+
+# Prepare key vectors ---------------------------
+sites <- unique(df_master_benthic_clean$Site)
+localities <- unique(df_master_benthic_clean$Locality)
+years <- unique(df_master_benthic_clean$Year)

@@ -8,6 +8,7 @@ library(shinycssloaders)
 
 # Source Objects ---------------------------
 source("theme.R")
+source("data_prepare.R")
 home_text <- paste(readLines("text/home.txt"))
 
 # Define ui ---------------------------
@@ -128,14 +129,50 @@ ui <- dashboardPage(
                 h2("Coral Cover Explorer"),
                 tabsetPanel(
                     tabPanel(
-                        h3("By Year"),
+                        h3("By Year and Locality"),
                         fluidRow(column(width = 12, div(style = "height: 20px;"))),
-                        p("Percent coral cover by year")
-                    ),
-                    tabPanel(
-                        h3("By Locality"),
-                        fluidRow(column(width = 12, div(style = "height: 20px;"))),
-                        p("Percent coral cover by locality")
+                        sidebarLayout(
+                            sidebarPanel(
+                                width = 2,
+                                pickerInput(
+                                    inputId = "coral_cover_year_choose_locality",
+                                    label = "Select Locality:",
+                                    choices = localities,
+                                    selected = localities,
+                                    options = pickerOptions(
+                                        actionsBox = TRUE,
+                                        size = 10,
+                                        selectedTextFormat = "count > 3"
+                                    ),
+                                    multiple = TRUE
+                                ),
+                                switchInput(
+                                    inputId = "coral_cover_year_consolidate_locality",
+                                    label = "Consolidate!"
+                                ),
+                                pickerInput(
+                                    inputId = "coral_cover_year_choose_year",
+                                    label = "Select Year:",
+                                    choices = years,
+                                    selected = years,
+                                    options = pickerOptions(
+                                        actionsBox = TRUE,
+                                        size = 10,
+                                        selectedTextFormat = "count > 3"
+                                    ),
+                                    multiple = TRUE
+                                ),
+                                switchInput(
+                                    inputId = "coral_cover_year_consolidate_year",
+                                    label = "Consolidate!"
+                                )
+                            ),
+                            mainPanel(
+                                plotOutput(outputId = "coral_cover_year_plot", height = "700px") %>%
+                                    withSpinner(type = 8, color = palette[4]),
+                                width = 10
+                            )
+                        )
                     ),
                     tabPanel(
                         h3("By Species"),
