@@ -34,3 +34,28 @@
     background-color: #5E81AC;
     color: #FFFFFF;
 }
+
+/* Custom styles for boxes */
+.section-box {
+    background-color: #c5ebf8;
+    /* Softer teal */
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    border: 1px solid #000;
+    /* Black border */
+}
+
+.section-box.alternate {
+    background-color: #f1d1c1;
+    /* Softer coral */
+    border: 1px solid #000;
+    /* Black border */
+}
+
+.section-box.alternate-2 {
+    background-color: #d8e6cf;
+    /* Softer green */
+    border: 1px solid #000;
+    /* Black border */
+}

@@ -2,12 +2,27 @@
 
 # Load packages ---------------------------
 library(fresh) # custom themes for dashboard
+library(ggplot2)
 
 # Define shiny dashboard theme ---------------------------
 dash_theme <- create_theme(
-    adminlte_color(light_blue = "#5E81AC", aqua = "#88C0D0", green = "#A3BE8C", purple = "#B48EAD"),
-    adminlte_sidebar(width = "200px", dark_bg = "#4C566A", dark_hover_bg = "#88C0D0", dark_color = "#ECEFF4"),
-    adminlte_global(content_bg = "#ECEFF4", box_bg = "#D8DEE9", info_box_bg = "#A3BE8C")
+    adminlte_color(
+        light_blue = "#a07aa5",
+        aqua = "#A8D8E8",
+        green = "#B8D0A8",
+        purple = "#7DAAC9"
+    ),
+    adminlte_sidebar(
+        width = "200px",
+        dark_bg = "#3B4252",
+        dark_hover_bg = "#7b667e",
+        dark_color = "#ECEFF4"
+    ),
+    adminlte_global(
+        content_bg = "#ECEFF4",
+        box_bg = "#D8DEE9",
+        info_box_bg = "#B8D0A8"
+    )
 )
 
 # Define ggplot2 theme ---------------------------

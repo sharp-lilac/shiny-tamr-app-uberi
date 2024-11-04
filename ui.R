@@ -8,10 +8,11 @@ library(shinycssloaders)
 
 # Source Objects ---------------------------
 source("theme.R")
+home_text <- paste(readLines("text/home.txt"))
 
 # Define ui ---------------------------
 ui <- dashboardPage(
-    dashboardHeader(title = "Title!"),
+    dashboardHeader(title = "Explore TAMR"),
     dashboardSidebar(
         sidebarMenu(
             menuItem("Home", tabName = "home", icon = icon("home")),
@@ -26,21 +27,46 @@ ui <- dashboardPage(
     dashboardBody(
         tags$head(tags$link(rel = "stylesheet", type = "text/css", href = "custom_styles.css")),
         use_theme(dash_theme),
-        fluidRow(column(width = 12, div(style = "height: 20px;"))),
         tabItems(
             tabItem(
                 tabName = "home",
-                fluidRow(column(width = 12, div(style = "height: 20px;"))),
                 fluidRow(
-                    h1("Home")
-                ),
-                fluidRow(column(width = 12, div(style = "height: 20px;"))),
-                fluidRow(
-                    column(width = 2, actionBttn(inputId = "Id113", label = "primary", style = "jelly", color = "primary")),
-                    column(width = 2, actionBttn(inputId = "Id113", label = "success", style = "jelly", color = "success")),
-                    column(width = 2, actionBttn(inputId = "Id113", label = "warning", style = "jelly", color = "warning")),
-                    column(width = 2, actionBttn(inputId = "Id113", label = "danger", style = "jelly", color = "danger")),
-                    column(width = 2, actionBttn(inputId = "Id113", label = "royal", style = "jelly", color = "royal"))
+                    column(
+                        width = 12,
+                        h1("Turneffe Data Exploration App"),
+                        br(),
+                        h3("Our Long-Term Reef Monitoring Data"),
+                        fluidRow(
+                            column(
+                                width = 9,
+                                div(
+                                    class = "section-box",
+                                    p(home_text[1], face = "bold"), p(home_text[2]), p(home_text[3]), p(home_text[4])
+                                )
+                            )
+                        ),
+                        h3("Project Collaborators"),
+                        fluidRow(
+                            column(
+                                width = 9,
+                                div(
+                                    class = "section-box alternate",
+                                    p(home_text[5]), p(home_text[6])
+                                )
+                            )
+                        ),
+                        h3("Access Our Data"),
+                        fluidRow(
+                            column(
+                                width = 9,
+                                div(
+                                    class = "section-box alternate-2",
+                                    p(home_text[7])
+                                )
+                            )
+                        )
+                    ),
+                    fluidRow(column(width = 12, div(style = "height: 20px;")))
                 )
             ),
             tabItem(
