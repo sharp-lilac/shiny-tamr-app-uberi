@@ -3,8 +3,12 @@
 
 ## Authors:
 Jessica C. Boles, Data Scientist, University of Belize Environmental Research Institute
+Jake L. Snaddon, Director, University of Belize Environmental Research Institute
+
+## Other Contributors:
+Justin Brodhurst, Student, University of Belize
 
 ## Citation:
-J.C. Boles. (2024). shiny-tamr-app-uberi. GitHub. 
+J. Boles., J. Snaddon (2024). shiny-tamr-app-uberi. GitHub. 
 
-Please include date accessed.
+Please include date accessed in citation.
