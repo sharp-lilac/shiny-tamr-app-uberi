@@ -27,4 +27,8 @@ shinyServer(function(input, output) {
         caption <- coral_cover_year_plot_caption()
         create_coral_cover_year_plot(data_filtered, input, caption)
     })
+    # Coral cover by species plot
+    output$coral_cover_species_plot <- renderPlot({
+        ggplot(data = create_tran_org_summary("AGRRA_Bucket", "Coral"), aes(x = Locality, y = Percent))
+    })
 })

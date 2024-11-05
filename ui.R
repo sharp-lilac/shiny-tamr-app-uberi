@@ -177,7 +177,48 @@ ui <- dashboardPage(
                     tabPanel(
                         h3("By Species"),
                         fluidRow(column(width = 12, div(style = "height: 20px;"))),
-                        p("Percent coral cover by species")
+                        sidebarLayout(
+                            sidebarPanel(
+                                width = 2,
+                                pickerInput(
+                                    inputId = "coral_cover_species_choose_locality",
+                                    label = "Select Locality:",
+                                    choices = localities,
+                                    selected = localities,
+                                    options = pickerOptions(
+                                        actionsBox = TRUE,
+                                        size = 10,
+                                        selectedTextFormat = "count > 3"
+                                    ),
+                                    multiple = TRUE
+                                ),
+                                switchInput(
+                                    inputId = "coral_cover_species_consolidate_locality",
+                                    label = "Consolidate!"
+                                ),
+                                pickerInput(
+                                    inputId = "coral_cover_species_choose_year",
+                                    label = "Select Year:",
+                                    choices = years,
+                                    selected = years,
+                                    options = pickerOptions(
+                                        actionsBox = TRUE,
+                                        size = 10,
+                                        selectedTextFormat = "count > 3"
+                                    ),
+                                    multiple = TRUE
+                                ),
+                                switchInput(
+                                    inputId = "coral_cover_species_consolidate_year",
+                                    label = "Consolidate!"
+                                )
+                            ),
+                            mainPanel(
+                                plotOutput(outputId = "coral_cover_species_plot", height = "700px") %>%
+                                    withSpinner(type = 8, color = palette[4]),
+                                width = 10
+                            )
+                        )
                     )
                 )
             ),

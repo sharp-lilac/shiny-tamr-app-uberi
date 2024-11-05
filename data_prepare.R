@@ -52,6 +52,21 @@ df_master_fish_biomass <- df_master_fish_clean %>%
     mutate(Biomass_g_per_100m2_Transect = 100 * Biomass_Transect / 60) %>% # calculate biomass density for transect
     filter(!is.na(Biomass_Category))
 
+# Prepare data subsets ---------------------------
+coral_species <- df_master_benthic_clean %>%
+    group_by(Uniq_Transect) %>%
+    summarise(Points = n()) %>%
+    ungroup() %>%
+    group_by(Uniq_Transect, Species) %>%
+    summarise(
+        count = n(),
+        total_points = max(count)
+    ) %>%
+    mutate(percent = (count / total_points) * 100) %>%
+    ungroup()
+
+
+
 # Prepare data functions ---------------------------
 # Create transect-level percent organism summary dataset
 create_tran_org_summary <- function(bucket, organism, df = df_master_benthic_clean) {
