@@ -5,7 +5,7 @@
 Jessica C. Boles, Data Scientist, University of Belize Environmental Research Institute
 Jake L. Snaddon, Director, University of Belize Environmental Research Institute
 
-## Other Contributors:
+## Contributors:
 Justin Brodhurst, Student, University of Belize
 
 ## Citation:
