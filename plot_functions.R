@@ -13,7 +13,7 @@ create_coral_cover_year_plot <- function(data_filtered, input, caption) {
                 outlier.shape = 4, outlier.size = 4
             ) +
             stat_summary(fun = mean, geom = "point", shape = 18, size = 3, fill = "#3B4252") +
-            xlab("Percent Coral Cover") +
+            ylab("Percent Coral Cover") +
             labs(caption = caption) +
             theme_classic() +
             gg_theme
@@ -28,7 +28,7 @@ create_coral_cover_year_plot <- function(data_filtered, input, caption) {
                 aes(group = Locality),
                 position = position_dodge(width = 0.75)
             ) +
-            xlab("Percent Coral Cover") +
+            ylab("Percent Coral Cover") +
             labs(caption = caption) +
             theme_classic() +
             gg_theme +
