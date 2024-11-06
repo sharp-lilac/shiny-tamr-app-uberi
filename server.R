@@ -17,15 +17,11 @@ shinyServer(function(input, output) {
     })
     output$coral_cover_year_plot <- renderPlot({
         data_filtered <- df_benthic_percents_coral %>%
-            filter(Locality %in% input$coral_cover_year_choose_locality) %>%
-            filter(Year %in% input$coral_cover_year_choose_year)
+            filter(Locality %in% input$coral_cover_year_choose_locality, Year %in% input$coral_cover_year_choose_year)
         if (input$coral_cover_year_consolidate_year) {
-            selected_years <- paste(input$coral_cover_year_choose_year, collapse = ", ")
-            data_filtered <- data_filtered %>%
-                mutate(Year = selected_years)
+            data_filtered <- mutate(data_filtered, Year = paste(input$coral_cover_year_choose_year, collapse = ", "))
         }
-        caption <- coral_cover_year_plot_caption()
-        create_coral_cover_year_plot(data_filtered, input, caption)
+        create_coral_cover_year_plot(data_filtered, input, coral_cover_year_plot_caption())
     })
     # Coral cover by species plot
     output$coral_cover_species_plot <- renderPlot({
