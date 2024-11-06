@@ -286,12 +286,17 @@ ui <- dashboardPage(
                 h2("Map of Turneffe Atoll Marine Reserve"),
                 fluidRow(column(width = 12, div(style = "height: 20px;"))),
                 p("Map of Turneffe Atoll Marine Reserve. Each surveyed locality is indicated with a white circle, zones are indicated with warm colors, and ecosystems are indicated with solid cool colors. Shapefiles for zones belong to Belize Fisheries Department (Belize Geomatics 2022) and were made available through the Turneffe Atoll Sustainability Association. Shapefiles for the base map and ecosystems come from the publicly available Spatial Data Warehouse for Belize (Meerman 2013, Meerman 2017)."),
-                img(src="images/Turneffe_Map.jpg", width="100%"),
-                p("Belize Geomatics. (2022). Turneffe Atoll Areas, Belize Replenishment Zones Project [dataset]. Meerman, J. C. (2013). Belize Basemap [dataset]. Biodiversity and Environmental Resource Data System of Belize."),
-                p("http://www.biodiversity.bz/"),
+                div( style="width: 33%; margin: auto", img(src="images/Turneffe_Map.jpg", width="100%", height = "50%")), # nolint
                 br(),
-                p("Meerman, J. C. (2017). Belize_Ecosystems_2017 [dataset]. Biodiversity and Environmental Resource Data System of Belize. "),
-                p("http://www.biodiversity.bz/")
+                p("Belize Geomatics. (2022). Turneffe Atoll Areas, Belize Replenishment Zones Project [dataset]. Meerman, J. C. (2013). Belize Basemap [dataset]. Biodiversity and Environmental Resource Data System of Belize.", 
+                    br(), 
+                    "http://www.biodiversity.bz/"
+                ),
+                br(),
+                p("Meerman, J. C. (2017). Belize_Ecosystems_2017 [dataset]. Biodiversity and Environmental Resource Data System of Belize. ", 
+                    br(), 
+                    "http://www.biodiversity.bz/"
+                ),
             )
         )
     )
