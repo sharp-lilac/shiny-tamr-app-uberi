@@ -201,6 +201,15 @@ ui <- dashboardPage(
                                         selectedTextFormat = "count > 3"
                                     ),
                                     multiple = TRUE
+                                ),
+                                prettyRadioButtons(
+                                    inputId = "coral_cover_species_color_toggle",
+                                    label = "Color by:",
+                                    choices = c("Locality", "Year", "Neither"),
+                                    selected = "Neither",
+                                    outline = TRUE,
+                                    status = "primary",
+                                    icon = icon("check")
                                 )
                             ),
                             mainPanel(
