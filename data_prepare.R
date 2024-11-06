@@ -52,28 +52,19 @@ df_master_fish_biomass <- df_master_fish_clean %>%
     mutate(Biomass_g_per_100m2_Transect = 100 * Biomass_Transect / 60) %>% # calculate biomass density for transect
     filter(!is.na(Biomass_Category))
 
-# Prepare data functions ---------------------------
-# Create transect-level percent organism summary dataset
-create_tran_org_summary <- function(bucket, organism, df = df_master_benthic_clean) {
-    bucket_col <- sym(bucket)
-    df %>%
-        group_by(Year, Locality, Site, Uniq_Transect) %>%
-        summarize(
-            Percent = sum(!!bucket_col == organism & ND_A.x != "ND") / n() * 100,
-            .groups = "drop"
-        )
-}
-# Create site-level percent organism summary dataset
-create_site_org_summary <- function(bucket, organism, df = df_master_benthic_clean) {
-    df <- create_tran_org_summary(bucket, organism, df)
-    df %>%
-        ungroup() %>%
-        group_by(Year, Locality, Site) %>%
-        summarize(
-            Percent_Mean = mean(Percent),
-            .groups = "drop"
-        )
-}
+# Prepare data subsets ---------------------------
+df_benthic_percents <- df_master_benthic_clean %>%
+    group_by(Uniq_Transect) %>%
+    summarise(Total_Points = n()) %>%
+    right_join(df_master_benthic_clean, by = "Uniq_Transect") %>%
+    group_by(Year, Locality, Site, Uniq_Transect, Org_Name, Species, Organism, AGRRA_Bucket) %>%
+    summarise(Count = n(), Total_Points = first(Total_Points)) %>%
+    mutate(Percent = (Count / Total_Points) * 100)
+
+df_benthic_percents_coral <- df_benthic_percents %>%
+    group_by(Year, Locality, Site, Uniq_Transect) %>%
+    summarize(Percent_Coral = sum(Percent[AGRRA_Bucket == "Coral"], na.rm = TRUE))
+
 # Create year-level percent organism summary dataset
 create_year_org_summary <- function(bucket, organism, df = df_master_benthic_clean) {
     df <- create_site_org_summary(bucket, organism, df)
