@@ -10,6 +10,7 @@ library(shinycssloaders)
 source("theme.R")
 source("data_prepare.R")
 home_text <- paste(readLines("text/home.txt"))
+map_text <- paste(readLines("text/map.txt"))
 
 # Define ui ---------------------------
 ui <- dashboardPage(
@@ -302,7 +303,28 @@ ui <- dashboardPage(
                 tabName = "page_4",
                 h2("Map of Turneffe Atoll Marine Reserve"),
                 fluidRow(column(width = 12, div(style = "height: 20px;"))),
-                p("Map and caption of TAMR")
+                fluidRow(
+                    column(
+                        width = 9,
+                        div(
+                            class = "section-box",
+                            p(map_text[1])
+                        )
+                    )
+                ),
+                div(style = "width: 33%; float:left;", img(src = "images/Turneffe_Map.jpg", width = "100%", height = "50%")),
+                fluidRow(column(width = 12, div(style = "height: 20px;"))),
+                fluidRow(
+                    column(
+                        width = 9,
+                        div(
+                            class = "section-box alternate",
+                            p(map_text[2], br(), "http://www.biodiversity.bz/"),
+                            br(),
+                            p(map_text[3], br(), "http://www.biodiversity.bz/")
+                        )
+                    )
+                )
             )
         )
     )
