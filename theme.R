@@ -6,23 +6,9 @@ library(ggplot2)
 
 # Define shiny dashboard theme ---------------------------
 dash_theme <- create_theme(
-    adminlte_color(
-        light_blue = "#a07aa5",
-        aqua = "#A8D8E8",
-        green = "#B8D0A8",
-        purple = "#7DAAC9"
-    ),
-    adminlte_sidebar(
-        width = "200px",
-        dark_bg = "#3B4252",
-        dark_hover_bg = "#7b667e",
-        dark_color = "#ECEFF4"
-    ),
-    adminlte_global(
-        content_bg = "#ECEFF4",
-        box_bg = "#D8DEE9",
-        info_box_bg = "#B8D0A8"
-    )
+    adminlte_color(light_blue = "#a07aa5", aqua = "#A8D8E8", green = "#B8D0A8", purple = "#7DAAC9"),
+    adminlte_sidebar(width = "200px", dark_bg = "#3B4252", dark_hover_bg = "#7b667e", dark_color = "#ECEFF4"),
+    adminlte_global(content_bg = "#ECEFF4", box_bg = "#D8DEE9", info_box_bg = "#B8D0A8")
 )
 
 # Define ggplot2 theme ---------------------------
@@ -44,7 +30,8 @@ gg_theme <- theme(
     plot.background = element_rect(fill = "#ecf0f5ff", color = NA),
     legend.background = element_rect(fill = "#ecf0f5ff", color = NA),
     legend.box.background = element_rect(fill = "#ecf0f5ff", color = NA),
-    plot.caption = element_text(hjust = 0, size = 14)
+    plot.caption = element_text(hjust = 0, size = 14),
+    panel.grid.major.y = element_line(color = "grey85", size = 0.5)
 )
 
 # Define color palette ---------------------------

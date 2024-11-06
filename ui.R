@@ -23,10 +23,8 @@ ui <- dashboardPage(
                 menuSubItem("Coral Health", tabName = "page_1-2"),
                 menuSubItem("Coral Cover", tabName = "page_1-3")
             ),
-            menuItem("Explore Macroalgae",
-                tabName = "page_2", icon = icon("magnifying-glass"),
-                menuSubItem("Macroalgae Species", tabName = "page_2-1"),
-                menuSubItem("Macroalgae Cover", tabName = "page_2-2")
+            menuItem("Explore Benthos",
+                tabName = "page_2", icon = icon("magnifying-glass")
             ),
             menuItem("Explore Fish",
                 tabName = "page_3", icon = icon("magnifying-glass"),
@@ -223,41 +221,8 @@ ui <- dashboardPage(
                 )
             ),
             tabItem(
-                tabName = "page_2-1",
-                h2("Macroalgae Species Explorer"),
-                tabsetPanel(
-                    tabPanel(
-                        h3("By Year"),
-                        fluidRow(column(width = 12, div(style = "height: 20px;"))),
-                        p("Macroalgae species by year")
-                    ),
-                    tabPanel(
-                        h3("By Locality"),
-                        fluidRow(column(width = 12, div(style = "height: 20px;"))),
-                        p("Macroalgae species by locality")
-                    )
-                )
-            ),
-            tabItem(
-                tabName = "page_2-2",
-                h2("Macroalgae Cover Explorer"),
-                tabsetPanel(
-                    tabPanel(
-                        h3("By Year"),
-                        fluidRow(column(width = 12, div(style = "height: 20px;"))),
-                        p("Macroalgae percent cover by year")
-                    ),
-                    tabPanel(
-                        h3("By Locality"),
-                        fluidRow(column(width = 12, div(style = "height: 20px;"))),
-                        p("Macroalgae percent cover by locality")
-                    ),
-                    tabPanel(
-                        h3("By Species"),
-                        fluidRow(column(width = 12, div(style = "height: 20px;"))),
-                        p("Macroalgae percent cover by species")
-                    )
-                )
+                tabName = "page_2",
+                h2("Benthic Composition Explorer"),
             ),
             tabItem(
                 tabName = "page_3-1",

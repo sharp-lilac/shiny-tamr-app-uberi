@@ -53,42 +53,18 @@ df_master_fish_biomass <- df_master_fish_clean %>%
     filter(!is.na(Biomass_Category))
 
 # Prepare data subsets ---------------------------
-coral_species <- df_master_benthic_clean %>%
+df_benthic_percents <- df_master_benthic_clean %>%
     group_by(Uniq_Transect) %>%
-    summarise(Points = n()) %>%
-    ungroup() %>%
-    group_by(Uniq_Transect, Species) %>%
-    summarise(
-        count = n(),
-        total_points = max(count)
-    ) %>%
-    mutate(percent = (count / total_points) * 100) %>%
-    ungroup()
+    summarise(Total_Points = n()) %>%
+    right_join(df_master_benthic_clean, by = "Uniq_Transect") %>%
+    group_by(Year, Locality, Site, Uniq_Transect, Org_Name, Species, Organism, AGRRA_Bucket) %>%
+    summarise(Count = n(), Total_Points = first(Total_Points)) %>%
+    mutate(Percent = (Count / Total_Points) * 100)
 
+df_benthic_percents_coral <- df_benthic_percents %>%
+    group_by(Year, Locality, Site, Uniq_Transect) %>%
+    summarize(Percent_Coral = sum(Percent[AGRRA_Bucket == "Coral"], na.rm = TRUE))
 
-
-# Prepare data functions ---------------------------
-# Create transect-level percent organism summary dataset
-create_tran_org_summary <- function(bucket, organism, df = df_master_benthic_clean) {
-    bucket_col <- sym(bucket)
-    df %>%
-        group_by(Year, Locality, Site, Uniq_Transect) %>%
-        summarize(
-            Percent = sum(!!bucket_col == organism & ND_A.x != "ND") / n() * 100,
-            .groups = "drop"
-        )
-}
-# Create site-level percent organism summary dataset
-create_site_org_summary <- function(bucket, organism, df = df_master_benthic_clean) {
-    df <- create_tran_org_summary(bucket, organism, df)
-    df %>%
-        ungroup() %>%
-        group_by(Year, Locality, Site) %>%
-        summarize(
-            Percent_Mean = mean(Percent),
-            .groups = "drop"
-        )
-}
 # Create year-level percent organism summary dataset
 create_year_org_summary <- function(bucket, organism, df = df_master_benthic_clean) {
     df <- create_site_org_summary(bucket, organism, df)
