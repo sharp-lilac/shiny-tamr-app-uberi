@@ -21,11 +21,12 @@ create_coral_cover_year_plot <- function(data_filtered, input, caption) {
     }
 }
 
-create_coral_cover_species_plot <- function(data_filtered) {
+# Create plot of coral cover by species ---------------------------
+create_coral_cover_species_plot <- function(data_filtered, input, caption) {
     plot <- ggplot(data_filtered, aes(x = reorder(Organism, -Percent, FUN = mean), y = Percent)) +
         geom_boxplot(color = "black", position = position_dodge(width = 0.75), outlier.shape = 4, outlier.size = 4) +
         stat_summary(fun = mean, geom = "point", shape = 18, size = 3, fill = "#3B4252", position = position_dodge(width = 0.75)) +
-        labs(x = "Percent Cover") +
+        labs(caption = caption, x = "Percent Cover") +
         theme_classic() +
         gg_theme +
         theme(axis.text.x = element_text(angle = 90))

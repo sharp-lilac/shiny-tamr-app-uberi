@@ -23,10 +23,14 @@ shinyServer(function(input, output) {
         }
         create_coral_cover_year_plot(data_filtered, input, coral_cover_year_plot_caption())
     })
-    # Coral cover by species plot
+    # Coral cover by species plot caption
+    coral_cover_species_plot_caption <- reactive({
+        generate_coral_cover_species_caption(input)
+    })
     output$coral_cover_species_plot <- renderPlot({
         data_filtered <- df_benthic_percents %>%
-            filter(AGRRA_Bucket == "Coral")
-        create_coral_cover_species_plot(data_filtered)
+            filter(AGRRA_Bucket == "Coral") %>%
+            filter(Locality %in% input$coral_cover_species_choose_locality, Year %in% input$coral_cover_species_choose_year)
+        create_coral_cover_species_plot(data_filtered, input, coral_cover_species_plot_caption())
     })
 })
