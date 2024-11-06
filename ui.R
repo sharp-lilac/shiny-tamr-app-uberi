@@ -210,11 +210,21 @@ ui <- dashboardPage(
                                     outline = TRUE,
                                     status = "primary",
                                     icon = icon("check")
+                                ),
+                                numericInput(
+                                    inputId = "coral_cover_species_max_species",
+                                    label = "Number of Coral Species to Display",
+                                    value = 10,
+                                    min = 5,
+                                    max = 15,
+                                    step = 1
                                 )
                             ),
                             mainPanel(
                                 plotOutput(outputId = "coral_cover_species_plot", height = "700px") %>%
                                     withSpinner(type = 8, color = palette[4]),
+                                h3("Table of Coral Codes"),
+                                DT::dataTableOutput(outputId = "coral_cover_species_table"),
                                 width = 10
                             )
                         )
