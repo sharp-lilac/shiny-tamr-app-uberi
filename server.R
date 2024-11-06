@@ -25,6 +25,8 @@ shinyServer(function(input, output) {
     })
     # Coral cover by species plot
     output$coral_cover_species_plot <- renderPlot({
-        ggplot(data = df_benthic_percents_coral, aes(x = Locality, y = Percent_Coral))
+        data_filtered <- df_benthic_percents %>%
+            filter(AGRRA_Bucket == "Coral")
+        create_coral_cover_species_plot(data_filtered)
     })
 })
