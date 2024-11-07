@@ -36,11 +36,11 @@ ui <- dashboardPage(
             ),
             menuItem("Quick Links",
                 tabName = "page_4", icon = icon("magnifying-glass"),
-                menuSubItem("UB-ERI", href = link_text[1]),
-                menuSubItem("AGRRA", href = link_text[2]),
-                menuSubItem("MBRS SMP", href = link_text[3]),
-                menuSubItem("Dryad", href = link_text[4]),
-                menuSubItem("HRHP", href = link_text[5])
+                menuSubItem("UB-ERI Website", href = link_text[1]),
+                menuSubItem("AGRRA Website", href = link_text[2]),
+                menuSubItem("HRHP Website", href = link_text[5]),
+                menuSubItem("MBRS SMP Methods", href = link_text[3]),
+                menuSubItem("Dryad Data", href = link_text[4])
             ),
             menuItem("Map", tabName = "page_5", icon = icon("map"))
         )
