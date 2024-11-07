@@ -54,4 +54,8 @@ shinyServer(function(input, output) {
             select(Organism, Genus, Species) %>%
             DT::datatable(options = list(pageLength = 10, autoWidth = TRUE))
     })
+    # Benthic composition plot
+    output$benthic_comp_plot <- renderPlot({
+        ggplot()
+    })
 })
