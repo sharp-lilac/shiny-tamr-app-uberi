@@ -16,6 +16,8 @@ shinyServer(function(input, output) {
         generate_coral_cover_year_caption(input)
     })
     output$coral_cover_year_plot <- renderPlot({
+        req(input$coral_cover_year_choose_locality)
+        req(input$coral_cover_year_choose_year)
         data_filtered <- df_benthic_percents_coral %>%
             filter(Locality %in% input$coral_cover_year_choose_locality, Year %in% input$coral_cover_year_choose_year)
         if (input$coral_cover_year_consolidate_year) {
@@ -31,6 +33,8 @@ shinyServer(function(input, output) {
         generate_coral_cover_species_caption(input)
     })
     output$coral_cover_species_plot <- renderPlot({
+        req(input$coral_cover_species_choose_locality)
+        req(input$coral_cover_species_choose_year)
         data_filtered <- df_benthic_percents %>%
             filter(AGRRA_Bucket == "Coral", !is.na(Species)) %>%
             filter(Locality %in% input$coral_cover_species_choose_locality, Year %in% input$coral_cover_species_choose_year)
