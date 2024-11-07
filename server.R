@@ -31,6 +31,10 @@ shinyServer(function(input, output) {
         data_filtered <- df_benthic_percents %>%
             filter(AGRRA_Bucket == "Coral", !is.na(Species)) %>%
             filter(Locality %in% input$coral_cover_species_choose_locality, Year %in% input$coral_cover_species_choose_year)
+        if (input$coral_cover_species_select_species != "All") {
+            data_filtered <- data_filtered %>%
+                filter(Species == input$coral_cover_species_select_species)
+        }
         top_organisms <- data_filtered %>%
             group_by(Organism) %>%
             summarize(Mean = mean(Percent, na.rm = TRUE)) %>%

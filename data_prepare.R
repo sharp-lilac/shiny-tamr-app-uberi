@@ -60,25 +60,16 @@ df_benthic_percents <- df_master_benthic_clean %>%
     group_by(Year, Locality, Site, Uniq_Transect, Org_Name, Species, Organism, AGRRA_Bucket) %>%
     summarise(Count = n(), Total_Points = first(Total_Points)) %>%
     mutate(Percent = (Count / Total_Points) * 100)
-
 df_benthic_percents_coral <- df_benthic_percents %>%
     group_by(Year, Locality, Site, Uniq_Transect) %>%
     summarize(Percent_Coral = sum(Percent[AGRRA_Bucket == "Coral"], na.rm = TRUE))
-
-# Create year-level percent organism summary dataset
-create_year_org_summary <- function(bucket, organism, df = df_master_benthic_clean) {
-    df <- create_site_org_summary(bucket, organism, df)
-    df %>%
-        ungroup() %>%
-        group_by(Year) %>%
-        summarize(
-            Percent_Mean = mean(Percent_Mean),
-            .groups = "drop"
-        )
-}
-
 
 # Prepare key vectors ---------------------------
 sites <- unique(df_master_benthic_clean$Site)
 localities <- unique(df_master_benthic_clean$Locality)
 years <- unique(df_master_benthic_clean$Year)
+coral_species <- df_master_benthic_clean %>%
+    filter(!is.na(Species) & !is.na(Organism)) %>%
+    select(Species) %>%
+    distinct() %>%
+    arrange(Species)

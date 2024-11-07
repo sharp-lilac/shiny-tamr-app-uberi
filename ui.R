@@ -199,7 +199,8 @@ ui <- dashboardPage(
                                     options = pickerOptions(
                                         actionsBox = TRUE,
                                         size = 10,
-                                        selectedTextFormat = "count > 3"
+                                        selectedTextFormat = "count > 3",
+                                        liveSearch = TRUE
                                     ),
                                     multiple = TRUE
                                 ),
@@ -207,7 +208,7 @@ ui <- dashboardPage(
                                     inputId = "coral_cover_species_color_toggle",
                                     label = "Color by:",
                                     choices = c("Locality", "Year", "Neither"),
-                                    selected = "Neither",
+                                    selected = "Year",
                                     outline = TRUE,
                                     status = "primary",
                                     icon = icon("check")
@@ -219,6 +220,19 @@ ui <- dashboardPage(
                                     min = 5,
                                     max = 15,
                                     step = 1
+                                ),
+                                pickerInput(
+                                    inputId = "coral_cover_species_select_species",
+                                    label = "Species of Interest",
+                                    choices = c("All", coral_species),
+                                    selected = "All",
+                                    multiple = FALSE,
+                                    options = pickerOptions(
+                                        actionsBox = FALSE,
+                                        size = 10,
+                                        selectedTextFormat = "count > 3",
+                                        liveSearch = TRUE
+                                    )
                                 )
                             ),
                             mainPanel(
