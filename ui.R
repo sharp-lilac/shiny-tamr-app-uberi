@@ -164,6 +164,15 @@ ui <- dashboardPage(
                                 switchInput(
                                     inputId = "coral_cover_year_consolidate_year",
                                     label = "Consolidate!"
+                                ),
+                                prettyRadioButtons(
+                                    inputId = "coral_cover_year_xaxis_toggle",
+                                    label = "Select X-Axis:",
+                                    choices = c("Locality", "Year"),
+                                    selected = "Year",
+                                    outline = TRUE,
+                                    status = "primary",
+                                    icon = icon("check")
                                 )
                             ),
                             mainPanel(

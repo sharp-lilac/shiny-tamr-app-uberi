@@ -21,6 +21,9 @@ shinyServer(function(input, output) {
         if (input$coral_cover_year_consolidate_year) {
             data_filtered <- mutate(data_filtered, Year = paste(input$coral_cover_year_choose_year, collapse = ", "))
         }
+        if (input$coral_cover_year_consolidate_locality) {
+            data_filtered <- mutate(data_filtered, Locality = paste(input$coral_cover_year_choose_locality, collapse = ", "))
+        }
         create_coral_cover_year_plot(data_filtered, input, coral_cover_year_plot_caption())
     })
     # Coral cover by species plot
