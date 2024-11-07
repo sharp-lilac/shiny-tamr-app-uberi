@@ -11,6 +11,7 @@ source("theme.R")
 source("data_prepare.R")
 home_text <- paste(readLines("text/home.txt"))
 map_text <- paste(readLines("text/map.txt"))
+link_text <- paste(readLines("text/links.txt"))
 
 # Define ui ---------------------------
 ui <- dashboardPage(
@@ -33,7 +34,15 @@ ui <- dashboardPage(
                 menuSubItem("Fish Biomass", tabName = "page_3-2"),
                 menuSubItem("Fish Observations", tabName = "page_3-3")
             ),
-            menuItem("Map", tabName = "page_4", icon = icon("map"))
+            menuItem("Quick Links",
+                tabName = "page_4", icon = icon("magnifying-glass"),
+                menuSubItem("UB-ERI", href = link_text[1]),
+                menuSubItem("AGRRA", href = link_text[2]),
+                menuSubItem("MBRS SMP", href = link_text[3]),
+                menuSubItem("Dryad", href = link_text[4]),
+                menuSubItem("HRHP", href = link_text[5])
+            ),
+            menuItem("Map", tabName = "page_5", icon = icon("map"))
         )
     ),
     dashboardBody(
@@ -323,7 +332,7 @@ ui <- dashboardPage(
                 )
             ),
             tabItem(
-                tabName = "page_4",
+                tabName = "page_5",
                 h2("Map of Turneffe Atoll Marine Reserve"),
                 fluidRow(column(width = 12, div(style = "height: 20px;"))),
                 fluidRow(
