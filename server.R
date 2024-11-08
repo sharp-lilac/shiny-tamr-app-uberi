@@ -12,6 +12,9 @@ source("caption_functions.R")
 # Define server ---------------------------
 shinyServer(function(input, output) {
     # Coral size by year and locality plot
+    coral_size_plot_caption <- reactive({
+        generate_coral_size_caption(input)
+    })
     output$coral_size_plot <- renderPlot({
         req(input$coral_size_choose_locality)
         req(input$coral_size_choose_year)
@@ -19,21 +22,7 @@ shinyServer(function(input, output) {
         group_name <- input$coral_size_xaxis_toggle
         data_filtered <- df_coral_size %>%
             filter(Locality %in% input$coral_size_choose_locality, Year %in% input$coral_size_choose_year, Genus %in% input$coral_size_choose_genus)
-        ggplot(data_filtered, aes(x = !!sym(group_name), y = Size, fill = Metric)) +
-            geom_boxplot() +
-            theme_classic() +
-            gg_theme +
-            labs(y = "Coral Size (cm)") +
-            scale_fill_manual(
-                name = "Size Metric",
-                values = palette,
-                labels = c(
-                    "Max_Width" = "Max Width",
-                    "Max_Height" = "Max Height",
-                    "Max_Length" = "Max Length"
-                )
-            ) +
-            scale_y_continuous(breaks = seq(0, 500, by = 25), sec.axis = dup_axis(name = ""))
+        create_coral_size_plot(data_filtered, input, coral_size_plot_caption())
     })
     # Coral cover by year plot
     coral_cover_year_plot_caption <- reactive({
