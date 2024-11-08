@@ -59,11 +59,16 @@ create_coral_cover_species_plot <- function(data_filtered, input, caption) {
 
 # Create plot of benthic composition ---------------------------
 create_benthic_comp_plot <- function(data_filtered, input) {
-    ggplot(data_filtered, aes(x = Year, y = Benthic_Cover, fill = Bucket2_Name)) +
+    print(input$benthic_comp_choose_locality)
+    print(input$benthic_comp_choose_year)
+    print(input$benthic_comp_xaxis_toggle)
+    print(names(data_filtered))
+    group_name <- input$benthic_comp_xaxis_toggle
+    ggplot(data_filtered, aes_string(x = group_name, y = "Benthic_Cover", fill = "Bucket2_Name")) +
         geom_col() +
         theme_classic() +
         gg_theme +
         labs(y = "Percent Benthic Cover") +
-        scale_fill_manual(name = "Group", values = palette, guide = guide_legend(nrow = 2)) +
+        scale_fill_manual(name = group_name, values = palette, guide = guide_legend(nrow = 2)) +
         scale_y_continuous(breaks = seq(0, 100, by = 10), sec.axis = dup_axis(name = ""))
 }

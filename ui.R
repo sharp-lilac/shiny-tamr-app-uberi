@@ -284,10 +284,6 @@ ui <- dashboardPage(
                             ),
                             multiple = TRUE
                         ),
-                        switchInput(
-                            inputId = "benthic_comp_consolidate_locality",
-                            label = "Consolidate!"
-                        ),
                         pickerInput(
                             inputId = "benthic_comp_choose_year",
                             label = "Select Year:",
@@ -299,10 +295,6 @@ ui <- dashboardPage(
                                 selectedTextFormat = "count > 3"
                             ),
                             multiple = TRUE
-                        ),
-                        switchInput(
-                            inputId = "benthic_comp_consolidate_year",
-                            label = "Consolidate!"
                         ),
                         prettyRadioButtons(
                             inputId = "benthic_comp_xaxis_toggle",
