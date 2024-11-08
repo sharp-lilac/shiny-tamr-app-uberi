@@ -94,21 +94,60 @@ ui <- dashboardPage(
             tabItem(
                 tabName = "page_1-1",
                 h2("Coral Community Explorer"),
-                tabsetPanel(
-                    tabPanel(
-                        h3("By Year"),
-                        fluidRow(column(width = 12, div(style = "height: 20px;"))),
-                        p("Coral size, depth, functional group by year")
+                fluidRow(column(width = 12, div(style = "height: 20px;"))),
+                sidebarLayout(
+                    sidebarPanel(
+                        width = 2,
+                        pickerInput(
+                            inputId = "coral_size_choose_locality",
+                            label = "Select Localities:",
+                            choices = localities,
+                            selected = localities,
+                            options = pickerOptions(
+                                actionsBox = TRUE,
+                                size = 10,
+                                selectedTextFormat = "count > 3"
+                            ),
+                            multiple = TRUE
+                        ),
+                        pickerInput(
+                            inputId = "coral_size_choose_year",
+                            label = "Select Years:",
+                            choices = years,
+                            selected = years,
+                            options = pickerOptions(
+                                actionsBox = TRUE,
+                                size = 10,
+                                selectedTextFormat = "count > 3"
+                            ),
+                            multiple = TRUE
+                        ),
+                        pickerInput(
+                            inputId = "coral_size_choose_genus",
+                            label = "Select Genera:",
+                            choices = years,
+                            selected = years,
+                            options = pickerOptions(
+                                actionsBox = TRUE,
+                                size = 10,
+                                selectedTextFormat = "count > 3"
+                            ),
+                            multiple = TRUE
+                        ),
+                        prettyRadioButtons(
+                            inputId = "coral_size_xaxis_toggle",
+                            label = "Select X-Axis:",
+                            choices = c("Locality", "Year", "Genus"),
+                            selected = "Year",
+                            outline = TRUE,
+                            status = "primary",
+                            icon = icon("check")
+                        )
                     ),
-                    tabPanel(
-                        h3("By Locality"),
-                        fluidRow(column(width = 12, div(style = "height: 20px;"))),
-                        p("Coral size, depth, functional group by locality")
-                    ),
-                    tabPanel(
-                        h3("By Species"),
-                        fluidRow(column(width = 12, div(style = "height: 20px;"))),
-                        p("Coral size, depth, functional group by species")
+                    mainPanel(
+                        plotOutput(outputId = "coral_size_plot", height = "700px") %>%
+                            withSpinner(type = 8, color = palette[4]),
+                        width = 10
                     )
                 )
             ),
@@ -145,7 +184,7 @@ ui <- dashboardPage(
                                 width = 2,
                                 pickerInput(
                                     inputId = "coral_cover_year_choose_locality",
-                                    label = "Select Locality:",
+                                    label = "Select Localities:",
                                     choices = localities,
                                     selected = localities,
                                     options = pickerOptions(
@@ -161,7 +200,7 @@ ui <- dashboardPage(
                                 ),
                                 pickerInput(
                                     inputId = "coral_cover_year_choose_year",
-                                    label = "Select Year:",
+                                    label = "Select Years:",
                                     choices = years,
                                     selected = years,
                                     options = pickerOptions(
@@ -200,7 +239,7 @@ ui <- dashboardPage(
                                 width = 2,
                                 pickerInput(
                                     inputId = "coral_cover_species_choose_locality",
-                                    label = "Select Locality:",
+                                    label = "Select Localities:",
                                     choices = localities,
                                     selected = localities,
                                     options = pickerOptions(
@@ -212,7 +251,7 @@ ui <- dashboardPage(
                                 ),
                                 pickerInput(
                                     inputId = "coral_cover_species_choose_year",
-                                    label = "Select Year:",
+                                    label = "Select Years:",
                                     choices = years,
                                     selected = years,
                                     options = pickerOptions(
@@ -274,7 +313,7 @@ ui <- dashboardPage(
                         width = 2,
                         pickerInput(
                             inputId = "benthic_comp_choose_locality",
-                            label = "Select Locality:",
+                            label = "Select Localities:",
                             choices = localities,
                             selected = localities,
                             options = pickerOptions(
@@ -286,7 +325,7 @@ ui <- dashboardPage(
                         ),
                         pickerInput(
                             inputId = "benthic_comp_choose_year",
-                            label = "Select Year:",
+                            label = "Select Years:",
                             choices = years,
                             selected = years,
                             options = pickerOptions(

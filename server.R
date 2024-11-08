@@ -81,4 +81,22 @@ shinyServer(function(input, output) {
             ungroup()
         create_benthic_comp_plot(data_filtered, input, benthic_comp_plot_caption())
     })
+    # Coral size by year and locality plot
+    output$coral_size_plot <- renderPlot({
+        ggplot(df_coral_size, aes(x = Year, y = Size, fill = Metric)) +
+            geom_boxplot() +
+            theme_classic() +
+            gg_theme +
+            labs(y = "Coral Size (cm)") +
+            scale_fill_manual(
+                name = "Size Metric",
+                values = palette,
+                labels = c(
+                    "Max_Width" = "Max Width",
+                    "Max_Height" = "Max Height",
+                    "Max_Length" = "Max Length"
+                )
+            ) +
+            scale_y_continuous(breaks = seq(0, 500, by = 25), sec.axis = dup_axis(name = ""))
+    })
 })
