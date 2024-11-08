@@ -37,8 +37,9 @@
 
 /* Custom styles for boxes */
 .section-box {
-    background-color: #c5ebf8;
-    /* Softer teal */
+    background-color:  #7b2d91;
+    color: white;
+    /* Purple */
     padding: 15px;
     border-radius: 8px;
     margin-bottom: 20px;
@@ -47,15 +48,23 @@
 }
 
 .section-box.alternate {
-    background-color: #f1d1c1;
-    /* Softer coral */
+    background-color: #339dff;
+    
+    /* Blue */
     border: 1px solid #000;
     /* Black border */
 }
 
 .section-box.alternate-2 {
-    background-color: #d8e6cf;
-    /* Softer green */
+    background-color: #df9130;
+    /* Softer Orange */
+    border: 1px solid #000;
+    /* Black border */
+}
+
+.section-box.alternate-3 {
+    background-color: #79a600;
+    /* Darker green */
     border: 1px solid #000;
     /* Black border */
 }
