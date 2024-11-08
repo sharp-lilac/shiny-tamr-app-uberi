@@ -3,6 +3,26 @@
 # Load packages ---------------------------
 library(ggplot2)
 
+# Create plot of coral size by year, locality, species ---------------------------
+create_coral_size_plot <- function(data_filtered, input, caption) {
+    group_name <- input$coral_size_xaxis_toggle
+    ggplot(data_filtered, aes(x = !!sym(group_name), y = Size, fill = Metric)) +
+        geom_boxplot() +
+        theme_classic() +
+        gg_theme +
+        labs(caption = caption, y = "Coral Size (cm)") +
+        scale_fill_manual(
+            name = "Size Metric",
+            values = palette,
+            labels = c(
+                "Max_Width" = "Max Width",
+                "Max_Height" = "Max Height",
+                "Max_Length" = "Max Length"
+            )
+        ) +
+        scale_y_continuous(breaks = seq(0, 500, by = 25), sec.axis = dup_axis(name = ""))
+}
+
 # Create plot of coral cover by year ---------------------------
 create_coral_cover_year_plot <- function(data_filtered, input, caption) {
     if (input$coral_cover_year_xaxis_toggle == "Locality") {
