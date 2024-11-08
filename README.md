@@ -7,9 +7,9 @@
 To learn more about the University of Belize Environmental Research Institute, navigate to https://www.uberibz.org/.
 
 ## Authors:
-Jessica C. Boles, Data Scientist, University of Belize Environmental Research Institute
-Justin Brodhurst, Student, University of Belize
-Jake L. Snaddon, Director, University of Belize Environmental Research Institute
+Jessica C. Boles, Data Scientist, University of Belize Environmental Research Institute\
+Justin Brodhurst, Student, University of Belize\
+Jake L. Snaddon, Director, University of Belize Environmental Research Institute\
 
 ## Contributors:
 Turneffe Atoll Sustainability Association
