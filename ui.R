@@ -125,8 +125,8 @@ ui <- dashboardPage(
                         pickerInput(
                             inputId = "coral_size_choose_genus",
                             label = "Select Genera:",
-                            choices = years,
-                            selected = years,
+                            choices = coral_genera,
+                            selected = coral_genera,
                             options = pickerOptions(
                                 actionsBox = TRUE,
                                 size = 10,

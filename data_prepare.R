@@ -38,14 +38,16 @@ df_benthic_percents_coral <- df_benthic_percents %>%
     summarize(Percent_Coral = sum(Percent[AGRRA_Bucket == "Coral"], na.rm = TRUE))
 df_coral_size <- df_master_coral_clean %>%
     select(Year, Locality, Organism, Genus, Org_Name, Max_Length, Max_Width, Max_Height) %>%
+    filter(!is.na(Genus), ) %>%
     pivot_longer(cols = c(Max_Length, Max_Width, Max_Height), names_to = "Metric", values_to = "Size")
 
 # Prepare key vectors ---------------------------
 sites <- unique(df_master_benthic_clean$Site)
-localities <- unique(df_master_benthic_clean$Locality)
+localities <- sort(unique(df_master_benthic_clean$Locality))
 years <- unique(df_master_benthic_clean$Year)
 coral_species <- df_master_benthic_clean %>%
     filter(!is.na(Species) & !is.na(Organism)) %>%
     select(Species) %>%
     distinct() %>%
     arrange(Species)
+coral_genera <- sort(unique(df_coral_size$Genus))
