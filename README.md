@@ -8,12 +8,13 @@ To learn more about the University of Belize Environmental Research Institute, n
 
 ## Authors:
 Jessica C. Boles, Data Scientist, University of Belize Environmental Research Institute
+Justin Brodhurst, Student, University of Belize
 Jake L. Snaddon, Director, University of Belize Environmental Research Institute
 
 ## Contributors:
-Justin Brodhurst, Student, University of Belize
+Turneffe Atoll Sustainability Association
 
 ## Citation:
-J. Boles., J. Snaddon (2024). shiny-tamr-app-uberi. GitHub. 
+J. Boles., J.Brodhurst, J. Snaddon (2024). shiny-tamr-app-uberi. GitHub. 
 
 Please include date accessed in citation.
