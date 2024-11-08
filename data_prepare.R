@@ -57,7 +57,7 @@ df_benthic_percents <- df_master_benthic_clean %>%
     group_by(Uniq_Transect) %>%
     summarise(Total_Points = n()) %>%
     right_join(df_master_benthic_clean, by = "Uniq_Transect") %>%
-    group_by(Year, Locality, Site, Uniq_Transect, Org_Name, Species, Organism, AGRRA_Bucket) %>%
+    group_by(Year, Locality, Site, Uniq_Transect, Org_Name, Species, Organism, AGRRA_Bucket, Bucket2_Name) %>%
     summarise(Count = n(), Total_Points = first(Total_Points)) %>%
     mutate(Percent = (Count / Total_Points) * 100)
 df_benthic_percents_coral <- df_benthic_percents %>%

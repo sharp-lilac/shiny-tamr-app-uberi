@@ -35,12 +35,13 @@ ui <- dashboardPage(
                 menuSubItem("Fish Observations", tabName = "page_3-3")
             ),
             menuItem("Quick Links",
-                tabName = "page_4", icon = icon("magnifying-glass"),
+                tabName = "page_4", icon = icon("location-arrow"),
                 menuSubItem("UB-ERI Website", href = link_text[1]),
                 menuSubItem("AGRRA Website", href = link_text[2]),
                 menuSubItem("HRHP Website", href = link_text[5]),
                 menuSubItem("MBRS SMP Methods", href = link_text[3]),
-                menuSubItem("Dryad Data", href = link_text[4])
+                menuSubItem("Dryad Data", href = link_text[4]),
+                menuSubItem("GitHub Repository", href = link_text[6])
             ),
             menuItem("Map", tabName = "page_5", icon = icon("map"))
         )
@@ -267,6 +268,59 @@ ui <- dashboardPage(
             tabItem(
                 tabName = "page_2",
                 h2("Benthic Composition Explorer"),
+                fluidRow(column(width = 12, div(style = "height: 20px;"))),
+                sidebarLayout(
+                    sidebarPanel(
+                        width = 2,
+                        pickerInput(
+                            inputId = "benthic_comp_choose_locality",
+                            label = "Select Locality:",
+                            choices = localities,
+                            selected = localities,
+                            options = pickerOptions(
+                                actionsBox = TRUE,
+                                size = 10,
+                                selectedTextFormat = "count > 3"
+                            ),
+                            multiple = TRUE
+                        ),
+                        pickerInput(
+                            inputId = "benthic_comp_choose_year",
+                            label = "Select Year:",
+                            choices = years,
+                            selected = years,
+                            options = pickerOptions(
+                                actionsBox = TRUE,
+                                size = 10,
+                                selectedTextFormat = "count > 3"
+                            ),
+                            multiple = TRUE
+                        ),
+                        prettyRadioButtons(
+                            inputId = "benthic_comp_xaxis_toggle",
+                            label = "Select X-Axis:",
+                            choices = c("Locality", "Year"),
+                            selected = "Year",
+                            outline = TRUE,
+                            status = "primary",
+                            icon = icon("check")
+                        ),
+                        prettyRadioButtons(
+                            inputId = "benthic_comp_cat_toggle",
+                            label = "Select Benthic Categories:",
+                            choices = c("Default" = "Bucket2_Name", "AGRRA Categories" = "AGRRA_Bucket"),
+                            selected = "Bucket2_Name",
+                            outline = TRUE,
+                            status = "primary",
+                            icon = icon("check")
+                        )
+                    ),
+                    mainPanel(
+                        plotOutput(outputId = "benthic_comp_plot", height = "700px") %>%
+                            withSpinner(type = 8, color = palette[4]),
+                        width = 10
+                    )
+                )
             ),
             tabItem(
                 tabName = "page_3-1",
