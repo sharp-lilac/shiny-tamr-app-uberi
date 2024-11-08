@@ -9,7 +9,7 @@ To learn more about the University of Belize Environmental Research Institute, n
 ## Authors:
 Jessica C. Boles, Data Scientist, University of Belize Environmental Research Institute\
 Justin Brodhurst, Student, University of Belize\
-Jake L. Snaddon, Director, University of Belize Environmental Research Institute\
+Jake L. Snaddon, Director, University of Belize Environmental Research Institute
 
 ## Contributors:
 Turneffe Atoll Sustainability Association
