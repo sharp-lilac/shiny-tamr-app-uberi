@@ -55,22 +55,26 @@ shinyServer(function(input, output) {
             DT::datatable(options = list(pageLength = 10, autoWidth = TRUE))
     })
     # Benthic composition plot
+    benthic_comp_plot_caption <- reactive({
+        generate_benthic_comp_caption(input)
+    })
     output$benthic_comp_plot <- renderPlot({
         req(input$benthic_comp_choose_locality)
         req(input$benthic_comp_choose_year)
+        group_name <- input$benthic_comp_xaxis_toggle
+        cat_name <- input$benthic_comp_cat_toggle
         df_benthic_percents_filtered <- df_benthic_percents %>%
             filter(Locality %in% input$benthic_comp_choose_locality, Year %in% input$benthic_comp_choose_year)
-        group_name <- input$benthic_comp_xaxis_toggle
         data_filtered <- df_benthic_percents_filtered %>%
             group_by(across(all_of(group_name))) %>%
             summarize(Group_Count = sum(Count)) %>%
             right_join(df_benthic_percents_filtered, by = group_name) %>%
-            group_by(across(all_of(group_name)), Bucket2_Name) %>%
+            group_by(across(all_of(group_name)), !!sym(cat_name)) %>%
             summarize(
                 Group_Organism_Count = sum(Count),
                 Benthic_Cover = Group_Organism_Count / unique(Group_Count) * 100
             ) %>%
             ungroup()
-        create_benthic_comp_plot(data_filtered, input)
+        create_benthic_comp_plot(data_filtered, input, benthic_comp_plot_caption())
     })
 })

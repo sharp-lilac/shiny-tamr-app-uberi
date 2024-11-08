@@ -27,7 +27,7 @@ create_coral_cover_year_plot <- function(data_filtered, input, caption) {
         base_plot +
             aes(fill = group_var) +
             stat_summary(aes(fill = group_var), fun = mean, geom = "point", shape = 23, size = 3, position = position_dodge(width = 0.75)) +
-            scale_fill_manual(name = group_name, values = palette, guide = guide_legend(nrow = 2))
+            scale_fill_manual(name = group_name, values = palette)
     }
 }
 
@@ -46,29 +46,26 @@ create_coral_cover_species_plot <- function(data_filtered, input, caption) {
         base_plot +
             aes(fill = Locality) +
             stat_summary(aes(fill = Locality), fun = mean, geom = "point", shape = 23, size = 3, position = position_dodge(width = 0.75)) +
-            scale_fill_manual(name = "Locality", values = palette, guide = guide_legend(nrow = 2)) +
+            scale_fill_manual(name = "Locality", values = palette) +
             scale_color_manual(values = palette)
     } else {
         base_plot +
             aes(fill = Year) +
             stat_summary(aes(fill = Year), fun = mean, geom = "point", shape = 23, size = 3, position = position_dodge(width = 0.75)) +
-            scale_fill_manual(name = "Year", values = palette, guide = guide_legend(nrow = 2)) +
+            scale_fill_manual(name = "Year", values = palette) +
             scale_color_manual(values = palette)
     }
 }
 
 # Create plot of benthic composition ---------------------------
-create_benthic_comp_plot <- function(data_filtered, input) {
-    print(input$benthic_comp_choose_locality)
-    print(input$benthic_comp_choose_year)
-    print(input$benthic_comp_xaxis_toggle)
-    print(names(data_filtered))
+create_benthic_comp_plot <- function(data_filtered, input, caption) {
     group_name <- input$benthic_comp_xaxis_toggle
-    ggplot(data_filtered, aes_string(x = group_name, y = "Benthic_Cover", fill = "Bucket2_Name")) +
+    cat_name <- input$benthic_comp_cat_toggle
+    ggplot(data_filtered, aes(x = !!sym(group_name), y = Benthic_Cover, fill = !!sym(cat_name))) +
         geom_col() +
         theme_classic() +
         gg_theme +
-        labs(y = "Percent Benthic Cover") +
-        scale_fill_manual(name = group_name, values = palette, guide = guide_legend(nrow = 2)) +
+        labs(y = "Percent Benthic Cover", caption = caption) +
+        scale_fill_manual(name = group_name, values = palette) +
         scale_y_continuous(breaks = seq(0, 100, by = 10), sec.axis = dup_axis(name = ""))
 }

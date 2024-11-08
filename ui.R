@@ -304,6 +304,15 @@ ui <- dashboardPage(
                             outline = TRUE,
                             status = "primary",
                             icon = icon("check")
+                        ),
+                        prettyRadioButtons(
+                            inputId = "benthic_comp_cat_toggle",
+                            label = "Select Benthic Categories:",
+                            choices = c("Default" = "Bucket2_Name", "AGRRA Categories" = "AGRRA_Bucket"),
+                            selected = "Bucket2_Name",
+                            outline = TRUE,
+                            status = "primary",
+                            icon = icon("check")
                         )
                     ),
                     mainPanel(
