@@ -56,3 +56,14 @@ create_coral_cover_species_plot <- function(data_filtered, input, caption) {
             scale_color_manual(values = palette)
     }
 }
+
+# Create plot of benthic composition ---------------------------
+create_benthic_comp_plot <- function(data_filtered, input) {
+    ggplot(data_filtered, aes(x = Year, y = Benthic_Cover, fill = Bucket2_Name)) +
+        geom_col() +
+        theme_classic() +
+        gg_theme +
+        labs(y = "Percent Benthic Cover") +
+        scale_fill_manual(name = "Group", values = palette, guide = guide_legend(nrow = 2)) +
+        scale_y_continuous(breaks = seq(0, 100, by = 10), sec.axis = dup_axis(name = ""))
+}

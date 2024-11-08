@@ -56,20 +56,20 @@ shinyServer(function(input, output) {
     })
     # Benthic composition plot
     output$benthic_comp_plot <- renderPlot({
+        req(input$benthic_comp_choose_locality)
+        req(input$benthic_comp_choose_year)
         df_benthic_percents_filtered <- df_benthic_percents %>%
+            filter(Locality %in% input$benthic_comp_choose_locality, Year %in% input$benthic_comp_choose_year)
+        data_filtered <- df_benthic_percents_filtered %>%
             group_by(Year) %>%
             summarize(Year_Count = sum(Count)) %>%
-            right_join(df_benthic_percents, by = "Year") %>%
+            right_join(df_benthic_percents_filtered, by = "Year") %>%
             group_by(Year, Bucket2_Name) %>%
             summarize(
                 Year_Organism_Count = sum(Count),
                 Benthic_Cover = Year_Organism_Count / unique(Year_Count) * 100
             ) %>%
             ungroup()
-        ggplot(df_benthic_percents_filtered, aes(x = Year, y = Benthic_Cover, fill = Bucket2_Name)) +
-            geom_col() +
-            theme_classic() +
-            gg_theme +
-            scale_fill_manual(name = "Group", values = palette, guide = guide_legend(nrow = 2))
+        create_benthic_comp_plot(data_filtered, input)
     })
 })
