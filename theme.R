@@ -26,7 +26,7 @@ gg_theme <- theme(
     legend.key.height = unit(1, "cm"),
     legend.key.width = unit(1, "cm"),
     legend.margin = margin(t = 20, b = 60),
-    panel.background = element_rect(fill = "#f5f5f5ff", color = "#e8eaecff", size = 2),
+    panel.background = element_rect(fill = "#f5f5f5ff", color = "#e8eaecff", linewidth = 2),
     plot.background = element_rect(fill = "#ecf0f5ff", color = NA),
     legend.background = element_rect(fill = "#ecf0f5ff", color = NA),
     legend.box.background = element_rect(fill = "#ecf0f5ff", color = NA),
