@@ -145,7 +145,7 @@ ui <- dashboardPage(
                         )
                     ),
                     mainPanel(
-                        plotOutput(outputId = "coral_health_plot", height = "1000px") %>%
+                        plotOutput(outputId = "coral_health_plot", height = "1200px") %>%
                             withSpinner(type = 8, color = palette[4]),
                         width = 10
                     )
