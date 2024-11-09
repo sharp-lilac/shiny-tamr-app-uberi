@@ -2,6 +2,7 @@
 
 # Load packages ---------------------------
 library(ggplot2)
+library(ggpubr)
 
 # Create plot of coral size by year, locality, species ---------------------------
 create_coral_size_plot <- function(data_filtered, input, caption) {

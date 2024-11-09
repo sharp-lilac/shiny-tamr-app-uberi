@@ -135,8 +135,8 @@ ui <- dashboardPage(
                             multiple = TRUE
                         ),
                         prettyRadioButtons(
-                            inputId = "coral_health_xaxis_toggle",
-                            label = "Select X-Axis:",
+                            inputId = "coral_health_group_toggle",
+                            label = "Select Group:",
                             choices = c("Locality", "Year", "Genus"),
                             selected = "Year",
                             outline = TRUE,
@@ -145,7 +145,7 @@ ui <- dashboardPage(
                         )
                     ),
                     mainPanel(
-                        plotOutput(outputId = "coral_health_plot", height = "700px") %>%
+                        plotOutput(outputId = "coral_health_plot", height = "1000px") %>%
                             withSpinner(type = 8, color = palette[4]),
                         width = 10
                     )
