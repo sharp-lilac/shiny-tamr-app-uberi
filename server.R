@@ -11,7 +11,11 @@ source("caption_functions.R")
 
 # Define server ---------------------------
 shinyServer(function(input, output) {
-    # Coral size by year and locality plot
+    # Coral health by year, locality, genus plot
+    output$coral_health_plot <- renderPlot({
+        ggplot()
+    })
+    # Coral size by year, locality, genus plot
     coral_size_plot_caption <- reactive({
         generate_coral_size_caption(input)
     })

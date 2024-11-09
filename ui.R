@@ -21,8 +21,8 @@ ui <- dashboardPage(
             menuItem("Home", tabName = "home", icon = icon("home")),
             menuItem("Explore Coral",
                 tabName = "page_1", icon = icon("magnifying-glass"),
-                menuSubItem("Coral Community", tabName = "page_1-1"),
                 menuSubItem("Coral Health", tabName = "page_1-2"),
+                menuSubItem("Coral Size", tabName = "page_1-1"),
                 menuSubItem("Coral Cover", tabName = "page_1-3")
             ),
             menuItem("Explore Benthos",
@@ -92,8 +92,68 @@ ui <- dashboardPage(
                 )
             ),
             tabItem(
+                tabName = "page_1-2",
+                h2("Coral Health Explorer"),
+                fluidRow(column(width = 12, div(style = "height: 20px;"))),
+                sidebarLayout(
+                    sidebarPanel(
+                        width = 2,
+                        pickerInput(
+                            inputId = "coral_health_choose_locality",
+                            label = "Select Localities:",
+                            choices = localities,
+                            selected = localities,
+                            options = pickerOptions(
+                                actionsBox = TRUE,
+                                size = 10,
+                                selectedTextFormat = "count > 3"
+                            ),
+                            multiple = TRUE
+                        ),
+                        pickerInput(
+                            inputId = "coral_health_choose_year",
+                            label = "Select Years:",
+                            choices = years,
+                            selected = years,
+                            options = pickerOptions(
+                                actionsBox = TRUE,
+                                size = 10,
+                                selectedTextFormat = "count > 3"
+                            ),
+                            multiple = TRUE
+                        ),
+                        pickerInput(
+                            inputId = "coral_health_choose_genus",
+                            label = "Select Genera:",
+                            choices = coral_genera,
+                            selected = coral_genera,
+                            options = pickerOptions(
+                                actionsBox = TRUE,
+                                size = 10,
+                                selectedTextFormat = "count > 3"
+                            ),
+                            multiple = TRUE
+                        ),
+                        prettyRadioButtons(
+                            inputId = "coral_health_xaxis_toggle",
+                            label = "Select X-Axis:",
+                            choices = c("Locality", "Year", "Genus"),
+                            selected = "Year",
+                            outline = TRUE,
+                            status = "primary",
+                            icon = icon("check")
+                        )
+                    ),
+                    mainPanel(
+                        plotOutput(outputId = "coral_health_plot", height = "700px") %>%
+                            withSpinner(type = 8, color = palette[4]),
+                        width = 10
+                    )
+                )
+            ),
+            tabItem(
                 tabName = "page_1-1",
-                h2("Coral Community Explorer"),
+                h2("Coral Size Explorer"),
                 fluidRow(column(width = 12, div(style = "height: 20px;"))),
                 sidebarLayout(
                     sidebarPanel(
@@ -148,27 +208,6 @@ ui <- dashboardPage(
                         plotOutput(outputId = "coral_size_plot", height = "700px") %>%
                             withSpinner(type = 8, color = palette[4]),
                         width = 10
-                    )
-                )
-            ),
-            tabItem(
-                tabName = "page_1-2",
-                h2("Coral Health Explorer"),
-                tabsetPanel(
-                    tabPanel(
-                        h3("By Year"),
-                        fluidRow(column(width = 12, div(style = "height: 20px;"))),
-                        p("Bleaching and disease by year")
-                    ),
-                    tabPanel(
-                        h3("By Locality"),
-                        fluidRow(column(width = 12, div(style = "height: 20px;"))),
-                        p("Bleaching and disease by locality")
-                    ),
-                    tabPanel(
-                        h3("By Species"),
-                        fluidRow(column(width = 12, div(style = "height: 20px;"))),
-                        p("Bleaching and disease by species")
                     )
                 )
             ),
