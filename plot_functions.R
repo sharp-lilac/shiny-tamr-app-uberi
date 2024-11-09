@@ -3,6 +3,26 @@
 # Load packages ---------------------------
 library(ggplot2)
 
+# Create plot of coral size by year, locality, species ---------------------------
+create_coral_size_plot <- function(data_filtered, input, caption) {
+    group_name <- input$coral_size_xaxis_toggle
+    ggplot(data_filtered, aes(x = !!sym(group_name), y = Size, fill = Metric)) +
+        geom_boxplot() +
+        theme_classic() +
+        gg_theme +
+        labs(caption = caption, y = "Coral Size (cm)") +
+        scale_fill_manual(
+            name = "Size Metric",
+            values = palette,
+            labels = c(
+                "Max_Width" = "Max Width",
+                "Max_Height" = "Max Height",
+                "Max_Length" = "Max Length"
+            )
+        ) +
+        scale_y_continuous(breaks = seq(0, 500, by = 25), sec.axis = dup_axis(name = ""))
+}
+
 # Create plot of coral cover by year ---------------------------
 create_coral_cover_year_plot <- function(data_filtered, input, caption) {
     if (input$coral_cover_year_xaxis_toggle == "Locality") {
@@ -27,7 +47,7 @@ create_coral_cover_year_plot <- function(data_filtered, input, caption) {
         base_plot +
             aes(fill = group_var) +
             stat_summary(aes(fill = group_var), fun = mean, geom = "point", shape = 23, size = 3, position = position_dodge(width = 0.75)) +
-            scale_fill_manual(name = group_name, values = palette, guide = guide_legend(nrow = 2))
+            scale_fill_manual(name = group_name, values = palette)
     }
 }
 
@@ -46,13 +66,26 @@ create_coral_cover_species_plot <- function(data_filtered, input, caption) {
         base_plot +
             aes(fill = Locality) +
             stat_summary(aes(fill = Locality), fun = mean, geom = "point", shape = 23, size = 3, position = position_dodge(width = 0.75)) +
-            scale_fill_manual(name = "Locality", values = palette, guide = guide_legend(nrow = 2)) +
+            scale_fill_manual(name = "Locality", values = palette) +
             scale_color_manual(values = palette)
     } else {
         base_plot +
             aes(fill = Year) +
             stat_summary(aes(fill = Year), fun = mean, geom = "point", shape = 23, size = 3, position = position_dodge(width = 0.75)) +
-            scale_fill_manual(name = "Year", values = palette, guide = guide_legend(nrow = 2)) +
+            scale_fill_manual(name = "Year", values = palette) +
             scale_color_manual(values = palette)
     }
+}
+
+# Create plot of benthic composition ---------------------------
+create_benthic_comp_plot <- function(data_filtered, input, caption) {
+    group_name <- input$benthic_comp_xaxis_toggle
+    cat_name <- input$benthic_comp_cat_toggle
+    ggplot(data_filtered, aes(x = !!sym(group_name), y = Benthic_Cover, fill = !!sym(cat_name))) +
+        geom_col() +
+        theme_classic() +
+        gg_theme +
+        labs(y = "Percent Benthic Cover", caption = caption) +
+        scale_fill_manual(name = group_name, values = palette) +
+        scale_y_continuous(breaks = seq(0, 100, by = 10), sec.axis = dup_axis(name = ""))
 }

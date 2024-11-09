@@ -11,6 +11,19 @@ source("caption_functions.R")
 
 # Define server ---------------------------
 shinyServer(function(input, output) {
+    # Coral size by year and locality plot
+    coral_size_plot_caption <- reactive({
+        generate_coral_size_caption(input)
+    })
+    output$coral_size_plot <- renderPlot({
+        req(input$coral_size_choose_locality)
+        req(input$coral_size_choose_year)
+        req(input$coral_size_choose_genus)
+        group_name <- input$coral_size_xaxis_toggle
+        data_filtered <- df_coral_size %>%
+            filter(Locality %in% input$coral_size_choose_locality, Year %in% input$coral_size_choose_year, Genus %in% input$coral_size_choose_genus)
+        create_coral_size_plot(data_filtered, input, coral_size_plot_caption())
+    })
     # Coral cover by year plot
     coral_cover_year_plot_caption <- reactive({
         generate_coral_cover_year_caption(input)
@@ -58,6 +71,7 @@ shinyServer(function(input, output) {
             select(Organism, Genus, Species) %>%
             DT::datatable(options = list(pageLength = 10, autoWidth = TRUE))
     })
+    # Download map
     output$download_map <- downloadHandler(
         filename = function() {
             "Turneffe_Map.jpg"
@@ -66,4 +80,27 @@ shinyServer(function(input, output) {
             file.copy("www/images/Turneffe_Map.jpg", file)
         }
     )
+    # Benthic composition plot
+    benthic_comp_plot_caption <- reactive({
+        generate_benthic_comp_caption(input)
+    })
+    output$benthic_comp_plot <- renderPlot({
+        req(input$benthic_comp_choose_locality)
+        req(input$benthic_comp_choose_year)
+        group_name <- input$benthic_comp_xaxis_toggle
+        cat_name <- input$benthic_comp_cat_toggle
+        df_benthic_percents_filtered <- df_benthic_percents %>%
+            filter(Locality %in% input$benthic_comp_choose_locality, Year %in% input$benthic_comp_choose_year)
+        data_filtered <- df_benthic_percents_filtered %>%
+            group_by(across(all_of(group_name))) %>%
+            summarize(Group_Count = sum(Count)) %>%
+            right_join(df_benthic_percents_filtered, by = group_name) %>%
+            group_by(across(all_of(group_name)), !!sym(cat_name)) %>%
+            summarize(
+                Group_Organism_Count = sum(Count),
+                Benthic_Cover = Group_Organism_Count / unique(Group_Count) * 100
+            ) %>%
+            ungroup()
+        create_benthic_comp_plot(data_filtered, input, benthic_comp_plot_caption())
+    })
 })

@@ -15,7 +15,7 @@ dash_theme <- create_theme(
 gg_theme <- theme(
     legend.position = "bottom",
     legend.box = "horizontal",
-    axis.text.x = element_text(face = "bold", angle = 0, vjust = 1, hjust = 0.5, size = 14),
+    axis.text.x = element_text(face = "bold", angle = 45, vjust = 1, hjust = 1, size = 14),
     axis.text.y = element_text(face = "bold", size = 14),
     axis.title.x = element_text(size = 20, margin = margin(30, 0, 0, 0)),
     axis.title.y = element_text(size = 20, margin = margin(0, 30, 0, 0)),
@@ -26,7 +26,7 @@ gg_theme <- theme(
     legend.key.height = unit(1, "cm"),
     legend.key.width = unit(1, "cm"),
     legend.margin = margin(t = 20, b = 60),
-    panel.background = element_rect(fill = "#f5f5f5ff", color = "#e8eaecff", size = 2),
+    panel.background = element_rect(fill = "#f5f5f5ff", color = "#e8eaecff", linewidth = 2),
     plot.background = element_rect(fill = "#ecf0f5ff", color = NA),
     legend.background = element_rect(fill = "#ecf0f5ff", color = NA),
     legend.box.background = element_rect(fill = "#ecf0f5ff", color = NA),
