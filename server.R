@@ -58,7 +58,7 @@ shinyServer(function(input, output) {
             select(Organism, Genus, Species) %>%
             DT::datatable(options = list(pageLength = 10, autoWidth = TRUE))
     })
-    output$downloadMap <- downloadHandler(
+    output$download_map <- downloadHandler(
         filename = function() {
             "Turneffe_Map.jpg"
         },

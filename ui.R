@@ -346,7 +346,7 @@ ui <- dashboardPage(
                 ),
                 div(style = "width: 33%; float:left;", img(src = "images/Turneffe_Map.jpg", width = "100%", height = "50%")),
                 fluidRow(column(width = 12, div(style = "height: 20px;"))),
-                downloadButton("downloadMap", "Download"),
+                downloadButton("download_map", "Download"),
                 fluidRow(column(width = 12, div(style = "height: 20px;"))),
                 fluidRow(
                     column(
