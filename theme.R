@@ -30,16 +30,16 @@ gg_theme <- theme(
     plot.background = element_rect(fill = "#ecf0f5ff", color = NA),
     legend.background = element_rect(fill = "#ecf0f5ff", color = NA),
     legend.box.background = element_rect(fill = "#ecf0f5ff", color = NA),
-    plot.caption = element_text(hjust = 0, size = 14, margin = margin(t = 20)),
+    plot.caption = element_text(hjust = 0, size = 14, margin = margin(t = 10)),
     panel.grid.major.y = element_line(color = "grey85", size = 0.5)
 )
 
 # Define color palette ---------------------------
 palette <- c(
-    "#5E81AC", "#A3BE8C", "#88C0D0", "#B48EAD", "#4C566A", "#b69efa",
-    "#5aacf8", "#e7a042", "#b4d368", "#00989eff", "#CC79A7", "#7E3793",
-    "#33A02C", "#FB9A99", "#ecec7f", "#b6107f", "#9933FF", "#999933",
-    "#FFCCFF", "#336600", "#999999", "#990000", "#f5f5f5ff", "#6be2a7",
+    "#5a7494", "#b4c781", "#88C0D0", "#B48EAD", "#4C566A", "#b69efa",
+    "#ce4fa4", "#e7a042", "#FB9A99", "#0d8086", "#79cc92", "#7E3793",
+    "#33A02C", "#c35e68", "#eaea9a", "#9933FF", "#999933",
+    "#FFCCFF", "#336600", "#999999", "#990000", "#f5f5f5ff",
     "#E22828", "coral", "#eeeec2", "violet", "#a5652a", "#d6fdfd",
     "#fcfc00", "#b69efa", "#ffecc8", "#3b3ba5"
 )

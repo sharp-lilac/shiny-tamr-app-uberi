@@ -2,6 +2,31 @@
 
 # Load packages ---------------------------
 library(ggplot2)
+library(ggpubr)
+
+# Create plot of coral health by year, locality, species ---------------------------
+create_coral_health_plot <- function(data_filtered, input, caption) {
+    group_name <- input$coral_health_group_toggle
+    plot1 <- ggplot(data_filtered, aes(x = !!sym(group_name), y = Dead, fill = !!sym(group_name))) +
+        geom_boxplot(color = "black", position = position_dodge(width = 0.75), outlier.shape = 4, outlier.size = 4) +
+        theme_classic() +
+        gg_theme +
+        theme(legend.position = "none") +
+        labs(y = "Percent of the Coral Structure Dead") +
+        stat_summary(fun = mean, geom = "point", shape = 23, size = 3, position = position_dodge(width = 0.75)) +
+        scale_y_continuous(breaks = seq(0, 100, by = 10), sec.axis = dup_axis(name = "")) +
+        ylim(min = 0, max = 100) +
+        scale_fill_manual(values = palette)
+    plot2 <- ggplot(data_filtered, aes(x = Dead)) +
+        geom_density(aes(color = !!sym(group_name)), size = 1) +
+        theme_classic() +
+        gg_theme +
+        labs(caption = caption, y = "Proportion of Observations", x = "Percent of the Coral Structure Dead") +
+        scale_x_continuous(breaks = seq(0, 100, by = 10)) +
+        xlim(min = 0, max = 100) +
+        scale_color_manual(values = palette)
+    ggarrange(plot1, plot2, nrow = 2, heights = c(0.75, 1))
+}
 
 # Create plot of coral size by year, locality, species ---------------------------
 create_coral_size_plot <- function(data_filtered, input, caption) {

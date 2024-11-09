@@ -15,6 +15,11 @@ df_master_benthic_clean <- df_master_benthic %>%
 df_master_coral_clean <- df_master_coral %>%
     mutate(
         Year = as.factor(Year),
+        OD = as.numeric(OD),
+        TD = as.numeric(TD),
+        RD = as.numeric(RD),
+        Percent_Pale = as.numeric(Percent_Pale),
+        Percent_Bleach = as.numeric(Percent_Bleach),
         Max_Diam = as.numeric(Max_Diam),
         Max_Length = as.numeric(Max_Length),
         Max_Length = case_when(!is.na(Max_Diam) ~ Max_Diam, TRUE ~ Max_Length),
@@ -38,8 +43,11 @@ df_benthic_percents_coral <- df_benthic_percents %>%
     summarize(Percent_Coral = sum(Percent[AGRRA_Bucket == "Coral"], na.rm = TRUE))
 df_coral_size <- df_master_coral_clean %>%
     select(Year, Locality, Organism, Genus, Org_Name, Max_Length, Max_Width, Max_Height) %>%
-    filter(!is.na(Genus), ) %>%
+    filter(!is.na(Genus)) %>%
     pivot_longer(cols = c(Max_Length, Max_Width, Max_Height), names_to = "Metric", values_to = "Size")
+df_coral_health <- df_master_coral_clean %>%
+    select(Year, Locality, Organism, Genus, Org_Name, OD, TD, RD) %>%
+    mutate(Dead = case_when(is.na(TD) ~ OD + RD, TRUE ~ OD + TD + RD))
 
 # Prepare key vectors ---------------------------
 sites <- unique(df_master_benthic_clean$Site)
