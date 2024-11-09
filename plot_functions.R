@@ -7,7 +7,7 @@ library(ggplot2)
 create_coral_size_plot <- function(data_filtered, input, caption) {
     group_name <- input$coral_size_xaxis_toggle
     ggplot(data_filtered, aes(x = !!sym(group_name), y = Size, fill = Metric)) +
-        geom_boxplot() +
+        geom_boxplot(color = "black", position = position_dodge(width = 0.75), outlier.shape = 4, outlier.size = 4) +
         theme_classic() +
         gg_theme +
         labs(caption = caption, y = "Coral Size (cm)") +
@@ -20,6 +20,7 @@ create_coral_size_plot <- function(data_filtered, input, caption) {
                 "Max_Length" = "Max Length"
             )
         ) +
+        stat_summary(aes(fill = Metric), fun = mean, geom = "point", shape = 23, size = 3, position = position_dodge(width = 0.75)) +
         scale_y_continuous(breaks = seq(0, 500, by = 25), sec.axis = dup_axis(name = ""))
 }
 
