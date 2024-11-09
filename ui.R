@@ -439,7 +439,7 @@ ui <- dashboardPage(
                 ),
                 div(style = "width: 33%; float:left;", img(src = "images/Turneffe_Map.jpg", width = "100%", height = "50%")),
                 fluidRow(column(width = 12, div(style = "height: 20px;"))),
-                downloadButton("download_map", "Download"),
+                downloadButton("download_map", "Download Map"),
                 fluidRow(column(width = 12, div(style = "height: 20px;"))),
                 fluidRow(
                     column(
