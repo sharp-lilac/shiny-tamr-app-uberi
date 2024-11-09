@@ -4,6 +4,27 @@
 library(ggplot2)
 library(ggpubr)
 
+# Create plot of coral health by year, locality, species ---------------------------
+create_coral_health_plot <- function(data_filtered, input) {
+    plot1 <- ggplot(df_coral_health, aes(x = Year, y = Dead)) +
+        geom_boxplot(color = "black", position = position_dodge(width = 0.75), outlier.shape = 4, outlier.size = 4) +
+        theme_classic() +
+        gg_theme +
+        labs(y = "Percent of the Coral Structure Dead") +
+        stat_summary(fun = mean, geom = "point", shape = 23, size = 3, position = position_dodge(width = 0.75)) +
+        scale_y_continuous(breaks = seq(0, 100, by = 10), sec.axis = dup_axis(name = "")) +
+        ylim(min = 0, max = 100)
+    plot2 <- ggplot(df_coral_health, aes(x = Dead)) +
+        geom_density(aes(color = Year), size = 1) +
+        theme_classic() +
+        gg_theme +
+        labs(y = "Proportion of Observations", x = "Percent of the Coral Structure Dead") +
+        scale_x_continuous(breaks = seq(0, 100, by = 10)) +
+        xlim(min = 0, max = 100) +
+        scale_color_manual(values = palette)
+    ggarrange(plot1, plot2, nrow = 2)
+}
+
 # Create plot of coral size by year, locality, species ---------------------------
 create_coral_size_plot <- function(data_filtered, input, caption) {
     group_name <- input$coral_size_xaxis_toggle

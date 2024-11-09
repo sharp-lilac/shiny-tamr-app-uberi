@@ -13,23 +13,8 @@ source("caption_functions.R")
 shinyServer(function(input, output) {
     # Coral health by year, locality, genus plot
     output$coral_health_plot <- renderPlot({
-        plot1 <- ggplot(df_coral_health, aes(x = Year, y = Dead)) +
-            geom_boxplot(color = "black", position = position_dodge(width = 0.75), outlier.shape = 4, outlier.size = 4) +
-            theme_classic() +
-            gg_theme +
-            labs(y = "Percent of the Coral Structure Dead") +
-            stat_summary(fun = mean, geom = "point", shape = 23, size = 3, position = position_dodge(width = 0.75)) +
-            scale_y_continuous(breaks = seq(0, 100, by = 10), sec.axis = dup_axis(name = "")) +
-            ylim(min = 0, max = 100)
-        plot2 <- ggplot(df_coral_health, aes(x = Dead)) +
-            geom_density(aes(color = Year), size = 1) +
-            theme_classic() +
-            gg_theme +
-            labs(y = "Proportion of Observations", x = "Percent of the Coral Structure Dead") +
-            scale_x_continuous(breaks = seq(0, 100, by = 10)) +
-            xlim(min = 0, max = 100) +
-            scale_color_manual(values = palette)
-        ggarrange(plot1, plot2, nrow = 2)
+        data_filtered <- df_coral_health
+        create_coral_health_plot(data_filtered, input)
     })
     # Coral size by year, locality, genus plot
     coral_size_plot_caption <- reactive({
