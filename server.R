@@ -71,6 +71,15 @@ shinyServer(function(input, output) {
             select(Organism, Genus, Species) %>%
             DT::datatable(options = list(pageLength = 10, autoWidth = TRUE))
     })
+    # Download map
+    output$download_map <- downloadHandler(
+        filename = function() {
+            "Turneffe_Map.jpg"
+        },
+        content = function(file) {
+            file.copy("www/images/Turneffe_Map.jpg", file)
+        }
+    )
     # Benthic composition plot
     benthic_comp_plot_caption <- reactive({
         generate_benthic_comp_caption(input)
