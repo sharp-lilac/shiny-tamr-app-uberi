@@ -48,6 +48,9 @@ df_coral_size <- df_master_coral_clean %>%
 df_coral_health <- df_master_coral_clean %>%
     select(Year, Locality, Organism, Genus, Org_Name, OD, TD, RD) %>%
     mutate(Dead = case_when(is.na(TD) ~ OD + RD, TRUE ~ OD + TD + RD))
+df_coral_pies <- df_master_coral_clean %>%
+    select(Year, Locality, Organism, Genus, Org_Name, Bleaching.x, Disease)
+df_coral_pies$Bleaching.x <- factor(df_coral_pies$Bleaching.x, levels = c("P", "PB", "BL", "UB", "MISSING"))
 
 # Prepare key vectors ---------------------------
 sites <- unique(df_master_benthic_clean$Site)
