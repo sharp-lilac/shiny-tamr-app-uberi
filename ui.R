@@ -62,9 +62,10 @@ ui <- dashboardPage(
                             column(
                                 width = 9,
                                 div(
-                                    infoBoxOutput("keyVal1"),
-                                    infoBoxOutput("keyVal2"),
-                                    infoBoxOutput("keyVal3")
+                                    infoBoxOutput("keyCollectors"),
+                                    infoBoxOutput("keyYears"),
+                                    infoBoxOutput("keyLocale"),
+                                    infoBoxOutput("keySites")
                                 )
                             )
                         ),

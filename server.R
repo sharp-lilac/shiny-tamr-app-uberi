@@ -125,22 +125,32 @@ shinyServer(function(input, output) {
         create_benthic_comp_plot(data_filtered, input, benthic_comp_plot_caption())
     })
 
-    output$keyVal1 <- renderInfoBox({
+    output$keyCollectors <- renderInfoBox({
         infoBox(
             "Data Collectors",
-            10
+            collectors_count,
+            icon = shiny::icon(NULL)
         )
     })
-    output$keyVal2 <- renderInfoBox({
+    output$keyYears <- renderInfoBox({
         infoBox(
             "Years",
-            15
+            years_count,
+            icon = shiny::icon(NULL)
         )
     })
-    output$keyVal3 <- renderInfoBox({
+    output$keyLocale <- renderInfoBox({
         infoBox(
             "Localities",
-            56
+            localities_count,
+            icon = shiny::icon(NULL)
+        )
+    })
+    output$keySites <- renderInfoBox({
+        infoBox(
+            "Sites",
+            sites_count,
+            icon = shiny::icon(NULL)
         )
     })
 })
