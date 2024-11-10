@@ -28,6 +28,10 @@ shinyServer(function(input, output) {
             )
         create_coral_health_plot(data_filtered, input, coral_health_plot_caption())
     })
+    # Coral disease and bleaching pie charts
+    output$coral_pie_plot <- renderPlot({
+        ggplot()
+    })
     # Coral size by year, locality, genus plot
     coral_size_plot_caption <- reactive({
         generate_coral_size_caption(input)

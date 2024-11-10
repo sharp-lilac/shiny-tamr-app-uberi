@@ -156,7 +156,53 @@ ui <- dashboardPage(
                     ),
                     tabPanel(
                         h3("Disease and Bleaching"),
-                        fluidRow(column(width = 12, div(style = "height: 20px;")))
+                        fluidRow(column(width = 12, div(style = "height: 20px;"))),
+                        sidebarLayout(
+                            sidebarPanel(
+                                width = 2,
+                                pickerInput(
+                                    inputId = "coral_pie_choose_locality",
+                                    label = "Select Localities:",
+                                    choices = localities,
+                                    selected = localities,
+                                    options = pickerOptions(
+                                        actionsBox = TRUE,
+                                        size = 10,
+                                        selectedTextFormat = "count > 3"
+                                    ),
+                                    multiple = TRUE
+                                ),
+                                pickerInput(
+                                    inputId = "coral_pie_choose_year",
+                                    label = "Select Years:",
+                                    choices = years,
+                                    selected = years,
+                                    options = pickerOptions(
+                                        actionsBox = TRUE,
+                                        size = 10,
+                                        selectedTextFormat = "count > 3"
+                                    ),
+                                    multiple = TRUE
+                                ),
+                                pickerInput(
+                                    inputId = "coral_pie_choose_genus",
+                                    label = "Select Genera:",
+                                    choices = coral_genera,
+                                    selected = coral_genera,
+                                    options = pickerOptions(
+                                        actionsBox = TRUE,
+                                        size = 10,
+                                        selectedTextFormat = "count > 3"
+                                    ),
+                                    multiple = TRUE
+                                )
+                            ),
+                            mainPanel(
+                                plotOutput(outputId = "coral_pie_plot", height = "800px") %>%
+                                    withSpinner(type = 8, color = palette[4]),
+                                width = 10
+                            )
+                        )
                     )
                 )
             ),
