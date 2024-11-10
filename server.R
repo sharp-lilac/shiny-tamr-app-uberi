@@ -124,4 +124,23 @@ shinyServer(function(input, output) {
             ungroup()
         create_benthic_comp_plot(data_filtered, input, benthic_comp_plot_caption())
     })
+
+    output$keyVal1 <- renderInfoBox({
+        infoBox(
+            "Data Collectors",
+            10
+        )
+    })
+    output$keyVal2 <- renderInfoBox({
+        infoBox(
+            "Years",
+            15
+        )
+    })
+    output$keyVal3 <- renderInfoBox({
+        infoBox(
+            "Localities",
+            56
+        )
+    })
 })
