@@ -198,7 +198,7 @@ ui <- dashboardPage(
                                 )
                             ),
                             mainPanel(
-                                plotOutput(outputId = "coral_pie_plot", height = "800px") %>%
+                                plotOutput(outputId = "coral_pie_plot", height = "1100px") %>%
                                     withSpinner(type = 8, color = palette[4]),
                                 width = 10
                             )

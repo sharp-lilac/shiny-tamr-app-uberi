@@ -49,8 +49,17 @@ df_coral_health <- df_master_coral_clean %>%
     select(Year, Locality, Organism, Genus, Org_Name, OD, TD, RD) %>%
     mutate(Dead = case_when(is.na(TD) ~ OD + RD, TRUE ~ OD + TD + RD))
 df_coral_pies <- df_master_coral_clean %>%
-    select(Year, Locality, Organism, Genus, Org_Name, Bleaching.x, Disease)
+    select(Year, Locality, Organism, Genus, Org_Name, Bleaching.x, Disease) %>%
+    left_join(df_ref_disease, by = "Disease")
 df_coral_pies$Bleaching.x <- factor(df_coral_pies$Bleaching.x, levels = c("P", "PB", "BL", "UB", "MISSING"))
+levels(df_coral_pies$Bleaching.x) <- c("Pale", "Pale Bleached", "Bleached", "Unbleached", "Unknown")
+df_coral_pies$Name <- factor(df_coral_pies$Name,
+    levels = c(
+        "Aspergillosis", "Black Band Disease", "Blue Spots", "Dark Spots Disease", "Dark Spots Disease I",
+        "Dark Spots Disease II", "Stony coral tissue loss disease", "White Band Disease", "White Plague Disease",
+        "White Spot Patch Disease", "Yellow Band Disease", "No disease"
+    )
+)
 
 # Prepare key vectors ---------------------------
 sites <- unique(df_master_benthic_clean$Site)

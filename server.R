@@ -36,81 +36,68 @@ shinyServer(function(input, output) {
             mutate(
                 Percent = round(Count / sum(Count) * 100)
             )
-        plot1 <- ggplot(data_filtered_1, aes(x = "", y = Percent, fill = Bleaching.x)) +
-            geom_bar(stat = "identity", width = 1) +
-            coord_polar("y", start = 0) +
+        plot1 <- ggplot(data_filtered_1, aes(x = Bleaching.x, y = Percent, fill = Bleaching.x)) +
+            geom_col() +
             theme_classic() +
             gg_theme +
-            geom_text(aes(label = paste0(Percent, "%")), size = 6, position = position_stack(vjust = 0.5)) +
-            labs(x = NULL, y = NULL) +
+            labs(x = "Bleaching Status", y = "Percent of Corals") +
             scale_fill_manual(
-                name = "Bleaching",
-                values = palette,
-                labels = c(
-                    "P" = "Pale",
-                    "PB" = "Pale Bleached",
-                    "BL" = "Bleached",
-                    "UB" = "Unbleached",
-                    "MISSING" = "Unknown"
-                )
-            )
+                name = "",
+                values = palette
+            ) +
+            theme(legend.position = "none") +
+            scale_y_continuous(breaks = seq(0, 100, by = 10), sec.axis = dup_axis(name = ""))
         data_filtered_2 <- df_coral_pies %>%
-            filter(Bleaching.x != "UB" & Bleaching.x != "MISSING") %>%
+            filter(Bleaching.x != "Unbleached" & Bleaching.x != "Unknown") %>%
             group_by(Bleaching.x) %>%
             summarise(Count = n()) %>%
             mutate(
                 Percent = round(Count / sum(Count) * 100)
             )
-        plot2 <- ggplot(data_filtered_2, aes(x = "", y = Percent, fill = Bleaching.x)) +
-            geom_bar(stat = "identity", width = 1) +
-            coord_polar("y", start = 0) +
+        plot2 <- ggplot(data_filtered_2, aes(x = Bleaching.x, y = Percent, fill = Bleaching.x)) +
+            geom_col() +
             theme_classic() +
             gg_theme +
-            geom_text(aes(label = paste0(Percent, "%")), size = 6, position = position_stack(vjust = 0.5)) +
-            labs(x = NULL, y = NULL) +
+            labs(x = "Bleaching Status", y = "Percent of Bleached Corals") +
             scale_fill_manual(
-                name = "Bleaching",
-                values = palette,
-                labels = c(
-                    "P" = "Pale",
-                    "PB" = "Pale Bleached",
-                    "BL" = "Bleached",
-                    "UB" = "Unbleached",
-                    "MISSING" = "Unknown"
-                )
-            )
-        plot_group1 <- ggarrange(plot1, plot2, nrow = 2)
+                name = "",
+                values = palette
+            ) +
+            theme(legend.position = "none") +
+            scale_y_continuous(breaks = seq(0, 100, by = 10), sec.axis = dup_axis(name = ""))
+        plot_group1 <- ggarrange(plot1, plot2, nrow = 1)
         data_filtered_3 <- df_coral_pies %>%
-            group_by(Disease) %>%
+            filter(Name != "NA") %>%
+            group_by(Name) %>%
             summarise(Count = n()) %>%
             mutate(
-                Percent = round(Count / sum(Count) * 100)
+                Percent = (Count / sum(Count) * 100)
             )
-        plot3 <- ggplot(data_filtered_3, aes(x = "", y = Percent, fill = Disease)) +
-            geom_bar(stat = "identity", width = 1) +
-            coord_polar("y", start = 0) +
+        plot3 <- ggplot(data_filtered_3, aes(x = Name, y = Percent, fill = Name)) +
+            geom_col() +
             theme_classic() +
             gg_theme +
-            geom_text(aes(label = paste0(Percent, "%")), size = 6, position = position_stack(vjust = 0.5)) +
-            labs(x = NULL, y = NULL) +
-            scale_fill_manual(values = palette)
+            labs(x = "Disease", y = "Percent of Corals") +
+            scale_fill_manual(values = palette, name = "") +
+            theme(legend.position = "none") +
+            scale_y_continuous(breaks = seq(0, 100, by = 10), sec.axis = dup_axis(name = ""))
         data_filtered_4 <- df_coral_pies %>%
-            filter(Disease != "None" & Disease != "MISSING") %>%
-            group_by(Disease) %>%
+            filter(Name != "No disease" & Name != "NA") %>%
+            group_by(Name) %>%
             summarise(Count = n()) %>%
             mutate(
                 Percent = round(Count / sum(Count) * 100)
             )
-        plot4 <- ggplot(data_filtered_4, aes(x = "", y = Percent, fill = Disease)) +
-            geom_bar(stat = "identity", width = 1) +
-            coord_polar("y", start = 0) +
+        plot4 <- ggplot(data_filtered_4, aes(x = Name, y = Percent, fill = Name)) +
+            geom_col() +
             theme_classic() +
             gg_theme +
-            geom_text(aes(label = paste0(Percent, "%")), size = 6, position = position_stack(vjust = 0.5)) +
-            labs(x = NULL, y = NULL) +
-            scale_fill_manual(values = palette)
-        plot_group2 <- ggarrange(plot3, plot4, nrow = 2)
-        ggarrange(plot_group1, plot_group2, nrow = 1)
+            labs(x = "Disease", y = "Percent of Diseased Coral") +
+            scale_fill_manual(values = palette, name = "") +
+            theme(legend.position = "none") +
+            scale_y_continuous(breaks = seq(0, 100, by = 10), sec.axis = dup_axis(name = ""))
+        plot_group2 <- ggarrange(plot3, plot4, nrow = 1)
+        ggarrange(plot_group1, plot_group2, nrow = 2)
     })
     # Coral size by year, locality, genus plot
     coral_size_plot_caption <- reactive({
