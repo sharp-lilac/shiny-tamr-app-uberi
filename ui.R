@@ -446,6 +446,15 @@ ui <- dashboardPage(
                             outline = TRUE,
                             status = "primary",
                             icon = icon("check")
+                        ),
+                        prettyRadioButtons(
+                            inputId = "benthic_comp_reef_toggle",
+                            label = "Select Reef Type:",
+                            choices = c("All" = "All", "Backreef" = "Backreef", "Deep Forereef" = "Deep_Forereef", "Shallow Forereef" = "Shallow_Forereef"),
+                            selected = "All",
+                            outline = TRUE,
+                            status = "primary",
+                            icon = icon("check")
                         )
                     ),
                     mainPanel(

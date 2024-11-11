@@ -76,11 +76,7 @@ shinyServer(function(input, output) {
         req(input$coral_size_choose_genus)
         group_name <- input$coral_size_xaxis_toggle
         data_filtered <- df_coral_size %>%
-            filter(
-                Locality %in% input$coral_size_choose_locality,
-                Year %in% input$coral_size_choose_year,
-                Genus %in% input$coral_size_choose_genus
-            )
+            filter(Locality %in% input$coral_size_choose_locality, Year %in% input$coral_size_choose_year, Genus %in% input$coral_size_choose_genus)
         create_coral_size_plot(data_filtered, input, coral_size_plot_caption())
     })
     # Coral cover by year plot
@@ -130,15 +126,6 @@ shinyServer(function(input, output) {
             select(Organism, Genus, Species) %>%
             DT::datatable(options = list(pageLength = 10, autoWidth = TRUE))
     })
-    # Download map
-    output$download_map <- downloadHandler(
-        filename = function() {
-            "Turneffe_Map.jpg"
-        },
-        content = function(file) {
-            file.copy("www/images/Turneffe_Map.jpg", file)
-        }
-    )
     # Benthic composition plot
     benthic_comp_plot_caption <- reactive({
         generate_benthic_comp_caption(input)
@@ -148,8 +135,13 @@ shinyServer(function(input, output) {
         req(input$benthic_comp_choose_year)
         group_name <- input$benthic_comp_xaxis_toggle
         cat_name <- input$benthic_comp_cat_toggle
+        reef_name <- input$benthic_comp_reef_toggle
         df_benthic_percents_filtered <- df_benthic_percents %>%
-            filter(Locality %in% input$benthic_comp_choose_locality, Year %in% input$benthic_comp_choose_year)
+            filter(
+                Locality %in% input$benthic_comp_choose_locality,
+                Year %in% input$benthic_comp_choose_year,
+                (Zone == reef_name | reef_name == "All")
+            )
         data_filtered <- df_benthic_percents_filtered %>%
             group_by(across(all_of(group_name))) %>%
             summarize(Group_Count = sum(Count)) %>%
@@ -162,4 +154,13 @@ shinyServer(function(input, output) {
             ungroup()
         create_benthic_comp_plot(data_filtered, input, benthic_comp_plot_caption())
     })
+    # Download map
+    output$download_map <- downloadHandler(
+        filename = function() {
+            "Turneffe_Map.jpg"
+        },
+        content = function(file) {
+            file.copy("www/images/Turneffe_Map.jpg", file)
+        }
+    )
 })
