@@ -1,61 +1,24 @@
 /* custom_styles.css */
 
-/* Custom colors for shinywidget buttons */
-.bttn,
-.bttn-lg,
-.bttn-md,
-.bttn-sm,
-.bttn-xs {
-    background-color: #88C0D0;
-    color: #FFFFFF;
-}
-
-.bttn-jelly.bttn-primary {
-    background-color: #88C0D0;
-    color: #FFFFFF;
-}
-
-.bttn-jelly.bttn-warning {
-    background-color: #D08770;
-    color: #FFFFFF;
-}
-
-.bttn-jelly.bttn-danger {
-    background-color: #BF616A;
-    color: #FFFFFF;
-}
-
-.bttn-jelly.bttn-success {
-    background-color: #A3BE8C;
-    color: #FFFFFF;
-}
-
-.bttn-jelly.bttn-royal {
-    background-color: #5E81AC;
-    color: #FFFFFF;
+/* Custom colors for sidebar */
+.well {
+    background-color: #c5ebf8 !important;
+    border: 1px solid #000;
 }
 
 /* Custom styles for boxes */
 .section-box {
     background-color: #c5ebf8;
-    /* Softer teal */
     padding: 15px;
     border-radius: 8px;
     margin-bottom: 20px;
     border: 1px solid #000;
-    /* Black border */
 }
-
 .section-box.alternate {
     background-color: #f1d1c1;
-    /* Softer coral */
     border: 1px solid #000;
-    /* Black border */
 }
-
 .section-box.alternate-2 {
     background-color: #d8e6cf;
-    /* Softer green */
     border: 1px solid #000;
-    /* Black border */
 }
