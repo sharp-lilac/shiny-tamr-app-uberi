@@ -88,3 +88,18 @@ generate_benthic_comp_caption <- function(input) {
     )
     str_wrap(caption_text, width = 150)
 }
+
+# Create caption of fish size plot ---------------------------
+generate_fish_size_caption <- function(input) {
+    selected_localities <- paste(input$fish_size_choose_locality, collapse = ", ")
+    selected_years <- paste(input$fish_size_choose_year, collapse = ", ")
+    selected_fish <- paste(input$fish_size_choose_family, collapse = ", ")
+    axis_name <- tolower(reverse_fish_choices[input$fish_size_xaxis_toggle])
+    means_name <- tolower(reverse_fish_choices[input$fish_size_means_toggle])
+    caption_text <- paste0(
+        "Figure Caption: Plot of fish size by ", axis_name, ". Data for localities (", selected_localities,
+        ") and for years (", selected_years, ") for fish families ( ", selected_fish, ") at Turneffe Atoll. Means of ", means_name, " are shown by colored diamonds. ",
+        caption_text[3], caption_text[1]
+    )
+    str_wrap(caption_text, width = 150)
+}

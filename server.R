@@ -154,6 +154,30 @@ shinyServer(function(input, output) {
             ungroup()
         create_benthic_comp_plot(data_filtered, input, benthic_comp_plot_caption())
     })
+    # Fish size plot
+    fish_size_plot_caption <- reactive({
+        generate_fish_size_caption(input)
+    })
+    output$fish_size_plot <- renderPlot({
+        req(input$fish_size_choose_locality)
+        req(input$fish_size_choose_year)
+        req(input$fish_size_choose_family)
+        axis_name <- input$fish_size_xaxis_toggle
+        means_name <- input$fish_size_means_toggle
+        df_master_fish_size$Year <- as.factor(df_master_fish_size$Year)
+        data_filtered <- df_master_fish_size %>%
+            filter(
+                Locality %in% input$fish_size_choose_locality,
+                Year %in% input$fish_size_choose_year,
+                Fish_Family %in% input$fish_size_choose_family
+            ) %>%
+            mutate(
+                Start_Time = if_else(Start_Time == "MISSING", NA, Start_Time),
+                Start_Time = hour(hm(Start_Time)),
+                Start_Time = if_else(Start_Time == 23, 11, Start_Time) # fix error of 2023 fish from 11am being 11pm
+            )
+        create_fish_size_plot(data_filtered, input, fish_size_plot_caption())
+    })
     # Download map
     output$download_map <- downloadHandler(
         filename = function() {

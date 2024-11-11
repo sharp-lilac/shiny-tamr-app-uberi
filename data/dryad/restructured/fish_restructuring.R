@@ -43,7 +43,7 @@ df_master_fish_clean <- df_master_fish %>%
 # Create fish size dataframe
 df_master_fish_size <- df_master_fish_clean %>%
     filter(!is.na(Length) & Observations != 0) %>%
-    select(Year, Locality, Uniq_Transect, Start_Time, Fish.x, Fish_Scientific, Length, Observations)
+    select(Year, Locality, Uniq_Transect, Start_Time, Fish.x, Fish_Scientific, Fish_Family, Length, Observations)
 # Create fish biomass dataframe
 complete_grid_fish <- expand_grid(
     Uniq_Transect = unique(df_master_fish_clean$Uniq_Transect),
