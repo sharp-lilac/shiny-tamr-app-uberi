@@ -30,12 +30,30 @@ shinyServer(function(input, output) {
     })
     # Coral disease and bleaching pie charts
     output$coral_disease_plot <- renderPlot({
-        data_filtered_1 <- df_coral_disease %>%
+        req(input$coral_disease_choose_locality)
+        req(input$coral_disease_choose_year)
+        req(input$coral_disease_choose_genus)
+        data_filtered <- df_coral_disease %>%
+            filter(
+                Locality %in% input$coral_disease_choose_locality,
+                Year %in% input$coral_disease_choose_year,
+                Genus %in% input$coral_disease_choose_genus
+            )
+
+        data_filtered_1 <- data_filtered %>%
+            filter(!is.na(Bleaching.x)) %>%
+            mutate(Bleaching.x = case_when(
+                Bleaching.x %in% c("Pale", "Pale Bleached  ", "Bleached") ~ "Bleaching Signs",
+                Bleaching.x == "Unbleached" ~ "Unbleached",
+                Bleaching.x == "Unknown" ~ "Unknown",
+                TRUE ~ "Unknown"
+            )) %>%
             group_by(Bleaching.x) %>%
             summarise(Count = n()) %>%
             mutate(
                 Percent = round(Count / sum(Count) * 100)
             )
+
         plot1 <- ggplot(data_filtered_1, aes(x = Bleaching.x, y = Percent, fill = Bleaching.x)) +
             geom_col() +
             theme_classic() +
@@ -47,7 +65,7 @@ shinyServer(function(input, output) {
             ) +
             theme(legend.position = "none") +
             scale_y_continuous(breaks = seq(0, 100, by = 10), sec.axis = dup_axis(name = ""))
-        data_filtered_2 <- df_coral_disease %>%
+        data_filtered_2 <- data_filtered %>%
             filter(Bleaching.x != "Unbleached" & Bleaching.x != "Unknown") %>%
             group_by(Bleaching.x) %>%
             summarise(Count = n()) %>%
@@ -66,8 +84,12 @@ shinyServer(function(input, output) {
             theme(legend.position = "none") +
             scale_y_continuous(breaks = seq(0, 100, by = 10), sec.axis = dup_axis(name = ""))
         plot_group1 <- ggarrange(plot1, plot2, nrow = 1)
-        data_filtered_3 <- df_coral_disease %>%
+        data_filtered_3 <- data_filtered %>%
             filter(Name != "NA") %>%
+            mutate(Name = case_when(
+                Name == "No disease" ~ "No disease",
+                TRUE ~ "                                       Disease"
+            )) %>%
             group_by(Name) %>%
             summarise(Count = n()) %>%
             mutate(
@@ -81,7 +103,7 @@ shinyServer(function(input, output) {
             scale_fill_manual(values = palette, name = "") +
             theme(legend.position = "none") +
             scale_y_continuous(breaks = seq(0, 100, by = 10), sec.axis = dup_axis(name = ""))
-        data_filtered_4 <- df_coral_disease %>%
+        data_filtered_4 <- data_filtered %>%
             filter(Name != "No disease" & Name != "NA") %>%
             group_by(Name) %>%
             summarise(Count = n()) %>%
