@@ -4,6 +4,7 @@
 library(ggplot2)
 library(ggpubr)
 library(grid)
+library(lubridate)
 
 # Create plot of coral health by year, locality, species ---------------------------
 create_coral_health_plot <- function(data_filtered, input, caption) {
