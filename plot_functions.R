@@ -139,3 +139,21 @@ create_benthic_comp_plot <- function(data_filtered, input, caption) {
         scale_fill_manual(name = group_name, values = palette) +
         scale_y_continuous(breaks = seq(0, 100, by = 10), sec.axis = dup_axis(name = ""))
 }
+
+# Create plot of fish size ---------------------------
+create_fish_size_plot <- function(data_filtered, input, caption) {
+    axis_name <- input$fish_size_xaxis_toggle
+    axis_label <- reverse_fish_choices[input$fish_size_xaxis_toggle]
+    means_name <- input$fish_size_means_toggle
+    means_label <- reverse_fish_choices[input$fish_size_means_toggle]
+    ggplot(data_filtered, aes(x = as.factor(!!sym(axis_name)), y = Length)) +
+        geom_boxplot(color = "black", position = position_dodge(width = 0.75), outlier.shape = 4, outlier.size = 4) +
+        theme_classic() +
+        gg_theme +
+        labs(caption = caption, y = "Fish Length (cm)", x = axis_label) +
+        scale_fill_manual(name = paste(means_label, " Mean"), values = palette) +
+        stat_summary(aes(fill = !!sym(means_name)), fun = mean, geom = "point", shape = 23, size = 3, position = position_dodge(width = 0.75)) +
+        scale_y_continuous(breaks = seq(0, 100, by = 10), sec.axis = dup_axis(name = "")) +
+        geom_hline(yintercept = 7.5, linetype = "dashed") +
+        geom_hline(yintercept = 2.5, linetype = "dashed")
+}

@@ -510,7 +510,7 @@ ui <- dashboardPage(
                         prettyRadioButtons(
                             inputId = "fish_size_xaxis_toggle",
                             label = "Select X-Axis:",
-                            choices = c("Locality", "Year", "Fish Family" = "Fish_Family", "Time of Day" = "Start_Time"),
+                            choices = fish_choices,
                             selected = "Fish_Family",
                             outline = TRUE,
                             status = "primary",
@@ -519,7 +519,7 @@ ui <- dashboardPage(
                         prettyRadioButtons(
                             inputId = "fish_size_means_toggle",
                             label = "Select Group for Mean:",
-                            choices = c("Locality", "Year", "Fish Family" = "Fish_Family"),
+                            choices = fish_choices[1:3],
                             selected = "Year",
                             outline = TRUE,
                             status = "primary",

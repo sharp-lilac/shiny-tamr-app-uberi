@@ -75,3 +75,5 @@ coral_species <- df_master_benthic_clean %>%
     arrange(Species)
 coral_genera <- sort(unique(df_coral_size$Genus))
 fish_families <- sort(unique(df_master_fish_size$Fish_Family))
+fish_choices <- c("Locality" = "Locality", "Year" = "Year", "Fish Family" = "Fish_Family", "Time of Day" = "Start_Time")
+reverse_fish_choices <- setNames(names(fish_choices), fish_choices)
