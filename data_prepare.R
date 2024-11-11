@@ -74,3 +74,4 @@ coral_species <- df_master_benthic_clean %>%
     distinct() %>%
     arrange(Species)
 coral_genera <- sort(unique(df_coral_size$Genus))
+fish_families <- sort(unique(df_master_fish_size$Fish_Family))

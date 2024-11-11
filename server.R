@@ -154,6 +154,10 @@ shinyServer(function(input, output) {
             ungroup()
         create_benthic_comp_plot(data_filtered, input, benthic_comp_plot_caption())
     })
+    # Fish size plot
+    output$fish_size_plot <- renderPlot({
+        ggplot()
+    })
     # Download map
     output$download_map <- downloadHandler(
         filename = function() {
