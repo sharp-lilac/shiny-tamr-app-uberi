@@ -28,6 +28,44 @@ shinyServer(function(input, output) {
             )
         create_coral_health_plot(data_filtered, input, coral_health_plot_caption())
     })
+    # Coral disease and bleaching pie charts
+    coral_disease_plot_caption <- reactive({
+        generate_coral_disease_caption(input)
+    })
+    output$coral_disease_plot <- renderPlot({
+        req(input$coral_disease_choose_locality)
+        req(input$coral_disease_choose_year)
+        req(input$coral_disease_choose_genus)
+        data_filtered <- df_coral_disease %>%
+            filter(Locality %in% input$coral_disease_choose_locality, Year %in% input$coral_disease_choose_year, Genus %in% input$coral_disease_choose_genus)
+        data_filtered_1 <- data_filtered %>%
+            filter(!is.na(Bleaching.x)) %>%
+            mutate(Bleaching.x = case_when(
+                Bleaching.x %in% c("Pale", "Pale Bleached  ", "Bleached") ~ "Bleaching Signs",
+                Bleaching.x == "Unbleached" ~ "Unbleached",
+                TRUE ~ "Unknown"
+            )) %>%
+            group_by(Bleaching.x) %>%
+            summarise(Count = n()) %>%
+            mutate(Percent = round(Count / sum(Count) * 100))
+        data_filtered_2 <- data_filtered %>%
+            filter(Bleaching.x != "Unbleached" & Bleaching.x != "Unknown") %>%
+            group_by(Bleaching.x) %>%
+            summarise(Count = n()) %>%
+            mutate(Percent = round(Count / sum(Count) * 100))
+        data_filtered_3 <- data_filtered %>%
+            filter(Name != "NA") %>%
+            mutate(Name = case_when(Name == "No disease" ~ "No disease", TRUE ~ paste0(strrep(" ", 40), "Disease"))) %>%
+            group_by(Name) %>%
+            summarise(Count = n()) %>%
+            mutate(Percent = (Count / sum(Count) * 100))
+        data_filtered_4 <- data_filtered %>%
+            filter(Name != "No disease" & Name != "NA") %>%
+            group_by(Name) %>%
+            summarise(Count = n()) %>%
+            mutate(Percent = round(Count / sum(Count) * 100))
+        create_coral_disease_plot(data_filtered_1, data_filtered_2, data_filtered_3, data_filtered_4, input, coral_disease_plot_caption())
+    })
     # Coral size by year, locality, genus plot
     coral_size_plot_caption <- reactive({
         generate_coral_size_caption(input)
