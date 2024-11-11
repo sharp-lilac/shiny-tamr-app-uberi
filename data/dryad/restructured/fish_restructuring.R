@@ -59,7 +59,7 @@ df_master_fish_biomass <- df_master_fish_clean %>%
     filter(!is.na(Biomass_Category))
 # Create fish count and richness dataframe
 df_master_fish_count <- df_master_fish_clean %>%
-    group_by(Year, Locality, Site, Uniq_Transect) %>%
+    group_by(Year, Locality, Site, Uniq_Transect, Start_Time) %>%
     summarize(
         Count = sum(Observations),
         Richness = length(unique(Fish_Scientific[Observations > 0]))

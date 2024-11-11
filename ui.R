@@ -584,8 +584,8 @@ ui <- dashboardPage(
                         prettyRadioButtons(
                             inputId = "fish_count_xaxis_toggle",
                             label = "Select X-Axis:",
-                            choices = fish_choices,
-                            selected = "Fish_Family",
+                            choices = fish_choices[1:2, 4],
+                            selected = "Year",
                             outline = TRUE,
                             status = "primary",
                             icon = icon("check")
@@ -593,15 +593,15 @@ ui <- dashboardPage(
                         prettyRadioButtons(
                             inputId = "fish_count_means_toggle",
                             label = "Select Group for Mean:",
-                            choices = fish_choices[1:3],
-                            selected = "Year",
+                            choices = fish_choices[1:2],
+                            selected = "Locality",
                             outline = TRUE,
                             status = "primary",
                             icon = icon("check")
                         )
                     ),
                     mainPanel(
-                        plotOutput(outputId = "fish_count_plot", height = "700px") %>%
+                        plotOutput(outputId = "fish_count_plot", height = "1000px") %>%
                             withSpinner(type = 8, color = palette[4]),
                         width = 10
                     )
