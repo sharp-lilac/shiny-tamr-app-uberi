@@ -161,7 +161,7 @@ ui <- dashboardPage(
                             sidebarPanel(
                                 width = 2,
                                 pickerInput(
-                                    inputId = "coral_pie_choose_locality",
+                                    inputId = "coral_disease_choose_locality",
                                     label = "Select Localities:",
                                     choices = localities,
                                     selected = localities,
@@ -173,7 +173,7 @@ ui <- dashboardPage(
                                     multiple = TRUE
                                 ),
                                 pickerInput(
-                                    inputId = "coral_pie_choose_year",
+                                    inputId = "coral_disease_choose_year",
                                     label = "Select Years:",
                                     choices = years,
                                     selected = years,
@@ -185,7 +185,7 @@ ui <- dashboardPage(
                                     multiple = TRUE
                                 ),
                                 pickerInput(
-                                    inputId = "coral_pie_choose_genus",
+                                    inputId = "coral_disease_choose_genus",
                                     label = "Select Genera:",
                                     choices = coral_genera,
                                     selected = coral_genera,
@@ -198,7 +198,7 @@ ui <- dashboardPage(
                                 )
                             ),
                             mainPanel(
-                                plotOutput(outputId = "coral_pie_plot", height = "1100px") %>%
+                                plotOutput(outputId = "coral_disease_plot", height = "1100px") %>%
                                     withSpinner(type = 8, color = palette[4]),
                                 width = 10
                             )

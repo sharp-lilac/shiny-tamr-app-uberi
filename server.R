@@ -29,8 +29,8 @@ shinyServer(function(input, output) {
         create_coral_health_plot(data_filtered, input, coral_health_plot_caption())
     })
     # Coral disease and bleaching pie charts
-    output$coral_pie_plot <- renderPlot({
-        data_filtered_1 <- df_coral_pies %>%
+    output$coral_disease_plot <- renderPlot({
+        data_filtered_1 <- df_coral_disease %>%
             group_by(Bleaching.x) %>%
             summarise(Count = n()) %>%
             mutate(
@@ -47,7 +47,7 @@ shinyServer(function(input, output) {
             ) +
             theme(legend.position = "none") +
             scale_y_continuous(breaks = seq(0, 100, by = 10), sec.axis = dup_axis(name = ""))
-        data_filtered_2 <- df_coral_pies %>%
+        data_filtered_2 <- df_coral_disease %>%
             filter(Bleaching.x != "Unbleached" & Bleaching.x != "Unknown") %>%
             group_by(Bleaching.x) %>%
             summarise(Count = n()) %>%
@@ -66,7 +66,7 @@ shinyServer(function(input, output) {
             theme(legend.position = "none") +
             scale_y_continuous(breaks = seq(0, 100, by = 10), sec.axis = dup_axis(name = ""))
         plot_group1 <- ggarrange(plot1, plot2, nrow = 1)
-        data_filtered_3 <- df_coral_pies %>%
+        data_filtered_3 <- df_coral_disease %>%
             filter(Name != "NA") %>%
             group_by(Name) %>%
             summarise(Count = n()) %>%
@@ -81,7 +81,7 @@ shinyServer(function(input, output) {
             scale_fill_manual(values = palette, name = "") +
             theme(legend.position = "none") +
             scale_y_continuous(breaks = seq(0, 100, by = 10), sec.axis = dup_axis(name = ""))
-        data_filtered_4 <- df_coral_pies %>%
+        data_filtered_4 <- df_coral_disease %>%
             filter(Name != "No disease" & Name != "NA") %>%
             group_by(Name) %>%
             summarise(Count = n()) %>%
