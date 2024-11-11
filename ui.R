@@ -467,65 +467,17 @@ ui <- dashboardPage(
             tabItem(
                 tabName = "page_3-1",
                 h2("Fish Size Explorer"),
-                tabsetPanel(
-                    tabPanel(
-                        h3("By Year"),
-                        fluidRow(column(width = 12, div(style = "height: 20px;"))),
-                        p("Fish size by year and family")
-                    ),
-                    tabPanel(
-                        h3("By Locality"),
-                        fluidRow(column(width = 12, div(style = "height: 20px;"))),
-                        p("Fish size by locality and family")
-                    ),
-                    tabPanel(
-                        h3("By Species"),
-                        fluidRow(column(width = 12, div(style = "height: 20px;"))),
-                        p("Fish size by species")
-                    ),
-                    tabPanel(
-                        h3("By Time of Day"),
-                        fluidRow(column(width = 12, div(style = "height: 20px;"))),
-                        p("Fish size by time of day")
-                    )
-                )
+                fluidRow(column(width = 12, div(style = "height: 20px;")))
             ),
             tabItem(
                 tabName = "page_3-2",
                 h2("Fish Biomass Explorer"),
-                tabsetPanel(
-                    tabPanel(
-                        h3("By Year"),
-                        fluidRow(column(width = 12, div(style = "height: 20px;"))),
-                        p("Fish biomass by year and group")
-                    ),
-                    tabPanel(
-                        h3("By Locality"),
-                        fluidRow(column(width = 12, div(style = "height: 20px;"))),
-                        p("Fish biomass by locality and group")
-                    )
-                )
+                fluidRow(column(width = 12, div(style = "height: 20px;")))
             ),
             tabItem(
                 tabName = "page_3-3",
                 h2("Fish Observations Explorer"),
-                tabsetPanel(
-                    tabPanel(
-                        h3("By Year"),
-                        fluidRow(column(width = 12, div(style = "height: 20px;"))),
-                        p("Fish count and richness by year and group")
-                    ),
-                    tabPanel(
-                        h3("By Locality"),
-                        fluidRow(column(width = 12, div(style = "height: 20px;"))),
-                        p("Fish count and richness by locality and group")
-                    ),
-                    tabPanel(
-                        h3("By Time of Day"),
-                        fluidRow(column(width = 12, div(style = "height: 20px;"))),
-                        p("Fish count and richness by time of day and group")
-                    )
-                )
+                fluidRow(column(width = 12, div(style = "height: 20px;")))
             ),
             tabItem(
                 tabName = "page_5",
