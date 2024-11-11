@@ -28,6 +28,27 @@ create_coral_health_plot <- function(data_filtered, input, caption) {
     ggarrange(plot1, plot2, nrow = 2, heights = c(0.75, 1))
 }
 
+# Create plot of coral disease/bleaching by year, locality, species ---------------------------
+create_coral_disease_plot <- function(data_filtered_1, data_filtered_2, data_filtered_3, data_filtered_4, input, caption = "Hello") {
+    create_plot <- function(data, x_var, y_var, x_label, y_label, fill_var) {
+        ggplot(data, aes_string(x = x_var, y = y_var, fill = fill_var)) +
+            geom_col() +
+            theme_classic() +
+            gg_theme +
+            labs(x = x_label, y = y_label) +
+            scale_fill_manual(values = palette, name = "") +
+            theme(legend.position = "none") +
+            scale_y_continuous(breaks = seq(0, 100, by = 10), sec.axis = dup_axis(name = ""))
+    }
+    plot1 <- create_plot(data_filtered_1, "Bleaching.x", "Percent", "Bleaching Status", "Percent of Corals", "Bleaching.x")
+    plot2 <- create_plot(data_filtered_2, "Bleaching.x", "Percent", "Bleaching Status", "Percent of Bleached Corals", "Bleaching.x")
+    plot3 <- create_plot(data_filtered_3, "Name", "Percent", "Disease", "Percent of Corals", "Name")
+    plot4 <- create_plot(data_filtered_4, "Name", "Percent", "Disease", "Percent of Diseased Coral", "Name")
+    plot_group1 <- ggarrange(plot1, plot2, nrow = 1)
+    plot_group2 <- ggarrange(plot3, plot4, nrow = 1)
+    ggarrange(plot_group1, plot_group2, nrow = 2)
+}
+
 # Create plot of coral size by year, locality, species ---------------------------
 create_coral_size_plot <- function(data_filtered, input, caption) {
     group_name <- input$coral_size_xaxis_toggle
