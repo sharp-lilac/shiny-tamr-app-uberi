@@ -181,7 +181,7 @@ shinyServer(function(input, output) {
     # Fish count and richness plot
     output$fish_count_plot <- renderPlot({
         df_master_fish_count$Year <- as.factor(df_master_fish_count$Year)
-
+        df_master_fish_count_site$Year <- as.factor(df_master_fish_count_site$Year)
         plot1 <- ggplot(df_master_fish_count, aes(x = Year, y = Count)) +
             geom_boxplot(color = "black", position = position_dodge(width = 0.75), outlier.shape = 4, outlier.size = 4) +
             theme_classic() +
@@ -202,6 +202,28 @@ shinyServer(function(input, output) {
             scale_y_continuous(breaks = seq(0, 30, by = 5), sec.axis = dup_axis(name = ""))
 
         ggarrange(plot1, plot2, nrow = 2, heights = c(0.75, 1))
+        # need to standardize by num transects per site - maybe only sites with certain num transects?
+        plot3 <- ggplot(df_master_fish_count_site, aes(x = Year, y = Count)) +
+            geom_boxplot(color = "black", position = position_dodge(width = 0.75), outlier.shape = 4, outlier.size = 4) +
+            theme_classic() +
+            gg_theme +
+            labs(y = "Number Fish / Site", x = "") +
+            scale_fill_manual(name = "Locality", values = palette) +
+            stat_summary(aes(fill = Locality), fun = mean, geom = "point", shape = 23, size = 3, position = position_dodge(width = 0.75)) +
+            scale_y_continuous(breaks = seq(0, 2000, by = 100), sec.axis = dup_axis(name = "")) +
+            theme(legend.position = "none")
+
+        plot4 <- ggplot(df_master_fish_count_site, aes(x = Year, y = Richness)) +
+            geom_boxplot(color = "black", position = position_dodge(width = 0.75), outlier.shape = 4, outlier.size = 4) +
+            theme_classic() +
+            gg_theme +
+            labs(caption = "66 fish species MBRS, 72 AGRRA", y = "Fish Species / Site", x = "Year") +
+            scale_fill_manual(name = "Locality", values = palette) +
+            stat_summary(aes(fill = Locality), fun = mean, geom = "point", shape = 23, size = 3, position = position_dodge(width = 0.75)) +
+            scale_y_continuous(breaks = seq(0, 50, by = 5), sec.axis = dup_axis(name = "")) +
+            coord_cartesian(ylim = c(0, 50))
+
+        site <- ggarrange(plot3, plot4, nrow = 2, heights = c(0.75, 1))
     })
     # Download map
     output$download_map <- downloadHandler(
