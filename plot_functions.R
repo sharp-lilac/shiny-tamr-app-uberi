@@ -43,8 +43,8 @@ create_coral_disease_plot <- function(data_filtered_1, data_filtered_2, data_fil
     }
     plot1 <- create_plot(data_filtered_1, "Bleaching.x", "Percent", "Bleaching Status", "Percent of Corals", "Bleaching.x")
     plot2 <- create_plot(data_filtered_2, "Bleaching.x", "Percent", "Bleaching Status", "Percent of Bleached Corals", "Bleaching.x")
-    plot3 <- create_plot(data_filtered_3, "Name", "Percent", "Disease", "Percent of Corals", "Name")
-    plot4 <- create_plot(data_filtered_4, "Name", "Percent", "Disease", "Percent of Diseased Coral", "Name")
+    plot3 <- create_plot(data_filtered_3, "Name", "Percent", "Disease", "Percent of Corals", "Name") + theme(plot.margin = margin(b = 30))
+    plot4 <- create_plot(data_filtered_4, "Name", "Percent", "Disease", "Percent of Diseased Coral", "Name") + theme(plot.margin = margin(b = 30))
     plot_group1 <- ggarrange(plot1, plot2, nrow = 1)
     plot_group2 <- ggarrange(plot3, plot4, nrow = 1)
     plot_group3 <- ggarrange(plot_group1, plot_group2, nrow = 2)
