@@ -178,6 +178,10 @@ shinyServer(function(input, output) {
             )
         create_fish_size_plot(data_filtered, input, fish_size_plot_caption())
     })
+    # Fish count and richness plot
+    output$fish_count_plot <- renderPlot({
+        ggplot()
+    })
     # Download map
     output$download_map <- downloadHandler(
         filename = function() {

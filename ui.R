@@ -541,7 +541,71 @@ ui <- dashboardPage(
             tabItem(
                 tabName = "page_3-3",
                 h2("Fish Observations Explorer"),
-                fluidRow(column(width = 12, div(style = "height: 20px;")))
+                fluidRow(column(width = 12, div(style = "height: 20px;"))),
+                sidebarLayout(
+                    sidebarPanel(
+                        width = 2,
+                        pickerInput(
+                            inputId = "fish_count_choose_locality",
+                            label = "Select Localities:",
+                            choices = localities,
+                            selected = localities,
+                            options = pickerOptions(
+                                actionsBox = TRUE,
+                                size = 10,
+                                selectedTextFormat = "count > 3"
+                            ),
+                            multiple = TRUE
+                        ),
+                        pickerInput(
+                            inputId = "fish_count_choose_year",
+                            label = "Select Years:",
+                            choices = years,
+                            selected = years,
+                            options = pickerOptions(
+                                actionsBox = TRUE,
+                                size = 10,
+                                selectedTextFormat = "count > 3"
+                            ),
+                            multiple = TRUE
+                        ),
+                        pickerInput(
+                            inputId = "fish_count_choose_family",
+                            label = "Select Fish Families:",
+                            choices = fish_families,
+                            selected = fish_families,
+                            options = pickerOptions(
+                                actionsBox = TRUE,
+                                size = 10,
+                                selectedTextFormat = "count > 3"
+                            ),
+                            multiple = TRUE
+                        ),
+                        prettyRadioButtons(
+                            inputId = "fish_count_xaxis_toggle",
+                            label = "Select X-Axis:",
+                            choices = fish_choices,
+                            selected = "Fish_Family",
+                            outline = TRUE,
+                            status = "primary",
+                            icon = icon("check")
+                        ),
+                        prettyRadioButtons(
+                            inputId = "fish_count_means_toggle",
+                            label = "Select Group for Mean:",
+                            choices = fish_choices[1:3],
+                            selected = "Year",
+                            outline = TRUE,
+                            status = "primary",
+                            icon = icon("check")
+                        )
+                    ),
+                    mainPanel(
+                        plotOutput(outputId = "fish_count_plot", height = "700px") %>%
+                            withSpinner(type = 8, color = palette[4]),
+                        width = 10
+                    )
+                )
             ),
             tabItem(
                 tabName = "page_5",
