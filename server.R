@@ -156,7 +156,17 @@ shinyServer(function(input, output) {
     })
     # Fish size plot
     output$fish_size_plot <- renderPlot({
-        ggplot()
+        df_master_fish_size$Year <- as.factor(df_master_fish_size$Year)
+        ggplot(df_master_fish_size, aes(x = Fish_Family, y = Length)) +
+            geom_boxplot(color = "black", position = position_dodge(width = 0.75), outlier.shape = 4, outlier.size = 4) +
+            theme_classic() +
+            gg_theme +
+            labs(caption = "Figure caption. Fish length (cm) by fish family, with annual means indicated by colored diamonds.", y = "Fish Length (cm)", x = "Fish Family") +
+            scale_fill_manual(name = "Year Mean", values = palette) +
+            stat_summary(aes(fill = Year), fun = mean, geom = "point", shape = 23, size = 3, position = position_dodge(width = 0.75)) +
+            scale_y_continuous(breaks = seq(0, 100, by = 10), sec.axis = dup_axis(name = "")) +
+            geom_hline(yintercept = 7.5, linetype = "dashed") +
+            geom_hline(yintercept = 2.5, linetype = "dashed")
     })
     # Download map
     output$download_map <- downloadHandler(
