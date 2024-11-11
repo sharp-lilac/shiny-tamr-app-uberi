@@ -29,6 +29,9 @@ shinyServer(function(input, output) {
         create_coral_health_plot(data_filtered, input, coral_health_plot_caption())
     })
     # Coral disease and bleaching pie charts
+    coral_disease_plot_caption <- reactive({
+        generate_coral_disease_caption(input)
+    })
     output$coral_disease_plot <- renderPlot({
         req(input$coral_disease_choose_locality)
         req(input$coral_disease_choose_year)
@@ -61,7 +64,7 @@ shinyServer(function(input, output) {
             group_by(Name) %>%
             summarise(Count = n()) %>%
             mutate(Percent = round(Count / sum(Count) * 100))
-        create_coral_disease_plot(data_filtered_1, data_filtered_2, data_filtered_3, data_filtered_4, input)
+        create_coral_disease_plot(data_filtered_1, data_filtered_2, data_filtered_3, data_filtered_4, input, coral_disease_plot_caption())
     })
     # Coral size by year, locality, genus plot
     coral_size_plot_caption <- reactive({

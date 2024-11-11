@@ -3,6 +3,7 @@
 # Load packages ---------------------------
 library(ggplot2)
 library(ggpubr)
+library(grid)
 
 # Create plot of coral health by year, locality, species ---------------------------
 create_coral_health_plot <- function(data_filtered, input, caption) {
@@ -29,7 +30,7 @@ create_coral_health_plot <- function(data_filtered, input, caption) {
 }
 
 # Create plot of coral disease/bleaching by year, locality, species ---------------------------
-create_coral_disease_plot <- function(data_filtered_1, data_filtered_2, data_filtered_3, data_filtered_4, input, caption = "Hello") {
+create_coral_disease_plot <- function(data_filtered_1, data_filtered_2, data_filtered_3, data_filtered_4, input, caption) {
     create_plot <- function(data, x_var, y_var, x_label, y_label, fill_var) {
         ggplot(data, aes_string(x = x_var, y = y_var, fill = fill_var)) +
             geom_col() +
@@ -46,7 +47,8 @@ create_coral_disease_plot <- function(data_filtered_1, data_filtered_2, data_fil
     plot4 <- create_plot(data_filtered_4, "Name", "Percent", "Disease", "Percent of Diseased Coral", "Name")
     plot_group1 <- ggarrange(plot1, plot2, nrow = 1)
     plot_group2 <- ggarrange(plot3, plot4, nrow = 1)
-    ggarrange(plot_group1, plot_group2, nrow = 2)
+    plot_group3 <- ggarrange(plot_group1, plot_group2, nrow = 2)
+    annotate_figure(plot_group3, bottom = text_grob(caption, hjust = 0, x = 0, size = 14))
 }
 
 # Create plot of coral size by year, locality, species ---------------------------
