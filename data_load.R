@@ -12,6 +12,7 @@ df_master_coral <- vroom::vroom("data/dryad/Master_Coral_Community_2010-2021.csv
 df_master_fish_biomass <- vroom::vroom("data/dryad/restructured/Master_Fish_Biomass.csv", na = nas)
 df_master_fish_size <- vroom::vroom("data/dryad/restructured/Master_Fish_Size.csv", na = nas)
 df_master_fish_count <- vroom::vroom("data/dryad/restructured/Master_Fish_Count.csv", na = nas)
+df_master_fish_count_site <- vroom::vroom("data/dryad/restructured/Master_Fish_Count_Site.csv", na = nas)
 df_ref_disease <- vroom::vroom("data/dryad/Ref_Diseases_Coral.csv", na = nas)
 df_ref_collec <- vroom::vroom("data/dryad/Ref_Collectors_Turneffe.csv", na = nas)
 df_ref_organisms <- vroom::vroom("data/dryad/Ref_Organisms_Benthic.csv", na = nas)
