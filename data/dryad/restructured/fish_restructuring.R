@@ -56,7 +56,8 @@ df_master_fish_biomass <- df_master_fish_clean %>%
     full_join(complete_grid_fish, by = c("Uniq_Transect", "Biomass_Category")) %>%
     mutate(Biomass_Transect = replace_na(Biomass_Transect, 0)) %>%
     mutate(Biomass_g_per_100m2_Transect = 100 * Biomass_Transect / 60) %>% # calculate biomass density for transect
-    filter(!is.na(Biomass_Category))
+    filter(!is.na(Biomass_Category)) %>%
+    left_join(df_ref_sites, by = "Site")
 # Create fish count and richness dataframe
 df_master_fish_count <- df_master_fish_clean %>%
     group_by(Year, Locality, Site, Uniq_Transect, Start_Time) %>%

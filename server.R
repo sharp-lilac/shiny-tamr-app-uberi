@@ -170,6 +170,22 @@ shinyServer(function(input, output) {
             )
         create_fish_size_plot(data_filtered, input, fish_size_plot_caption())
     })
+    # Fish biomass plot
+    output$fish_biomass_plot <- renderPlot({
+        fish_biomass_plot_caption <- reactive({
+            generate_fish_biomass_caption(input)
+        })
+        req(input$fish_biomass_choose_locality)
+        req(input$fish_biomass_choose_year)
+        reef_name <- input$fish_biomass_reef_toggle
+        df_master_fish_biomass$Year <- as.factor(df_master_fish_biomass$Year)
+        df_master_fish_biomass$Locality <- as.factor(df_master_fish_biomass$Locality.x)
+        data_filtered <- df_master_fish_biomass %>%
+            filter(Locality %in% input$fish_biomass_choose_locality, Year %in% input$fish_biomass_choose_year, (Zone == reef_name | reef_name == "All"))
+        data_filtered_1 <- data_filtered %>% filter(Biomass_Category == "C")
+        data_filtered_2 <- data_filtered %>% filter(Biomass_Category == "H")
+        create_fish_biomass_plot(data_filtered_1, data_filtered_2, input, fish_biomass_plot_caption())
+    })
     # Fish count and richness plot by transect
     fish_count_plot_caption <- reactive({
         generate_fish_count_caption(input)
