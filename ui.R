@@ -593,7 +593,7 @@ ui <- dashboardPage(
                         )
                     ),
                     mainPanel(
-                        plotOutput(outputId = "fish_biomass_plot", height = "700px") %>%
+                        plotOutput(outputId = "fish_biomass_plot", height = "1100px") %>%
                             withSpinner(type = 8, color = palette[4]),
                         width = 10
                     )

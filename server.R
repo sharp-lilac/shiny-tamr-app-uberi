@@ -172,7 +172,28 @@ shinyServer(function(input, output) {
     })
     # Fish biomass plot
     output$fish_biomass_plot <- renderPlot({
-        ggplot()
+        df_master_fish_biomass$Year <- as.factor(df_master_fish_biomass$Year)
+        data_filtered_1 <- df_master_fish_biomass %>% filter(Biomass_Category == "C")
+        data_filtered_2 <- df_master_fish_biomass %>% filter(Biomass_Category == "H")
+        plot1 <- ggplot(data_filtered_1, aes(x = as.factor(Locality), y = Biomass_g_per_100m2_Transect, fill = Year)) +
+            geom_boxplot(color = "black", position = position_dodge(width = 0.75), outlier.shape = 4, outlier.size = 4) +
+            theme_classic() +
+            gg_theme +
+            labs(y = "Commercial Fish Biomass (g/100m2)", x = "Locality") +
+            scale_fill_manual(values = palette) +
+            stat_summary(aes(fill = Year), fun = mean, geom = "point", shape = 23, size = 3, position = position_dodge(width = 0.75)) +
+            scale_y_continuous(breaks = seq(0, 30000, by = 5000), sec.axis = dup_axis(name = "")) +
+            theme(legend.position = "none")
+
+        plot2 <- ggplot(data_filtered_2, aes(x = as.factor(Locality), y = Biomass_g_per_100m2_Transect, fill = Year)) +
+            geom_boxplot(color = "black", position = position_dodge(width = 0.75), outlier.shape = 4, outlier.size = 4) +
+            theme_classic() +
+            gg_theme +
+            labs(y = "Herbivorous Fish Biomass (g/100m2)", x = "Locality") +
+            scale_fill_manual(values = palette) +
+            stat_summary(aes(fill = Year), fun = mean, geom = "point", shape = 23, size = 3, position = position_dodge(width = 0.75)) +
+            scale_y_continuous(breaks = seq(0, 30000, by = 5000), sec.axis = dup_axis(name = ""))
+        ggarrange(plot1, plot2, nrow = 2, heights = c(0.75, 1))
     })
     # Fish count and richness plot by transect
     fish_count_plot_caption <- reactive({
