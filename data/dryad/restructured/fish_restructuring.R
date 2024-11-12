@@ -67,6 +67,7 @@ df_master_fish_count <- df_master_fish_clean %>%
 df_master_fish_count_site <- df_master_fish_clean %>%
     group_by(Year, Locality, Site) %>%
     summarize(
+        Transects = n_distinct(Uniq_Transect),
         Count = sum(Observations),
         Richness = length(unique(Fish_Scientific[Observations > 0]))
     )

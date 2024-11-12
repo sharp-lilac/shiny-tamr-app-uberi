@@ -218,6 +218,7 @@ shinyServer(function(input, output) {
         means_name <- input$fish_count_site_means_toggle
         df_master_fish_count_site$Year <- as.factor(df_master_fish_count_site$Year)
         data_filtered <- df_master_fish_count_site %>%
+            filter(Transects == 8) %>%
             filter(Locality %in% input$fish_count_site_choose_locality, Year %in% input$fish_count_site_choose_year)
         plot1 <- ggplot(data_filtered, aes(x = !!sym(axis_name), y = Count)) +
             geom_boxplot(color = "black", position = position_dodge(width = 0.75), outlier.shape = 4, outlier.size = 4) +
