@@ -536,7 +536,68 @@ ui <- dashboardPage(
             tabItem(
                 tabName = "page_3-2",
                 h2("Fish Biomass Explorer"),
-                fluidRow(column(width = 12, div(style = "height: 20px;")))
+                fluidRow(column(width = 12, div(style = "height: 20px;"))),
+                sidebarLayout(
+                    sidebarPanel(
+                        width = 2,
+                        pickerInput(
+                            inputId = "fish_biomass_choose_locality",
+                            label = "Select Localities:",
+                            choices = localities,
+                            selected = localities,
+                            options = pickerOptions(
+                                actionsBox = TRUE,
+                                size = 10,
+                                selectedTextFormat = "count > 3"
+                            ),
+                            multiple = TRUE
+                        ),
+                        pickerInput(
+                            inputId = "fish_biomass_choose_year",
+                            label = "Select Years:",
+                            choices = years,
+                            selected = years,
+                            options = pickerOptions(
+                                actionsBox = TRUE,
+                                size = 10,
+                                selectedTextFormat = "count > 3"
+                            ),
+                            multiple = TRUE
+                        ),
+                        prettyRadioButtons(
+                            inputId = "fish_biomass_xaxis_toggle",
+                            label = "Select X-Axis:",
+                            choices = c("Locality", "Year"),
+                            selected = "Locality",
+                            outline = TRUE,
+                            status = "primary",
+                            icon = icon("check")
+                        ),
+                        prettyRadioButtons(
+                            inputId = "fish_biomass_group_toggle",
+                            label = "Select Group:",
+                            choices = c("Locality", "Year"),
+                            selected = "Year",
+                            outline = TRUE,
+                            status = "primary",
+                            icon = icon("check")
+                        ),
+                        prettyRadioButtons(
+                            inputId = "fish_biomass_reef_toggle",
+                            label = "Select Reef Type:",
+                            choices = c("All" = "All", "Backreef" = "Backreef", "Deep Forereef" = "Deep_Forereef", "Shallow Forereef" = "Shallow_Forereef"),
+                            selected = "All",
+                            outline = TRUE,
+                            status = "primary",
+                            icon = icon("check")
+                        )
+                    ),
+                    mainPanel(
+                        plotOutput(outputId = "fish_biomass_plot", height = "700px") %>%
+                            withSpinner(type = 8, color = palette[4]),
+                        width = 10
+                    )
+                )
             ),
             tabItem(
                 tabName = "page_3-3",

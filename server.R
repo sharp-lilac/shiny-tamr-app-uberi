@@ -170,6 +170,10 @@ shinyServer(function(input, output) {
             )
         create_fish_size_plot(data_filtered, input, fish_size_plot_caption())
     })
+    # Fish biomass plot
+    output$fish_biomass_plot <- renderPlot({
+        ggplot()
+    })
     # Fish count and richness plot by transect
     fish_count_plot_caption <- reactive({
         generate_fish_count_caption(input)
