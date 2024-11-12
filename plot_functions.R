@@ -158,6 +158,31 @@ create_fish_size_plot <- function(data_filtered, input, caption) {
         geom_hline(yintercept = 2.5, linetype = "dashed")
 }
 
+# Create plot of fish biomass ---------------------------
+create_fish_biomass_plot <- function(data_filtered_1, data_filtered_2, input, caption) {
+    axis_name <- input$fish_biomass_xaxis_toggle
+    group_name <- input$fish_biomass_group_toggle
+    reef_name <- input$fish_biomass_reef_toggle
+    plot1 <- ggplot(data_filtered_1, aes(x = as.factor(!!sym(axis_name)), y = Biomass_g_per_100m2_Transect, fill = as.factor(!!sym(group_name)))) +
+        geom_boxplot(color = "black", position = position_dodge(width = 0.75), outlier.shape = 4, outlier.size = 4) +
+        theme_classic() +
+        gg_theme +
+        labs(y = "Commercial Fish Biomass (g/100m2)", x = axis_name) +
+        scale_fill_manual(values = palette) +
+        stat_summary(aes(fill = as.factor(!!sym(group_name))), fun = mean, geom = "point", shape = 23, size = 3, position = position_dodge(width = 0.75)) +
+        scale_y_continuous(breaks = seq(0, 30000, by = 5000), sec.axis = dup_axis(name = "")) +
+        theme(legend.position = "none")
+    plot2 <- ggplot(data_filtered_2, aes(x = as.factor(!!sym(axis_name)), y = Biomass_g_per_100m2_Transect, fill = as.factor(!!sym(group_name)))) +
+        geom_boxplot(color = "black", position = position_dodge(width = 0.75), outlier.shape = 4, outlier.size = 4) +
+        theme_classic() +
+        gg_theme +
+        labs(caption = caption, y = "Herbivorous Fish Biomass (g/100m2)", x = axis_name) +
+        scale_fill_manual(name = group_name, values = palette) +
+        stat_summary(aes(fill = as.factor(!!sym(group_name))), fun = mean, geom = "point", shape = 23, size = 3, position = position_dodge(width = 0.75)) +
+        scale_y_continuous(breaks = seq(0, 30000, by = 5000), sec.axis = dup_axis(name = ""))
+    ggarrange(plot1, plot2, nrow = 2, heights = c(0.75, 1))
+}
+
 # Create plot of fish count (transect-level) ---------------------------
 create_fish_count_plot <- function(data_filtered, input, caption) {
     axis_name <- input$fish_count_xaxis_toggle

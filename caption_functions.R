@@ -104,6 +104,22 @@ generate_fish_size_caption <- function(input) {
     str_wrap(caption_text, width = 150)
 }
 
+# Create caption of fish biomass plot ---------------------------
+generate_fish_biomass_caption <- function(input) {
+    selected_localities <- paste(input$fish_biomass_choose_locality, collapse = ", ")
+    selected_years <- paste(input$fish_biomass_choose_year, collapse = ", ")
+    axis_name <- tolower(input$fish_biomass_xaxis_toggle)
+    group_name <- tolower(input$fish_biomass_group_toggle)
+    reef_name <- tolower(input$fish_biomass_reef_toggle)
+
+    caption_text <- paste0(
+        "Figure Caption: Plot of fish biomass density (g/100m2) for commerical (Epinephelidae and Lutjanidae) and herbivorous (Acanthuridae and Scaridae) fish by ", axis_name, ". Data for localities (", selected_localities,
+        ") and for years (", selected_years, ") at Turneffe Atoll. Means of ", group_name, " biomass are shown by colored diamonds. ",
+        caption_text[1]
+    )
+    str_wrap(caption_text, width = 150)
+}
+
 # Create caption of fish count plot (transect-level) ---------------------------
 generate_fish_count_caption <- function(input) {
     selected_localities <- paste(input$fish_count_choose_locality, collapse = ", ")
