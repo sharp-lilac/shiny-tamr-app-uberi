@@ -59,8 +59,15 @@ df_master_fish_biomass <- df_master_fish_clean %>%
     filter(!is.na(Biomass_Category))
 # Create fish count and richness dataframe
 df_master_fish_count <- df_master_fish_clean %>%
-    group_by(Year, Locality, Site, Uniq_Transect) %>%
+    group_by(Year, Locality, Site, Uniq_Transect, Start_Time) %>%
     summarize(
+        Count = sum(Observations),
+        Richness = length(unique(Fish_Scientific[Observations > 0]))
+    )
+df_master_fish_count_site <- df_master_fish_clean %>%
+    group_by(Year, Locality, Site) %>%
+    summarize(
+        Transects = n_distinct(Uniq_Transect),
         Count = sum(Observations),
         Richness = length(unique(Fish_Scientific[Observations > 0]))
     )
@@ -69,3 +76,4 @@ df_master_fish_count <- df_master_fish_clean %>%
 write.csv(df_master_fish_biomass, "data/dryad/restructured/Master_Fish_Biomass.csv")
 write.csv(df_master_fish_size, "data/dryad/restructured/Master_Fish_Size.csv")
 write.csv(df_master_fish_count, "data/dryad/restructured/Master_Fish_Count.csv")
+write.csv(df_master_fish_count_site, "data/dryad/restructured/Master_Fish_Count_Site.csv")

@@ -19,7 +19,6 @@ shinyServer(function(input, output) {
         req(input$coral_health_choose_locality)
         req(input$coral_health_choose_year)
         req(input$coral_health_choose_genus)
-        group_name <- input$coral_health_group_toggle
         data_filtered <- df_coral_health %>%
             filter(
                 Locality %in% input$coral_health_choose_locality,
@@ -74,7 +73,6 @@ shinyServer(function(input, output) {
         req(input$coral_size_choose_locality)
         req(input$coral_size_choose_year)
         req(input$coral_size_choose_genus)
-        group_name <- input$coral_size_xaxis_toggle
         data_filtered <- df_coral_size %>%
             filter(Locality %in% input$coral_size_choose_locality, Year %in% input$coral_size_choose_year, Genus %in% input$coral_size_choose_genus)
         create_coral_size_plot(data_filtered, input, coral_size_plot_caption())
@@ -162,21 +160,45 @@ shinyServer(function(input, output) {
         req(input$fish_size_choose_locality)
         req(input$fish_size_choose_year)
         req(input$fish_size_choose_family)
-        axis_name <- input$fish_size_xaxis_toggle
-        means_name <- input$fish_size_means_toggle
         df_master_fish_size$Year <- as.factor(df_master_fish_size$Year)
         data_filtered <- df_master_fish_size %>%
-            filter(
-                Locality %in% input$fish_size_choose_locality,
-                Year %in% input$fish_size_choose_year,
-                Fish_Family %in% input$fish_size_choose_family
-            ) %>%
+            filter(Locality %in% input$fish_size_choose_locality, Year %in% input$fish_size_choose_year, Fish_Family %in% input$fish_size_choose_family) %>%
             mutate(
                 Start_Time = if_else(Start_Time == "MISSING", NA, Start_Time),
                 Start_Time = hour(hm(Start_Time)),
-                Start_Time = if_else(Start_Time == 23, 11, Start_Time) # fix error of 2023 fish from 11am being 11pm
+                Start_Time = if_else(Start_Time == 23, 11, Start_Time)
             )
         create_fish_size_plot(data_filtered, input, fish_size_plot_caption())
+    })
+    # Fish count and richness plot by transect
+    fish_count_plot_caption <- reactive({
+        generate_fish_count_caption(input)
+    })
+    output$fish_count_plot <- renderPlot({
+        req(input$fish_count_choose_locality)
+        req(input$fish_count_choose_year)
+        df_master_fish_count$Year <- as.factor(df_master_fish_count$Year)
+        data_filtered <- df_master_fish_count %>%
+            filter(Locality %in% input$fish_count_choose_locality, Year %in% input$fish_count_choose_year) %>%
+            mutate(
+                Start_Time = if_else(Start_Time == "MISSING", NA, Start_Time),
+                Start_Time = hour(hm(Start_Time)),
+                Start_Time = if_else(Start_Time == 23, 11, Start_Time)
+            )
+        create_fish_count_plot(data_filtered, input, fish_count_plot_caption())
+    })
+    # Fish count and richness plot by site
+    fish_count_site_plot_caption <- reactive({
+        generate_fish_count_site_caption(input)
+    })
+    output$fish_count_site_plot <- renderPlot({
+        req(input$fish_count_site_choose_locality)
+        req(input$fish_count_site_choose_year)
+        df_master_fish_count_site$Year <- as.factor(df_master_fish_count_site$Year)
+        data_filtered <- df_master_fish_count_site %>%
+            filter(Transects == 8) %>%
+            filter(Locality %in% input$fish_count_site_choose_locality, Year %in% input$fish_count_site_choose_year)
+        create_fish_count_site_plot(data_filtered, input, fish_count_site_plot_caption())
     })
     # Download map
     output$download_map <- downloadHandler(
