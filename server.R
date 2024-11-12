@@ -172,26 +172,37 @@ shinyServer(function(input, output) {
     })
     # Fish biomass plot
     output$fish_biomass_plot <- renderPlot({
+        req(input$fish_biomass_choose_locality)
+        req(input$fish_biomass_choose_year)
+        axis_name <- input$fish_biomass_xaxis_toggle
+        group_name <- input$fish_biomass_group_toggle
+        reef_name <- input$fish_biomass_reef_toggle
         df_master_fish_biomass$Year <- as.factor(df_master_fish_biomass$Year)
-        data_filtered_1 <- df_master_fish_biomass %>% filter(Biomass_Category == "C")
-        data_filtered_2 <- df_master_fish_biomass %>% filter(Biomass_Category == "H")
-        plot1 <- ggplot(data_filtered_1, aes(x = as.factor(Locality), y = Biomass_g_per_100m2_Transect, fill = Year)) +
+        df_master_fish_biomass$Locality <- as.factor(df_master_fish_biomass$Locality.x)
+        data_filtered <- df_master_fish_biomass %>%
+            filter(
+                Locality %in% input$fish_biomass_choose_locality,
+                Year %in% input$fish_biomass_choose_year,
+                (Zone == reef_name | reef_name == "All")
+            )
+        data_filtered_1 <- data_filtered %>% filter(Biomass_Category == "C")
+        data_filtered_2 <- data_filtered %>% filter(Biomass_Category == "H")
+        plot1 <- ggplot(data_filtered_1, aes(x = as.factor(!!sym(axis_name)), y = Biomass_g_per_100m2_Transect, fill = as.factor(!!sym(group_name)))) +
             geom_boxplot(color = "black", position = position_dodge(width = 0.75), outlier.shape = 4, outlier.size = 4) +
             theme_classic() +
             gg_theme +
-            labs(y = "Commercial Fish Biomass (g/100m2)", x = "Locality") +
+            labs(y = "Commercial Fish Biomass (g/100m2)", x = axis_name) +
             scale_fill_manual(values = palette) +
-            stat_summary(aes(fill = Year), fun = mean, geom = "point", shape = 23, size = 3, position = position_dodge(width = 0.75)) +
+            stat_summary(aes(fill = as.factor(!!sym(group_name))), fun = mean, geom = "point", shape = 23, size = 3, position = position_dodge(width = 0.75)) +
             scale_y_continuous(breaks = seq(0, 30000, by = 5000), sec.axis = dup_axis(name = "")) +
             theme(legend.position = "none")
-
-        plot2 <- ggplot(data_filtered_2, aes(x = as.factor(Locality), y = Biomass_g_per_100m2_Transect, fill = Year)) +
+        plot2 <- ggplot(data_filtered_2, aes(x = as.factor(!!sym(axis_name)), y = Biomass_g_per_100m2_Transect, fill = as.factor(!!sym(group_name)))) +
             geom_boxplot(color = "black", position = position_dodge(width = 0.75), outlier.shape = 4, outlier.size = 4) +
             theme_classic() +
             gg_theme +
-            labs(y = "Herbivorous Fish Biomass (g/100m2)", x = "Locality") +
-            scale_fill_manual(values = palette) +
-            stat_summary(aes(fill = Year), fun = mean, geom = "point", shape = 23, size = 3, position = position_dodge(width = 0.75)) +
+            labs(y = "Herbivorous Fish Biomass (g/100m2)", x = axis_name) +
+            scale_fill_manual(name = group_name, values = palette) +
+            stat_summary(aes(fill = as.factor(!!sym(group_name))), fun = mean, geom = "point", shape = 23, size = 3, position = position_dodge(width = 0.75)) +
             scale_y_continuous(breaks = seq(0, 30000, by = 5000), sec.axis = dup_axis(name = ""))
         ggarrange(plot1, plot2, nrow = 2, heights = c(0.75, 1))
     })
