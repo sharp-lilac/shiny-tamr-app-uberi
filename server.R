@@ -19,7 +19,6 @@ shinyServer(function(input, output) {
         req(input$coral_health_choose_locality)
         req(input$coral_health_choose_year)
         req(input$coral_health_choose_genus)
-        group_name <- input$coral_health_group_toggle
         data_filtered <- df_coral_health %>%
             filter(
                 Locality %in% input$coral_health_choose_locality,
@@ -74,7 +73,6 @@ shinyServer(function(input, output) {
         req(input$coral_size_choose_locality)
         req(input$coral_size_choose_year)
         req(input$coral_size_choose_genus)
-        group_name <- input$coral_size_xaxis_toggle
         data_filtered <- df_coral_size %>%
             filter(Locality %in% input$coral_size_choose_locality, Year %in% input$coral_size_choose_year, Genus %in% input$coral_size_choose_genus)
         create_coral_size_plot(data_filtered, input, coral_size_plot_caption())
@@ -162,8 +160,6 @@ shinyServer(function(input, output) {
         req(input$fish_size_choose_locality)
         req(input$fish_size_choose_year)
         req(input$fish_size_choose_family)
-        axis_name <- input$fish_size_xaxis_toggle
-        means_name <- input$fish_size_means_toggle
         df_master_fish_size$Year <- as.factor(df_master_fish_size$Year)
         data_filtered <- df_master_fish_size %>%
             filter(Locality %in% input$fish_size_choose_locality, Year %in% input$fish_size_choose_year, Fish_Family %in% input$fish_size_choose_family) %>%
@@ -175,12 +171,12 @@ shinyServer(function(input, output) {
         create_fish_size_plot(data_filtered, input, fish_size_plot_caption())
     })
     # Fish count and richness plot by transect
+    fish_count_plot_caption <- reactive({
+        generate_fish_count_caption(input)
+    })
     output$fish_count_plot <- renderPlot({
         req(input$fish_count_choose_locality)
         req(input$fish_count_choose_year)
-        axis_name <- input$fish_count_xaxis_toggle
-        axis_label <- reverse_fish_choices[input$fish_count_xaxis_toggle]
-        means_name <- input$fish_count_means_toggle
         df_master_fish_count$Year <- as.factor(df_master_fish_count$Year)
         data_filtered <- df_master_fish_count %>%
             filter(Locality %in% input$fish_count_choose_locality, Year %in% input$fish_count_choose_year) %>%
@@ -189,62 +185,21 @@ shinyServer(function(input, output) {
                 Start_Time = hour(hm(Start_Time)),
                 Start_Time = if_else(Start_Time == 23, 11, Start_Time)
             )
-        plot1 <- ggplot(data_filtered, aes(x = as.factor(!!sym(axis_name)), y = Count)) +
-            geom_boxplot(color = "black", position = position_dodge(width = 0.75), outlier.shape = 4, outlier.size = 4) +
-            theme_classic() +
-            gg_theme +
-            labs(y = "Number Fish / Transect", x = "") +
-            scale_fill_manual(name = paste(means_name, " Mean"), values = palette) +
-            stat_summary(aes(fill = !!sym(means_name)), fun = mean, geom = "point", shape = 23, size = 3, position = position_dodge(width = 0.75)) +
-            scale_y_continuous(breaks = seq(0, 500, by = 50), sec.axis = dup_axis(name = "")) +
-            theme(legend.position = "none")
-
-        plot2 <- ggplot(data_filtered, aes(x = as.factor(!!sym(axis_name)), y = Richness)) +
-            geom_boxplot(color = "black", position = position_dodge(width = 0.75), outlier.shape = 4, outlier.size = 4) +
-            theme_classic() +
-            gg_theme +
-            labs(caption = "66 fish species MBRS, 72 AGRRA", y = "Fish Species / Transect", x = axis_label) +
-            scale_fill_manual(name = paste(means_name, " Mean"), values = palette) +
-            stat_summary(aes(fill = !!sym(means_name)), fun = mean, geom = "point", shape = 23, size = 3, position = position_dodge(width = 0.75)) +
-            scale_y_continuous(breaks = seq(0, 30, by = 5), sec.axis = dup_axis(name = ""))
-
-        ggarrange(plot1, plot2, nrow = 2, heights = c(0.75, 1))
+        create_fish_count_plot(data_filtered, input, fish_count_plot_caption())
     })
     # Fish count and richness plot by site
+    fish_count_site_plot_caption <- reactive({
+        generate_fish_count_site_caption(input)
+    })
     output$fish_count_site_plot <- renderPlot({
         req(input$fish_count_site_choose_locality)
         req(input$fish_count_site_choose_year)
-        axis_name <- input$fish_count_site_xaxis_toggle
-        means_name <- input$fish_count_site_means_toggle
         df_master_fish_count_site$Year <- as.factor(df_master_fish_count_site$Year)
         data_filtered <- df_master_fish_count_site %>%
             filter(Transects == 8) %>%
             filter(Locality %in% input$fish_count_site_choose_locality, Year %in% input$fish_count_site_choose_year)
-        plot1 <- ggplot(data_filtered, aes(x = !!sym(axis_name), y = Count)) +
-            geom_boxplot(color = "black", position = position_dodge(width = 0.75), outlier.shape = 4, outlier.size = 4) +
-            theme_classic() +
-            gg_theme +
-            labs(y = "Number Fish / Site", x = "") +
-            scale_fill_manual(name = paste(means_name, " Mean"), values = palette) +
-            stat_summary(aes(fill = !!sym(means_name)), fun = mean, geom = "point", shape = 23, size = 3, position = position_dodge(width = 0.75)) +
-            scale_y_continuous(breaks = seq(0, 2000, by = 100), sec.axis = dup_axis(name = "")) +
-            theme(legend.position = "none")
-
-        plot2 <- ggplot(data_filtered, aes(x = !!sym(axis_name), y = Richness)) +
-            geom_boxplot(color = "black", position = position_dodge(width = 0.75), outlier.shape = 4, outlier.size = 4) +
-            theme_classic() +
-            gg_theme +
-            labs(caption = "66 fish species MBRS, 72 AGRRA", y = "Fish Species / Site", x = axis_name) +
-            scale_fill_manual(name = paste(means_name, " Mean"), values = palette) +
-            stat_summary(aes(fill = !!sym(means_name)), fun = mean, geom = "point", shape = 23, size = 3, position = position_dodge(width = 0.75)) +
-            scale_y_continuous(breaks = seq(0, 50, by = 5), sec.axis = dup_axis(name = "")) +
-            coord_cartesian(ylim = c(0, 50))
-
-        ggarrange(plot1, plot2, nrow = 2, heights = c(0.75, 1))
-
-        # need to standardize by num transects per site - maybe only sites with certain num transects?
+        create_fish_count_site_plot(data_filtered, input, fish_count_site_plot_caption())
     })
-
     # Download map
     output$download_map <- downloadHandler(
         filename = function() {

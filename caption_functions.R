@@ -103,3 +103,30 @@ generate_fish_size_caption <- function(input) {
     )
     str_wrap(caption_text, width = 150)
 }
+
+# Create caption of fish count plot (transect-level) ---------------------------
+generate_fish_count_caption <- function(input) {
+    selected_localities <- paste(input$fish_count_choose_locality, collapse = ", ")
+    selected_years <- paste(input$fish_count_choose_year, collapse = ", ")
+    axis_name <- tolower(reverse_fish_choices[input$fish_count_xaxis_toggle])
+    means_name <- tolower(reverse_fish_choices[input$fish_count_means_toggle])
+    caption_text <- paste0(
+        "Figure Caption: Plot of fish count and richness at the transect-level by ", axis_name, ". Data for localities (", selected_localities,
+        ") and for years (", selected_years, ") at Turneffe Atoll. Means of ", means_name, " are shown by colored diamonds. ", caption_text[4]
+    )
+    str_wrap(caption_text, width = 150)
+}
+
+# Create caption of fish count plot (site-level) ---------------------------
+generate_fish_count_site_caption <- function(input) {
+    selected_localities <- paste(input$fish_count_site_choose_locality, collapse = ", ")
+    selected_years <- paste(input$fish_count_site_choose_year, collapse = ", ")
+    axis_name <- tolower(reverse_fish_choices[input$fish_count_site_xaxis_toggle])
+    means_name <- tolower(reverse_fish_choices[input$fish_count_site_means_toggle])
+    caption_text <- paste0(
+        "Figure Caption: Plot of fish count and richness at the site-level by ", axis_name, ". Data for localities (", selected_localities,
+        ") and for years (", selected_years, ") at Turneffe Atoll. Means of ", means_name, " are shown by colored diamonds. ",
+        caption_text[5], caption_text[4]
+    )
+    str_wrap(caption_text, width = 150)
+}
