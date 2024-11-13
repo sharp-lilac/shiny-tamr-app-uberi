@@ -61,10 +61,23 @@
 }
 
 
-.info-box>.info-box-icon {
+/*Styles for the Key Data boxes on home page*/
+.keyBoxes .info-box {
+    min-height: 0;
+}
+
+.keyBoxes .shiny-html-output {
+    width: fit-content;
+}
+
+.keyBoxes .info-box-icon {
     display: none;
 }
 
-.info-box>.info-box-content {
+.keyBoxes .info-box-content {
     margin-left: 0;
+}
+
+.keyBoxes .info-box-number {
+    justify-self: center;
 }

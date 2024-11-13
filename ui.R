@@ -66,7 +66,7 @@ ui <- dashboardPage(
                                     infoBoxOutput("keyYears"),
                                     infoBoxOutput("keyLocale"),
                                     infoBoxOutput("keySites")
-                                )
+                                ) %>% tagAppendAttributes(class = "keyBoxes")
                             )
                         ),
                         h3("Our Long-Term Reef Monitoring Data"),
