@@ -64,6 +64,10 @@
 /*Styles for the Key Data boxes on home page*/
 .keyBoxes .info-box {
     min-height: 0;
+    min-width: 80px;
+    border-radius: 8px;
+    border: 1px solid #000;
+    background-color: #d8e6cf;
 }
 
 .keyBoxes .shiny-html-output {
@@ -76,8 +80,13 @@
 
 .keyBoxes .info-box-content {
     margin-left: 0;
+    justify-self: center;
 }
 
 .keyBoxes .info-box-number {
     justify-self: center;
+}
+
+.keyBoxes>div {
+    border-radius: 2px;
 }
