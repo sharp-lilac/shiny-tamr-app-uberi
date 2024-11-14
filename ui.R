@@ -106,60 +106,115 @@ ui <- dashboardPage(
             tabItem(
                 tabName = "page_1-2",
                 h2("Coral Health Explorer"),
-                fluidRow(column(width = 12, div(style = "height: 20px;"))),
-                sidebarLayout(
-                    sidebarPanel(
-                        width = 2,
-                        pickerInput(
-                            inputId = "coral_health_choose_locality",
-                            label = "Select Localities:",
-                            choices = localities,
-                            selected = localities,
-                            options = pickerOptions(
-                                actionsBox = TRUE,
-                                size = 10,
-                                selectedTextFormat = "count > 3"
+                tabsetPanel(
+                    tabPanel(
+                        h3("Dead Coral"),
+                        fluidRow(column(width = 12, div(style = "height: 20px;"))),
+                        sidebarLayout(
+                            sidebarPanel(
+                                width = 2,
+                                pickerInput(
+                                    inputId = "coral_health_choose_locality",
+                                    label = "Select Localities:",
+                                    choices = localities,
+                                    selected = localities,
+                                    options = pickerOptions(
+                                        actionsBox = TRUE,
+                                        size = 10,
+                                        selectedTextFormat = "count > 3"
+                                    ),
+                                    multiple = TRUE
+                                ),
+                                pickerInput(
+                                    inputId = "coral_health_choose_year",
+                                    label = "Select Years:",
+                                    choices = years,
+                                    selected = years,
+                                    options = pickerOptions(
+                                        actionsBox = TRUE,
+                                        size = 10,
+                                        selectedTextFormat = "count > 3"
+                                    ),
+                                    multiple = TRUE
+                                ),
+                                pickerInput(
+                                    inputId = "coral_health_choose_genus",
+                                    label = "Select Genera:",
+                                    choices = coral_genera,
+                                    selected = coral_genera,
+                                    options = pickerOptions(
+                                        actionsBox = TRUE,
+                                        size = 10,
+                                        selectedTextFormat = "count > 3"
+                                    ),
+                                    multiple = TRUE
+                                ),
+                                prettyRadioButtons(
+                                    inputId = "coral_health_group_toggle",
+                                    label = "Select Group:",
+                                    choices = c("Locality", "Year", "Genus"),
+                                    selected = "Year",
+                                    outline = TRUE,
+                                    status = "primary",
+                                    icon = icon("check")
+                                )
                             ),
-                            multiple = TRUE
-                        ),
-                        pickerInput(
-                            inputId = "coral_health_choose_year",
-                            label = "Select Years:",
-                            choices = years,
-                            selected = years,
-                            options = pickerOptions(
-                                actionsBox = TRUE,
-                                size = 10,
-                                selectedTextFormat = "count > 3"
-                            ),
-                            multiple = TRUE
-                        ),
-                        pickerInput(
-                            inputId = "coral_health_choose_genus",
-                            label = "Select Genera:",
-                            choices = coral_genera,
-                            selected = coral_genera,
-                            options = pickerOptions(
-                                actionsBox = TRUE,
-                                size = 10,
-                                selectedTextFormat = "count > 3"
-                            ),
-                            multiple = TRUE
-                        ),
-                        prettyRadioButtons(
-                            inputId = "coral_health_group_toggle",
-                            label = "Select Group:",
-                            choices = c("Locality", "Year", "Genus"),
-                            selected = "Year",
-                            outline = TRUE,
-                            status = "primary",
-                            icon = icon("check")
+                            mainPanel(
+                                plotOutput(outputId = "coral_health_plot", height = "1200px") %>%
+                                    withSpinner(type = 8, color = palette[4]),
+                                width = 10
+                            )
                         )
                     ),
-                    mainPanel(
-                        plotOutput(outputId = "coral_health_plot", height = "1200px") %>%
-                            withSpinner(type = 8, color = palette[4]),
-                        width = 10
+                    tabPanel(
+                        h3("Disease and Bleaching"),
+                        fluidRow(column(width = 12, div(style = "height: 20px;"))),
+                        sidebarLayout(
+                            sidebarPanel(
+                                width = 2,
+                                pickerInput(
+                                    inputId = "coral_disease_choose_locality",
+                                    label = "Select Localities:",
+                                    choices = localities,
+                                    selected = localities,
+                                    options = pickerOptions(
+                                        actionsBox = TRUE,
+                                        size = 10,
+                                        selectedTextFormat = "count > 3"
+                                    ),
+                                    multiple = TRUE
+                                ),
+                                pickerInput(
+                                    inputId = "coral_disease_choose_year",
+                                    label = "Select Years:",
+                                    choices = years,
+                                    selected = years,
+                                    options = pickerOptions(
+                                        actionsBox = TRUE,
+                                        size = 10,
+                                        selectedTextFormat = "count > 3"
+                                    ),
+                                    multiple = TRUE
+                                ),
+                                pickerInput(
+                                    inputId = "coral_disease_choose_genus",
+                                    label = "Select Genera:",
+                                    choices = coral_genera,
+                                    selected = coral_genera,
+                                    options = pickerOptions(
+                                        actionsBox = TRUE,
+                                        size = 10,
+                                        selectedTextFormat = "count > 3"
+                                    ),
+                                    multiple = TRUE
+                                )
+                            ),
+                            mainPanel(
+                                plotOutput(outputId = "coral_disease_plot", height = "1100px") %>%
+                                    withSpinner(type = 8, color = palette[4]),
+                                width = 10
+                            )
+                        )
                     )
                 )
             ),
@@ -403,6 +458,15 @@ ui <- dashboardPage(
                             outline = TRUE,
                             status = "primary",
                             icon = icon("check")
+                        ),
+                        prettyRadioButtons(
+                            inputId = "benthic_comp_reef_toggle",
+                            label = "Select Reef Type:",
+                            choices = c("All" = "All", "Backreef" = "Backreef", "Deep Forereef" = "Deep_Forereef", "Shallow Forereef" = "Shallow_Forereef"),
+                            selected = "All",
+                            outline = TRUE,
+                            status = "primary",
+                            icon = icon("check")
                         )
                     ),
                     mainPanel(
@@ -415,42 +479,135 @@ ui <- dashboardPage(
             tabItem(
                 tabName = "page_3-1",
                 h2("Fish Size Explorer"),
-                tabsetPanel(
-                    tabPanel(
-                        h3("By Year"),
-                        fluidRow(column(width = 12, div(style = "height: 20px;"))),
-                        p("Fish size by year and family")
+                fluidRow(column(width = 12, div(style = "height: 20px;"))),
+                sidebarLayout(
+                    sidebarPanel(
+                        width = 2,
+                        pickerInput(
+                            inputId = "fish_size_choose_locality",
+                            label = "Select Localities:",
+                            choices = localities,
+                            selected = localities,
+                            options = pickerOptions(
+                                actionsBox = TRUE,
+                                size = 10,
+                                selectedTextFormat = "count > 3"
+                            ),
+                            multiple = TRUE
+                        ),
+                        pickerInput(
+                            inputId = "fish_size_choose_year",
+                            label = "Select Years:",
+                            choices = years,
+                            selected = years,
+                            options = pickerOptions(
+                                actionsBox = TRUE,
+                                size = 10,
+                                selectedTextFormat = "count > 3"
+                            ),
+                            multiple = TRUE
+                        ),
+                        pickerInput(
+                            inputId = "fish_size_choose_family",
+                            label = "Select Fish Families:",
+                            choices = fish_families,
+                            selected = fish_families,
+                            options = pickerOptions(
+                                actionsBox = TRUE,
+                                size = 10,
+                                selectedTextFormat = "count > 3"
+                            ),
+                            multiple = TRUE
+                        ),
+                        prettyRadioButtons(
+                            inputId = "fish_size_xaxis_toggle",
+                            label = "Select X-Axis:",
+                            choices = fish_choices,
+                            selected = "Fish_Family",
+                            outline = TRUE,
+                            status = "primary",
+                            icon = icon("check")
+                        ),
+                        prettyRadioButtons(
+                            inputId = "fish_size_means_toggle",
+                            label = "Select Group for Mean:",
+                            choices = fish_choices[1:3],
+                            selected = "Year",
+                            outline = TRUE,
+                            status = "primary",
+                            icon = icon("check")
+                        )
                     ),
-                    tabPanel(
-                        h3("By Locality"),
-                        fluidRow(column(width = 12, div(style = "height: 20px;"))),
-                        p("Fish size by locality and family")
-                    ),
-                    tabPanel(
-                        h3("By Species"),
-                        fluidRow(column(width = 12, div(style = "height: 20px;"))),
-                        p("Fish size by species")
-                    ),
-                    tabPanel(
-                        h3("By Time of Day"),
-                        fluidRow(column(width = 12, div(style = "height: 20px;"))),
-                        p("Fish size by time of day")
+                    mainPanel(
+                        plotOutput(outputId = "fish_size_plot", height = "700px") %>%
+                            withSpinner(type = 8, color = palette[4]),
+                        width = 10
                     )
                 )
             ),
             tabItem(
                 tabName = "page_3-2",
                 h2("Fish Biomass Explorer"),
-                tabsetPanel(
-                    tabPanel(
-                        h3("By Year"),
-                        fluidRow(column(width = 12, div(style = "height: 20px;"))),
-                        p("Fish biomass by year and group")
+                fluidRow(column(width = 12, div(style = "height: 20px;"))),
+                sidebarLayout(
+                    sidebarPanel(
+                        width = 2,
+                        pickerInput(
+                            inputId = "fish_biomass_choose_locality",
+                            label = "Select Localities:",
+                            choices = localities,
+                            selected = localities,
+                            options = pickerOptions(
+                                actionsBox = TRUE,
+                                size = 10,
+                                selectedTextFormat = "count > 3"
+                            ),
+                            multiple = TRUE
+                        ),
+                        pickerInput(
+                            inputId = "fish_biomass_choose_year",
+                            label = "Select Years:",
+                            choices = years,
+                            selected = years,
+                            options = pickerOptions(
+                                actionsBox = TRUE,
+                                size = 10,
+                                selectedTextFormat = "count > 3"
+                            ),
+                            multiple = TRUE
+                        ),
+                        prettyRadioButtons(
+                            inputId = "fish_biomass_xaxis_toggle",
+                            label = "Select X-Axis:",
+                            choices = c("Locality", "Year"),
+                            selected = "Locality",
+                            outline = TRUE,
+                            status = "primary",
+                            icon = icon("check")
+                        ),
+                        prettyRadioButtons(
+                            inputId = "fish_biomass_group_toggle",
+                            label = "Select Group:",
+                            choices = c("Locality", "Year"),
+                            selected = "Year",
+                            outline = TRUE,
+                            status = "primary",
+                            icon = icon("check")
+                        ),
+                        prettyRadioButtons(
+                            inputId = "fish_biomass_reef_toggle",
+                            label = "Select Reef Type:",
+                            choices = c("All" = "All", "Backreef" = "Backreef", "Deep Forereef" = "Deep_Forereef", "Shallow Forereef" = "Shallow_Forereef"),
+                            selected = "All",
+                            outline = TRUE,
+                            status = "primary",
+                            icon = icon("check")
+                        )
                     ),
-                    tabPanel(
-                        h3("By Locality"),
-                        fluidRow(column(width = 12, div(style = "height: 20px;"))),
-                        p("Fish biomass by locality and group")
+                    mainPanel(
+                        plotOutput(outputId = "fish_biomass_plot", height = "1100px") %>%
+                            withSpinner(type = 8, color = palette[4]),
+                        width = 10
                     )
                 )
             ),
@@ -459,19 +616,116 @@ ui <- dashboardPage(
                 h2("Fish Observations Explorer"),
                 tabsetPanel(
                     tabPanel(
-                        h3("By Year"),
+                        h3("Transect-Level"),
                         fluidRow(column(width = 12, div(style = "height: 20px;"))),
-                        p("Fish count and richness by year and group")
+                        sidebarLayout(
+                            sidebarPanel(
+                                width = 2,
+                                pickerInput(
+                                    inputId = "fish_count_choose_locality",
+                                    label = "Select Localities:",
+                                    choices = localities,
+                                    selected = localities,
+                                    options = pickerOptions(
+                                        actionsBox = TRUE,
+                                        size = 10,
+                                        selectedTextFormat = "count > 3"
+                                    ),
+                                    multiple = TRUE
+                                ),
+                                pickerInput(
+                                    inputId = "fish_count_choose_year",
+                                    label = "Select Years:",
+                                    choices = years,
+                                    selected = years,
+                                    options = pickerOptions(
+                                        actionsBox = TRUE,
+                                        size = 10,
+                                        selectedTextFormat = "count > 3"
+                                    ),
+                                    multiple = TRUE
+                                ),
+                                prettyRadioButtons(
+                                    inputId = "fish_count_xaxis_toggle",
+                                    label = "Select X-Axis:",
+                                    choices = c(fish_choices[1:2], fish_choices[4]),
+                                    selected = "Year",
+                                    outline = TRUE,
+                                    status = "primary",
+                                    icon = icon("check")
+                                ),
+                                prettyRadioButtons(
+                                    inputId = "fish_count_means_toggle",
+                                    label = "Select Group for Mean:",
+                                    choices = fish_choices[1:2],
+                                    selected = "Locality",
+                                    outline = TRUE,
+                                    status = "primary",
+                                    icon = icon("check")
+                                )
+                            ),
+                            mainPanel(
+                                plotOutput(outputId = "fish_count_plot", height = "1000px") %>%
+                                    withSpinner(type = 8, color = palette[4]),
+                                width = 10
+                            )
+                        )
                     ),
                     tabPanel(
-                        h3("By Locality"),
+                        h3("Site-Level"),
                         fluidRow(column(width = 12, div(style = "height: 20px;"))),
-                        p("Fish count and richness by locality and group")
-                    ),
-                    tabPanel(
-                        h3("By Time of Day"),
-                        fluidRow(column(width = 12, div(style = "height: 20px;"))),
-                        p("Fish count and richness by time of day and group")
+                        sidebarLayout(
+                            sidebarPanel(
+                                width = 2,
+                                pickerInput(
+                                    inputId = "fish_count_site_choose_locality",
+                                    label = "Select Localities:",
+                                    choices = localities,
+                                    selected = localities,
+                                    options = pickerOptions(
+                                        actionsBox = TRUE,
+                                        size = 10,
+                                        selectedTextFormat = "count > 3"
+                                    ),
+                                    multiple = TRUE
+                                ),
+                                pickerInput(
+                                    inputId = "fish_count_site_choose_year",
+                                    label = "Select Years:",
+                                    choices = years,
+                                    selected = years,
+                                    options = pickerOptions(
+                                        actionsBox = TRUE,
+                                        size = 10,
+                                        selectedTextFormat = "count > 3"
+                                    ),
+                                    multiple = TRUE
+                                ),
+                                prettyRadioButtons(
+                                    inputId = "fish_count_site_xaxis_toggle",
+                                    label = "Select X-Axis:",
+                                    choices = fish_choices[1:2],
+                                    selected = "Year",
+                                    outline = TRUE,
+                                    status = "primary",
+                                    icon = icon("check")
+                                ),
+                                prettyRadioButtons(
+                                    inputId = "fish_count_site_means_toggle",
+                                    label = "Select Group for Mean:",
+                                    choices = fish_choices[1:2],
+                                    selected = "Locality",
+                                    outline = TRUE,
+                                    status = "primary",
+                                    icon = icon("check")
+                                )
+                            ),
+                            mainPanel(
+                                plotOutput(outputId = "fish_count_site_plot", height = "1000px") %>%
+                                    withSpinner(type = 8, color = palette[4]),
+                                width = 10
+                            )
+                        )
                     )
                 )
             ),

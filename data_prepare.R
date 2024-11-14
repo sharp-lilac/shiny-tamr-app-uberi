@@ -35,7 +35,7 @@ df_benthic_percents <- df_master_benthic_clean %>%
     group_by(Uniq_Transect) %>%
     summarise(Total_Points = n()) %>%
     right_join(df_master_benthic_clean, by = "Uniq_Transect") %>%
-    group_by(Year, Locality, Site, Uniq_Transect, Org_Name, Species, Organism, AGRRA_Bucket, Bucket2_Name) %>%
+    group_by(Year, Locality, Site, Zone, Uniq_Transect, Org_Name, Species, Organism, AGRRA_Bucket, Bucket2_Name) %>%
     summarise(Count = n(), Total_Points = first(Total_Points)) %>%
     mutate(Percent = (Count / Total_Points) * 100)
 df_benthic_percents_coral <- df_benthic_percents %>%
@@ -48,6 +48,21 @@ df_coral_size <- df_master_coral_clean %>%
 df_coral_health <- df_master_coral_clean %>%
     select(Year, Locality, Organism, Genus, Org_Name, OD, TD, RD) %>%
     mutate(Dead = case_when(is.na(TD) ~ OD + RD, TRUE ~ OD + TD + RD))
+df_coral_disease <- df_master_coral_clean %>%
+    select(Year, Locality, Organism, Genus, Org_Name, Bleaching.x, Disease) %>%
+    left_join(df_ref_disease, by = "Disease") %>%
+    mutate(
+        Bleaching.x = factor(Bleaching.x,
+            levels = c("P", "PB", "BL", "UB", "MISSING"),
+            labels = c("Pale", "Pale Bleached", "Bleached", "Unbleached", "Unknown")
+        ),
+        Name = factor(Name, levels = c(
+            "Aspergillosis", "Black Band Disease", "Blue Spots", "Dark Spots Disease",
+            "Dark Spots Disease I", "Dark Spots Disease II", "Stony coral tissue loss disease",
+            "White Band Disease", "White Plague Disease", "White Spot Patch Disease",
+            "Yellow Band Disease", "No disease"
+        ))
+    )
 
 # Prepare key vectors ---------------------------
 collectors_count <- length(unique(c(df_master_benthic$Collector, df_master_fish$Collector, df_master_coral$Collector)))
@@ -63,3 +78,6 @@ coral_species <- df_master_benthic_clean %>%
     distinct() %>%
     arrange(Species)
 coral_genera <- sort(unique(df_coral_size$Genus))
+fish_families <- sort(unique(df_master_fish_size$Fish_Family))
+fish_choices <- c("Locality" = "Locality", "Year" = "Year", "Fish Family" = "Fish_Family", "Time of Day" = "Start_Time")
+reverse_fish_choices <- setNames(names(fish_choices), fish_choices)
