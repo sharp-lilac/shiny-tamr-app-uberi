@@ -57,6 +57,16 @@ ui <- dashboardPage(
                         width = 12,
                         h1("Turneffe Data Exploration App"),
                         br(),
+                        h3(tags$strong("Disclaimer")),
+                        fluidRow(
+                            column(
+                                width = 9,
+                                div(
+                                    class = "section-box",
+                                    p(home_text[1], face = "bold")
+                                )
+                            )
+                        ),
                         h3("Our Long-Term Reef Monitoring Data"),
                         fluidRow(
                             column(
