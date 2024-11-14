@@ -72,6 +72,8 @@
 
 .keyBoxes .shiny-html-output {
     width: fit-content;
+    padding-left: 0px;
+    padding-right: 30px;
 }
 
 .keyBoxes .info-box-icon {
@@ -81,10 +83,12 @@
 .keyBoxes .info-box-content {
     margin-left: 0;
     justify-self: center;
+
 }
 
 .keyBoxes .info-box-text {
     justify-self: center;
+    font-size: 24px;
 }
 
 .keyBoxes>div {
