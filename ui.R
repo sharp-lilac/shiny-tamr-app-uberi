@@ -145,7 +145,8 @@ ui <- dashboardPage(
                                     outline = TRUE,
                                     status = "primary",
                                     icon = icon("check")
-                                )
+                                ),
+                                downloadButton("deadCoralDl", "Download Plot")
                             ),
                             mainPanel(
                                 plotOutput(outputId = "coral_health_plot", height = "1200px") %>%
