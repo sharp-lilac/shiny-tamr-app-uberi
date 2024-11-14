@@ -11,6 +11,35 @@ source("caption_functions.R")
 
 # Define server ---------------------------
 shinyServer(function(input, output) {
+   # Key data summary Boxes
+    output$keyCollectors <- renderInfoBox({
+        infoBox(
+            collectors_count,
+            "Data Collectors",
+            icon = shiny::icon(NULL)
+        )
+    })
+    output$keyYears <- renderInfoBox({
+        infoBox(
+            years_count,
+            "Years of Data",
+            icon = shiny::icon(NULL)
+        )
+    })
+    output$keyLocale <- renderInfoBox({
+        infoBox(
+            localities_count,
+            "Localities Sampled",
+            icon = shiny::icon(NULL)
+        )
+    })
+    output$keySites <- renderInfoBox({
+        infoBox(
+            sites_count,
+            "Sites Sampled",
+            icon = shiny::icon(NULL)
+        )
+    })
     # Coral health by year, locality, genus plot
     coral_health_plot_caption <- reactive({
         generate_coral_health_caption(input)

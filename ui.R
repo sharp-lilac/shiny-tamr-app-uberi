@@ -57,12 +57,23 @@ ui <- dashboardPage(
                         width = 12,
                         h1("Turneffe Data Exploration App"),
                         br(),
+                        fluidRow(
+                            column(
+                                width = 9,
+                                div(
+                                    infoBoxOutput("keyCollectors"),
+                                    infoBoxOutput("keyYears"),
+                                    infoBoxOutput("keyLocale"),
+                                    infoBoxOutput("keySites")
+                                ) %>% tagAppendAttributes(class = "keyBoxes")
+                            )
+                        ),
                         h3(tags$strong("Disclaimer")),
                         fluidRow(
                             column(
                                 width = 9,
                                 div(
-                                    class = "section-box",
+                                    class = "section-box alternate",
                                     p(home_text[1], face = "bold")
                                 )
                             )
