@@ -229,7 +229,8 @@ shinyServer(function(input, output) {
         }
     )
 
-    output$deadCoralDl <- downloadHandler(
+    # Download coral health plot
+    output$coral_health_download <- downloadHandler(
         filename = function() {
             paste("coral_health_plot", Sys.Date(), ".png", sep = "")
         },
