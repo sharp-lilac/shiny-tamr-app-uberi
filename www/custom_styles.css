@@ -14,10 +14,12 @@
     margin-bottom: 20px;
     border: 1px solid #000;
 }
+
 .section-box.alternate {
     background-color: #f1d1c1;
     border: 1px solid #000;
 }
+
 .section-box.alternate-2 {
     background-color: #d8e6cf;
     border: 1px solid #000;
@@ -55,4 +57,17 @@
 
 .keyBoxes>div {
     border-radius: 2px;
+}
+
+/* Responsive images */
+.responsive-img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Responsive images on large screens*/
+@media (min-width: 992px) {
+    .responsive-img {
+        max-width: 33%;
+    }
 }
