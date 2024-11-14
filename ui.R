@@ -68,13 +68,23 @@ ui <- dashboardPage(
                                 ) %>% tagAppendAttributes(class = "keyBoxes")
                             )
                         ),
+                        h3(tags$strong("Disclaimer")),
+                        fluidRow(
+                            column(
+                                width = 9,
+                                div(
+                                    class = "section-box alternate",
+                                    p(home_text[1], face = "bold")
+                                )
+                            )
+                        ),
                         h3("Our Long-Term Reef Monitoring Data"),
                         fluidRow(
                             column(
                                 width = 9,
                                 div(
                                     class = "section-box",
-                                    p(home_text[1], face = "bold"), p(home_text[2]), p(home_text[3]), p(home_text[4])
+                                    p(home_text[2], face = "bold"), p(home_text[3]), p(home_text[4]), p(home_text[5])
                                 )
                             )
                         ),
@@ -84,7 +94,7 @@ ui <- dashboardPage(
                                 width = 9,
                                 div(
                                     class = "section-box alternate",
-                                    p(home_text[5]), p(home_text[6])
+                                    p(home_text[6]), p(home_text[7])
                                 )
                             )
                         ),
@@ -94,7 +104,7 @@ ui <- dashboardPage(
                                 width = 9,
                                 div(
                                     class = "section-box alternate-2",
-                                    p(home_text[7])
+                                    p(home_text[8])
                                 )
                             )
                         )
