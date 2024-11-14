@@ -22,3 +22,37 @@
     background-color: #d8e6cf;
     border: 1px solid #000;
 }
+
+/*Key data boxes*/
+.keyBoxes .info-box {
+    min-height: 0;
+    min-width: 80px;
+    border-radius: 8px;
+    border: 1px solid #000;
+    background-color: #d8e6cf;
+}
+
+.keyBoxes .shiny-html-output {
+    width: fit-content;
+    padding-left: 0px;
+    padding-right: 30px;
+}
+
+.keyBoxes .info-box-icon {
+    display: none;
+}
+
+.keyBoxes .info-box-content {
+    margin-left: 0;
+    justify-self: center;
+
+}
+
+.keyBoxes .info-box-text {
+    justify-self: center;
+    font-size: 24px;
+}
+
+.keyBoxes>div {
+    border-radius: 2px;
+}
