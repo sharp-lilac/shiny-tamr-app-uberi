@@ -65,10 +65,10 @@ df_coral_disease <- df_master_coral_clean %>%
     )
 
 # Prepare key vectors ---------------------------
-collectors_count <- length(unique(c(df_master_benthic$Collector, df_master_fish$Collector, df_master_coral$Collector)))
-sites_count <- length(unique(c(df_master_benthic$Site, df_master_fish$Site, df_master_coral$Site)))
+collectors_count <- length(unique(c(df_master_benthic$Collector, df_master_fish_biomass$Collector, df_master_coral$Collector)))
+sites_count <- length(unique(c(df_master_benthic$Site, df_master_fish_biomass$Site, df_master_coral$Site)))
 localities_count <- length(unique(c(df_master_benthic_clean$Locality)))
-years_count <- length(unique(c(df_master_benthic$Year, df_master_fish$Year, df_master_coral$Year)))
+years_count <- length(unique(c(df_master_benthic$Year, df_master_fish_biomass$Year, df_master_coral$Year)))
 sites <- unique(df_master_benthic_clean$Site)
 localities <- sort(unique(df_master_benthic_clean$Locality))
 years <- unique(df_master_benthic_clean$Year)

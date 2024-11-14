@@ -57,7 +57,6 @@ ui <- dashboardPage(
                         width = 12,
                         h1("Turneffe Data Exploration App"),
                         br(),
-                        h3("Key Data Summary"),
                         fluidRow(
                             column(
                                 width = 9,
