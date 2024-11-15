@@ -7,7 +7,7 @@ library(grid)
 library(lubridate)
 
 # Create plot of coral health by year, locality, species ---------------------------
-create_coral_health_plot <- function(data_filtered, input, caption) {
+create_coral_health_plot <- function(data_filtered, input) {
     group_name <- input$coral_health_group_toggle
     plot1 <- ggplot(data_filtered, aes(x = !!sym(group_name), y = Dead, fill = !!sym(group_name))) +
         geom_boxplot(color = "black", position = position_dodge(width = 0.75), outlier.shape = 4, outlier.size = 4) +
@@ -23,7 +23,7 @@ create_coral_health_plot <- function(data_filtered, input, caption) {
         geom_density(aes(color = !!sym(group_name)), size = 1) +
         theme_classic() +
         gg_theme +
-        labs(caption = caption, y = "Proportion of Observations", x = "Percent of the Coral Structure Dead") +
+        labs(y = "Proportion of Observations", x = "Percent of the Coral Structure Dead") +
         scale_x_continuous(breaks = seq(0, 100, by = 10)) +
         xlim(min = 0, max = 100) +
         scale_color_manual(values = palette)

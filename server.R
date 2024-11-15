@@ -11,7 +11,7 @@ source("caption_functions.R")
 
 # Define server ---------------------------
 shinyServer(function(input, output) {
-   # Key data summary Boxes
+    # Key data summary Boxes
     output$keyCollectors <- renderInfoBox({
         infoBox(
             collectors_count,
@@ -44,6 +44,9 @@ shinyServer(function(input, output) {
     coral_health_plot_caption <- reactive({
         generate_coral_health_caption(input)
     })
+    output$coral_health_caption <- renderText({
+        coral_health_plot_caption()
+    })
     output$coral_health_plot <- renderPlot({
         req(input$coral_health_choose_locality)
         req(input$coral_health_choose_year)
@@ -54,7 +57,7 @@ shinyServer(function(input, output) {
                 Year %in% input$coral_health_choose_year,
                 Genus %in% input$coral_health_choose_genus
             )
-        create_coral_health_plot(data_filtered, input, coral_health_plot_caption())
+        create_coral_health_plot(data_filtered, input)
     })
     # Coral disease and bleaching pie charts
     coral_disease_plot_caption <- reactive({
