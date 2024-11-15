@@ -55,28 +55,12 @@ ui <- dashboardPage(
                 fluidRow(
                     column(
                         width = 12,
-                        h1("Turneffe Data Exploration App"),
+                        h2("Turneffe Data Exploration App"),
                         br(),
-                        fluidRow(
-                            column(
-                                width = 9,
-                                div(
-                                    infoBoxOutput("keyCollectors"),
-                                    infoBoxOutput("keyYears"),
-                                    infoBoxOutput("keyLocale"),
-                                    infoBoxOutput("keySites")
-                                ) %>% tagAppendAttributes(class = "keyBoxes")
-                            )
-                        ),
-                        h3(tags$strong("Disclaimer")),
-                        fluidRow(
-                            column(
-                                width = 9,
-                                div(
-                                    class = "section-box alternate",
-                                    p(home_text[1], face = "bold")
-                                )
-                            )
+                        div(
+                            style = "display: flex; align-items: left;",
+                            icon("exclamation-triangle", class = "text-warning"),
+                            p(tags$strong(home_text[1]))
                         ),
                         h3("Our Long-Term Reef Monitoring Data"),
                         fluidRow(
@@ -84,8 +68,19 @@ ui <- dashboardPage(
                                 width = 9,
                                 div(
                                     class = "section-box",
-                                    p(home_text[2], face = "bold"), p(home_text[3]), p(home_text[4]), p(home_text[5])
+                                    p(home_text[2]), p(home_text[3]), p(home_text[4]), p(home_text[5])
                                 )
+                            )
+                        ),
+                        br(),
+                        fluidRow(
+                            column(
+                                width = 9,
+                                div(
+                                    infoBoxOutput("keyCollectors"),
+                                    infoBoxOutput("keyYears"),
+                                    infoBoxOutput("keySites")
+                                ) %>% tagAppendAttributes(class = "keyBoxes")
                             )
                         ),
                         h3("Project Collaborators"),
@@ -171,6 +166,7 @@ ui <- dashboardPage(
                             mainPanel(
                                 plotOutput(outputId = "coral_health_plot", height = "1200px") %>%
                                     withSpinner(type = 8, color = palette[4]),
+                                textOutput(outputId = "coral_health_caption"),
                                 width = 10
                             )
                         )
@@ -221,6 +217,7 @@ ui <- dashboardPage(
                             mainPanel(
                                 plotOutput(outputId = "coral_disease_plot", height = "1100px") %>%
                                     withSpinner(type = 8, color = palette[4]),
+                                textOutput(outputId = "coral_disease_caption"),
                                 width = 10
                             )
                         )
@@ -283,6 +280,7 @@ ui <- dashboardPage(
                     mainPanel(
                         plotOutput(outputId = "coral_size_plot", height = "700px") %>%
                             withSpinner(type = 8, color = palette[4]),
+                        textOutput(outputId = "coral_size_caption"),
                         width = 10
                     )
                 )
@@ -342,6 +340,7 @@ ui <- dashboardPage(
                             mainPanel(
                                 plotOutput(outputId = "coral_cover_year_plot", height = "700px") %>%
                                     withSpinner(type = 8, color = palette[4]),
+                                textOutput(outputId = "coral_cover_year_caption"),
                                 width = 10
                             )
                         )
@@ -411,6 +410,7 @@ ui <- dashboardPage(
                             mainPanel(
                                 plotOutput(outputId = "coral_cover_species_plot", height = "700px") %>%
                                     withSpinner(type = 8, color = palette[4]),
+                                textOutput(outputId = "coral_cover_species_caption"),
                                 h3("Table of Coral Codes"),
                                 DT::dataTableOutput(outputId = "coral_cover_species_table"),
                                 width = 10
@@ -481,6 +481,7 @@ ui <- dashboardPage(
                     mainPanel(
                         plotOutput(outputId = "benthic_comp_plot", height = "700px") %>%
                             withSpinner(type = 8, color = palette[4]),
+                        textOutput(outputId = "benthic_comp_caption"),
                         width = 10
                     )
                 )
@@ -550,6 +551,7 @@ ui <- dashboardPage(
                     mainPanel(
                         plotOutput(outputId = "fish_size_plot", height = "700px") %>%
                             withSpinner(type = 8, color = palette[4]),
+                        textOutput(outputId = "fish_size_caption"),
                         width = 10
                     )
                 )
@@ -616,6 +618,7 @@ ui <- dashboardPage(
                     mainPanel(
                         plotOutput(outputId = "fish_biomass_plot", height = "1100px") %>%
                             withSpinner(type = 8, color = palette[4]),
+                        textOutput(outputId = "fish_biomass_caption"),
                         width = 10
                     )
                 )
@@ -676,6 +679,7 @@ ui <- dashboardPage(
                             mainPanel(
                                 plotOutput(outputId = "fish_count_plot", height = "1000px") %>%
                                     withSpinner(type = 8, color = palette[4]),
+                                textOutput(outputId = "fish_count_caption"),
                                 width = 10
                             )
                         )
@@ -732,6 +736,7 @@ ui <- dashboardPage(
                             mainPanel(
                                 plotOutput(outputId = "fish_count_site_plot", height = "1000px") %>%
                                     withSpinner(type = 8, color = palette[4]),
+                                textOutput(outputId = "fish_count_site_caption"),
                                 width = 10
                             )
                         )
@@ -751,7 +756,7 @@ ui <- dashboardPage(
                         )
                     )
                 ),
-                div(style = "width: 33%; float:left;", img(src = "images/Turneffe_Map.jpg", width = "100%", height = "50%")),
+                div(style = "float:left;", img(src = "images/Turneffe_Map.jpg", class = "responsive-img")),
                 fluidRow(column(width = 12, div(style = "height: 20px;"))),
                 downloadButton("download_map", "Download Map"),
                 fluidRow(column(width = 12, div(style = "height: 20px;"))),

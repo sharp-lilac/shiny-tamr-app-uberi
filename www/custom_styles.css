@@ -14,10 +14,12 @@
     margin-bottom: 20px;
     border: 1px solid #000;
 }
+
 .section-box.alternate {
     background-color: #f1d1c1;
     border: 1px solid #000;
 }
+
 .section-box.alternate-2 {
     background-color: #d8e6cf;
     border: 1px solid #000;
@@ -29,11 +31,10 @@
     min-width: 80px;
     border-radius: 8px;
     border: 1px solid #000;
-    background-color: #d8e6cf;
+    background-color: #B48EAD;
 }
 
 .keyBoxes .shiny-html-output {
-    width: fit-content;
     padding-left: 0px;
     padding-right: 30px;
 }
@@ -45,14 +46,29 @@
 .keyBoxes .info-box-content {
     margin-left: 0;
     justify-self: center;
+    color: white;
 
 }
 
 .keyBoxes .info-box-text {
     justify-self: center;
     font-size: 24px;
+    color: white;
 }
 
 .keyBoxes>div {
     border-radius: 2px;
+}
+
+/* Responsive images */
+.responsive-img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Responsive images on large screens*/
+@media (min-width: 992px) {
+    .responsive-img {
+        max-width: 33%;
+    }
 }
