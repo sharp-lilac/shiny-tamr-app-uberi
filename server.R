@@ -28,11 +28,14 @@ shinyServer(function(input, output) {
     output$coral_health_caption <- renderText({
         coral_health_plot_caption()
     })
-    output$coral_health_plot <- renderPlot({
+    coral_health_plot <- reactive({
         req(input$coral_health_choose_locality, input$coral_health_choose_year, input$coral_health_choose_genus)
         data_filtered <- df_coral_health %>%
             filter(Locality %in% input$coral_health_choose_locality, Year %in% input$coral_health_choose_year, Genus %in% input$coral_health_choose_genus)
         create_coral_health_plot(data_filtered, input)
+    })
+    output$coral_health_plot <- renderPlot({
+        coral_health_plot()
     })
     # Coral disease and bleaching pie charts
     coral_disease_plot_caption <- reactive({
@@ -245,6 +248,16 @@ shinyServer(function(input, output) {
         },
         content = function(file) {
             file.copy("www/images/Turneffe_Map.jpg", file)
+        }
+    )
+
+    # Download coral health plot
+    output$coral_health_download <- downloadHandler(
+        filename = function() {
+            paste("coral_health_plot", Sys.Date(), ".png", sep = "")
+        },
+        content = function(file) {
+            ggsave(file, plot = coral_health_plot(), width = 15, height = 15)
         }
     )
 })

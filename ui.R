@@ -161,7 +161,8 @@ ui <- dashboardPage(
                                     outline = TRUE,
                                     status = "primary",
                                     icon = icon("check")
-                                )
+                                ),
+                                downloadButton("coral_health_download", "Download Plot")
                             ),
                             mainPanel(
                                 plotOutput(outputId = "coral_health_plot", height = "1200px") %>%
