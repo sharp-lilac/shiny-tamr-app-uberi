@@ -222,6 +222,7 @@ ui <- dashboardPage(
                             mainPanel(
                                 plotOutput(outputId = "coral_disease_plot", height = "1100px") %>%
                                     withSpinner(type = 8, color = palette[4]),
+                                textOutput(outputId = "coral_disease_caption"),
                                 width = 10
                             )
                         )
@@ -284,6 +285,7 @@ ui <- dashboardPage(
                     mainPanel(
                         plotOutput(outputId = "coral_size_plot", height = "700px") %>%
                             withSpinner(type = 8, color = palette[4]),
+                        textOutput(outputId = "coral_size_caption"),
                         width = 10
                     )
                 )
@@ -343,6 +345,7 @@ ui <- dashboardPage(
                             mainPanel(
                                 plotOutput(outputId = "coral_cover_year_plot", height = "700px") %>%
                                     withSpinner(type = 8, color = palette[4]),
+                                textOutput(outputId = "coral_cover_year_caption"),
                                 width = 10
                             )
                         )
@@ -412,6 +415,7 @@ ui <- dashboardPage(
                             mainPanel(
                                 plotOutput(outputId = "coral_cover_species_plot", height = "700px") %>%
                                     withSpinner(type = 8, color = palette[4]),
+                                textOutput(outputId = "coral_cover_species_caption"),
                                 h3("Table of Coral Codes"),
                                 DT::dataTableOutput(outputId = "coral_cover_species_table"),
                                 width = 10
@@ -482,6 +486,7 @@ ui <- dashboardPage(
                     mainPanel(
                         plotOutput(outputId = "benthic_comp_plot", height = "700px") %>%
                             withSpinner(type = 8, color = palette[4]),
+                        textOutput(outputId = "benthic_comp_caption"),
                         width = 10
                     )
                 )
@@ -551,6 +556,7 @@ ui <- dashboardPage(
                     mainPanel(
                         plotOutput(outputId = "fish_size_plot", height = "700px") %>%
                             withSpinner(type = 8, color = palette[4]),
+                        textOutput(outputId = "fish_size_caption"),
                         width = 10
                     )
                 )
@@ -617,6 +623,7 @@ ui <- dashboardPage(
                     mainPanel(
                         plotOutput(outputId = "fish_biomass_plot", height = "1100px") %>%
                             withSpinner(type = 8, color = palette[4]),
+                        textOutput(outputId = "fish_biomass_caption"),
                         width = 10
                     )
                 )
@@ -677,6 +684,7 @@ ui <- dashboardPage(
                             mainPanel(
                                 plotOutput(outputId = "fish_count_plot", height = "1000px") %>%
                                     withSpinner(type = 8, color = palette[4]),
+                                textOutput(outputId = "fish_count_caption"),
                                 width = 10
                             )
                         )
@@ -733,6 +741,7 @@ ui <- dashboardPage(
                             mainPanel(
                                 plotOutput(outputId = "fish_count_site_plot", height = "1000px") %>%
                                     withSpinner(type = 8, color = palette[4]),
+                                textOutput(outputId = "fish_count_site_caption"),
                                 width = 10
                             )
                         )

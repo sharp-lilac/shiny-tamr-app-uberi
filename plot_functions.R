@@ -31,7 +31,7 @@ create_coral_health_plot <- function(data_filtered, input) {
 }
 
 # Create plot of coral disease/bleaching by year, locality, species ---------------------------
-create_coral_disease_plot <- function(data_filtered_1, data_filtered_2, data_filtered_3, data_filtered_4, input, caption) {
+create_coral_disease_plot <- function(data_filtered_1, data_filtered_2, data_filtered_3, data_filtered_4, input) {
     create_plot <- function(data, x_var, y_var, x_label, y_label, fill_var) {
         ggplot(data, aes_string(x = x_var, y = y_var, fill = fill_var)) +
             geom_col() +
@@ -48,18 +48,17 @@ create_coral_disease_plot <- function(data_filtered_1, data_filtered_2, data_fil
     plot4 <- create_plot(data_filtered_4, "Name", "Percent", "Disease", "Percent of Diseased Coral", "Name") + theme(plot.margin = margin(b = 30))
     plot_group1 <- ggarrange(plot1, plot2, nrow = 1)
     plot_group2 <- ggarrange(plot3, plot4, nrow = 1)
-    plot_group3 <- ggarrange(plot_group1, plot_group2, nrow = 2)
-    annotate_figure(plot_group3, bottom = text_grob(caption, hjust = 0, x = 0, size = 14))
+    ggarrange(plot_group1, plot_group2, nrow = 2)
 }
 
 # Create plot of coral size by year, locality, species ---------------------------
-create_coral_size_plot <- function(data_filtered, input, caption) {
+create_coral_size_plot <- function(data_filtered, input) {
     group_name <- input$coral_size_xaxis_toggle
     ggplot(data_filtered, aes(x = !!sym(group_name), y = Size, fill = Metric)) +
         geom_boxplot(color = "black", position = position_dodge(width = 0.75), outlier.shape = 4, outlier.size = 4) +
         theme_classic() +
         gg_theme +
-        labs(caption = caption, y = "Coral Size (cm)") +
+        labs(y = "Coral Size (cm)") +
         scale_fill_manual(
             name = "Size Metric",
             values = palette,
@@ -74,7 +73,7 @@ create_coral_size_plot <- function(data_filtered, input, caption) {
 }
 
 # Create plot of coral cover by year ---------------------------
-create_coral_cover_year_plot <- function(data_filtered, input, caption) {
+create_coral_cover_year_plot <- function(data_filtered, input) {
     if (input$coral_cover_year_xaxis_toggle == "Locality") {
         x_axis <- data_filtered$Locality
         group_var <- data_filtered$Year
@@ -86,7 +85,7 @@ create_coral_cover_year_plot <- function(data_filtered, input, caption) {
     }
     base_plot <- ggplot(data_filtered, aes(x = x_axis, y = Percent_Coral)) +
         geom_boxplot(color = "black", position = position_dodge(width = 0.75), outlier.shape = 4, outlier.size = 4) +
-        labs(caption = caption, y = "Percent Coral Cover", x = input$coral_cover_year_xaxis_toggle) +
+        labs(y = "Percent Coral Cover", x = input$coral_cover_year_xaxis_toggle) +
         theme_classic() +
         gg_theme +
         scale_y_continuous(breaks = seq(0, 100, by = 10), sec.axis = dup_axis(name = ""))
@@ -102,10 +101,10 @@ create_coral_cover_year_plot <- function(data_filtered, input, caption) {
 }
 
 # Create plot of coral cover by species ---------------------------
-create_coral_cover_species_plot <- function(data_filtered, input, caption) {
+create_coral_cover_species_plot <- function(data_filtered, input) {
     base_plot <- ggplot(data_filtered, aes(x = reorder(Organism, -Percent, FUN = mean), y = Percent)) +
         geom_boxplot(color = "black", position = position_dodge(width = 0.75), outlier.shape = 4, outlier.size = 4) +
-        labs(caption = caption, y = "Percent Cover", x = "Coral Species Code") +
+        labs(y = "Percent Cover", x = "Coral Species Code") +
         theme_classic() +
         gg_theme +
         scale_y_continuous(breaks = seq(0, 100, by = 10), sec.axis = dup_axis(name = ""))
@@ -128,20 +127,20 @@ create_coral_cover_species_plot <- function(data_filtered, input, caption) {
 }
 
 # Create plot of benthic composition ---------------------------
-create_benthic_comp_plot <- function(data_filtered, input, caption) {
+create_benthic_comp_plot <- function(data_filtered, input) {
     group_name <- input$benthic_comp_xaxis_toggle
     cat_name <- input$benthic_comp_cat_toggle
     ggplot(data_filtered, aes(x = !!sym(group_name), y = Benthic_Cover, fill = !!sym(cat_name))) +
         geom_col() +
         theme_classic() +
         gg_theme +
-        labs(y = "Percent Benthic Cover", caption = caption) +
+        labs(y = "Percent Benthic Cover") +
         scale_fill_manual(name = group_name, values = palette) +
         scale_y_continuous(breaks = seq(0, 100, by = 10), sec.axis = dup_axis(name = ""))
 }
 
 # Create plot of fish size ---------------------------
-create_fish_size_plot <- function(data_filtered, input, caption) {
+create_fish_size_plot <- function(data_filtered, input) {
     axis_name <- input$fish_size_xaxis_toggle
     axis_label <- reverse_fish_choices[input$fish_size_xaxis_toggle]
     means_name <- input$fish_size_means_toggle
@@ -150,7 +149,7 @@ create_fish_size_plot <- function(data_filtered, input, caption) {
         geom_boxplot(color = "black", position = position_dodge(width = 0.75), outlier.shape = 4, outlier.size = 4) +
         theme_classic() +
         gg_theme +
-        labs(caption = caption, y = "Fish Length (cm)", x = axis_label) +
+        labs(y = "Fish Length (cm)", x = axis_label) +
         scale_fill_manual(name = paste(means_label, " Mean"), values = palette) +
         stat_summary(aes(fill = !!sym(means_name)), fun = mean, geom = "point", shape = 23, size = 3, position = position_dodge(width = 0.75)) +
         scale_y_continuous(breaks = seq(0, 100, by = 10), sec.axis = dup_axis(name = "")) +
@@ -159,7 +158,7 @@ create_fish_size_plot <- function(data_filtered, input, caption) {
 }
 
 # Create plot of fish biomass ---------------------------
-create_fish_biomass_plot <- function(data_filtered_1, data_filtered_2, input, caption) {
+create_fish_biomass_plot <- function(data_filtered_1, data_filtered_2, input) {
     axis_name <- input$fish_biomass_xaxis_toggle
     group_name <- input$fish_biomass_group_toggle
     reef_name <- input$fish_biomass_reef_toggle
@@ -176,7 +175,7 @@ create_fish_biomass_plot <- function(data_filtered_1, data_filtered_2, input, ca
         geom_boxplot(color = "black", position = position_dodge(width = 0.75), outlier.shape = 4, outlier.size = 4) +
         theme_classic() +
         gg_theme +
-        labs(caption = caption, y = "Herbivorous Fish Biomass (g/100m2)", x = axis_name) +
+        labs(y = "Herbivorous Fish Biomass (g/100m2)", x = axis_name) +
         scale_fill_manual(name = group_name, values = palette) +
         stat_summary(aes(fill = as.factor(!!sym(group_name))), fun = mean, geom = "point", shape = 23, size = 3, position = position_dodge(width = 0.75)) +
         scale_y_continuous(breaks = seq(0, 30000, by = 5000), sec.axis = dup_axis(name = ""))
@@ -184,7 +183,7 @@ create_fish_biomass_plot <- function(data_filtered_1, data_filtered_2, input, ca
 }
 
 # Create plot of fish count (transect-level) ---------------------------
-create_fish_count_plot <- function(data_filtered, input, caption) {
+create_fish_count_plot <- function(data_filtered, input) {
     axis_name <- input$fish_count_xaxis_toggle
     axis_label <- reverse_fish_choices[input$fish_count_xaxis_toggle]
     means_name <- input$fish_count_means_toggle
@@ -201,7 +200,7 @@ create_fish_count_plot <- function(data_filtered, input, caption) {
         geom_boxplot(color = "black", position = position_dodge(width = 0.75), outlier.shape = 4, outlier.size = 4) +
         theme_classic() +
         gg_theme +
-        labs(caption = caption, y = "Fish Species / Transect", x = axis_label) +
+        labs(y = "Fish Species / Transect", x = axis_label) +
         scale_fill_manual(name = paste(means_name, " Mean"), values = palette) +
         stat_summary(aes(fill = !!sym(means_name)), fun = mean, geom = "point", shape = 23, size = 3, position = position_dodge(width = 0.75)) +
         scale_y_continuous(breaks = seq(0, 30, by = 5), sec.axis = dup_axis(name = ""))
@@ -209,7 +208,7 @@ create_fish_count_plot <- function(data_filtered, input, caption) {
 }
 
 # Create plot of fish count (site-level) ---------------------------
-create_fish_count_site_plot <- function(data_filtered, input, caption) {
+create_fish_count_site_plot <- function(data_filtered, input) {
     axis_name <- input$fish_count_site_xaxis_toggle
     means_name <- input$fish_count_site_means_toggle
     plot1 <- ggplot(data_filtered, aes(x = !!sym(axis_name), y = Count)) +
@@ -225,7 +224,7 @@ create_fish_count_site_plot <- function(data_filtered, input, caption) {
         geom_boxplot(color = "black", position = position_dodge(width = 0.75), outlier.shape = 4, outlier.size = 4) +
         theme_classic() +
         gg_theme +
-        labs(caption = caption, y = "Fish Species / Site", x = axis_name) +
+        labs(y = "Fish Species / Site", x = axis_name) +
         scale_fill_manual(name = paste(means_name, " Mean"), values = palette) +
         stat_summary(aes(fill = !!sym(means_name)), fun = mean, geom = "point", shape = 23, size = 3, position = position_dodge(width = 0.75)) +
         scale_y_continuous(breaks = seq(0, 50, by = 5), sec.axis = dup_axis(name = "")) +

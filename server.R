@@ -13,32 +13,16 @@ source("caption_functions.R")
 shinyServer(function(input, output) {
     # Key data summary Boxes
     output$keyCollectors <- renderInfoBox({
-        infoBox(
-            collectors_count,
-            "Data Collectors",
-            icon = shiny::icon(NULL)
-        )
+        infoBox(collectors_count, "Data Collectors", icon = shiny::icon(NULL))
     })
     output$keyYears <- renderInfoBox({
-        infoBox(
-            years_count,
-            "Years of Data",
-            icon = shiny::icon(NULL)
-        )
+        infoBox(years_count, "Years of Data", icon = shiny::icon(NULL))
     })
     output$keyLocale <- renderInfoBox({
-        infoBox(
-            localities_count,
-            "Localities Sampled",
-            icon = shiny::icon(NULL)
-        )
+        infoBox(localities_count, "Localities Sampled", icon = shiny::icon(NULL))
     })
     output$keySites <- renderInfoBox({
-        infoBox(
-            sites_count,
-            "Sites Sampled",
-            icon = shiny::icon(NULL)
-        )
+        infoBox(sites_count, "Sites Sampled", icon = shiny::icon(NULL))
     })
     # Coral health by year, locality, genus plot
     coral_health_plot_caption <- reactive({
@@ -48,25 +32,20 @@ shinyServer(function(input, output) {
         coral_health_plot_caption()
     })
     output$coral_health_plot <- renderPlot({
-        req(input$coral_health_choose_locality)
-        req(input$coral_health_choose_year)
-        req(input$coral_health_choose_genus)
+        req(input$coral_health_choose_locality, input$coral_health_choose_year, input$coral_health_choose_genus)
         data_filtered <- df_coral_health %>%
-            filter(
-                Locality %in% input$coral_health_choose_locality,
-                Year %in% input$coral_health_choose_year,
-                Genus %in% input$coral_health_choose_genus
-            )
+            filter(Locality %in% input$coral_health_choose_locality, Year %in% input$coral_health_choose_year, Genus %in% input$coral_health_choose_genus)
         create_coral_health_plot(data_filtered, input)
     })
     # Coral disease and bleaching pie charts
     coral_disease_plot_caption <- reactive({
         generate_coral_disease_caption(input)
     })
+    output$coral_disease_caption <- renderText({
+        coral_disease_plot_caption()
+    })
     output$coral_disease_plot <- renderPlot({
-        req(input$coral_disease_choose_locality)
-        req(input$coral_disease_choose_year)
-        req(input$coral_disease_choose_genus)
+        req(input$coral_disease_choose_locality, input$coral_disease_choose_year, input$coral_disease_choose_genus)
         data_filtered <- df_coral_disease %>%
             filter(Locality %in% input$coral_disease_choose_locality, Year %in% input$coral_disease_choose_year, Genus %in% input$coral_disease_choose_genus)
         data_filtered_1 <- data_filtered %>%
@@ -95,27 +74,30 @@ shinyServer(function(input, output) {
             group_by(Name) %>%
             summarise(Count = n()) %>%
             mutate(Percent = round(Count / sum(Count) * 100))
-        create_coral_disease_plot(data_filtered_1, data_filtered_2, data_filtered_3, data_filtered_4, input, coral_disease_plot_caption())
+        create_coral_disease_plot(data_filtered_1, data_filtered_2, data_filtered_3, data_filtered_4, input)
     })
     # Coral size by year, locality, genus plot
     coral_size_plot_caption <- reactive({
         generate_coral_size_caption(input)
     })
+    output$coral_size_caption <- renderText({
+        coral_size_plot_caption()
+    })
     output$coral_size_plot <- renderPlot({
-        req(input$coral_size_choose_locality)
-        req(input$coral_size_choose_year)
-        req(input$coral_size_choose_genus)
+        req(input$coral_size_choose_locality, input$coral_size_choose_year, input$coral_size_choose_genus)
         data_filtered <- df_coral_size %>%
             filter(Locality %in% input$coral_size_choose_locality, Year %in% input$coral_size_choose_year, Genus %in% input$coral_size_choose_genus)
-        create_coral_size_plot(data_filtered, input, coral_size_plot_caption())
+        create_coral_size_plot(data_filtered, input)
     })
     # Coral cover by year plot
     coral_cover_year_plot_caption <- reactive({
         generate_coral_cover_year_caption(input)
     })
+    output$coral_cover_year_caption <- renderText({
+        coral_cover_year_plot_caption()
+    })
     output$coral_cover_year_plot <- renderPlot({
-        req(input$coral_cover_year_choose_locality)
-        req(input$coral_cover_year_choose_year)
+        req(input$coral_cover_year_choose_locality, input$coral_cover_year_choose_year)
         data_filtered <- df_benthic_percents_coral %>%
             filter(Locality %in% input$coral_cover_year_choose_locality, Year %in% input$coral_cover_year_choose_year)
         if (input$coral_cover_year_consolidate_year) {
@@ -124,15 +106,17 @@ shinyServer(function(input, output) {
         if (input$coral_cover_year_consolidate_locality) {
             data_filtered <- mutate(data_filtered, Locality = paste(input$coral_cover_year_choose_locality, collapse = ", "))
         }
-        create_coral_cover_year_plot(data_filtered, input, coral_cover_year_plot_caption())
+        create_coral_cover_year_plot(data_filtered, input)
     })
     # Coral cover by species plot
     coral_cover_species_plot_caption <- reactive({
         generate_coral_cover_species_caption(input)
     })
+    output$coral_cover_species_caption <- renderText({
+        coral_cover_species_plot_caption()
+    })
     output$coral_cover_species_plot <- renderPlot({
-        req(input$coral_cover_species_choose_locality)
-        req(input$coral_cover_species_choose_year)
+        req(input$coral_cover_species_choose_locality, input$coral_cover_species_choose_year)
         data_filtered <- df_benthic_percents %>%
             filter(AGRRA_Bucket == "Coral", !is.na(Species)) %>%
             filter(Locality %in% input$coral_cover_species_choose_locality, Year %in% input$coral_cover_species_choose_year)
@@ -148,7 +132,7 @@ shinyServer(function(input, output) {
             pull(Organism)
         data_filtered <- data_filtered %>%
             filter(Organism %in% top_organisms)
-        create_coral_cover_species_plot(data_filtered, input, coral_cover_species_plot_caption())
+        create_coral_cover_species_plot(data_filtered, input)
     })
     output$coral_cover_species_table <- DT::renderDataTable({
         df_ref_organisms %>%
@@ -160,9 +144,11 @@ shinyServer(function(input, output) {
     benthic_comp_plot_caption <- reactive({
         generate_benthic_comp_caption(input)
     })
+    output$benthic_comp_caption <- renderText({
+        benthic_comp_plot_caption()
+    })
     output$benthic_comp_plot <- renderPlot({
-        req(input$benthic_comp_choose_locality)
-        req(input$benthic_comp_choose_year)
+        req(input$benthic_comp_choose_locality, input$benthic_comp_choose_year)
         group_name <- input$benthic_comp_xaxis_toggle
         cat_name <- input$benthic_comp_cat_toggle
         reef_name <- input$benthic_comp_reef_toggle
@@ -182,16 +168,17 @@ shinyServer(function(input, output) {
                 Benthic_Cover = Group_Organism_Count / unique(Group_Count) * 100
             ) %>%
             ungroup()
-        create_benthic_comp_plot(data_filtered, input, benthic_comp_plot_caption())
+        create_benthic_comp_plot(data_filtered, input)
     })
     # Fish size plot
     fish_size_plot_caption <- reactive({
         generate_fish_size_caption(input)
     })
+    output$fish_size_caption <- renderText({
+        fish_size_plot_caption()
+    })
     output$fish_size_plot <- renderPlot({
-        req(input$fish_size_choose_locality)
-        req(input$fish_size_choose_year)
-        req(input$fish_size_choose_family)
+        req(input$fish_size_choose_locality, input$fish_size_choose_year, input$fish_size_choose_family)
         df_master_fish_size$Year <- as.factor(df_master_fish_size$Year)
         data_filtered <- df_master_fish_size %>%
             filter(Locality %in% input$fish_size_choose_locality, Year %in% input$fish_size_choose_year, Fish_Family %in% input$fish_size_choose_family) %>%
@@ -200,15 +187,17 @@ shinyServer(function(input, output) {
                 Start_Time = hour(hm(Start_Time)),
                 Start_Time = if_else(Start_Time == 23, 11, Start_Time)
             )
-        create_fish_size_plot(data_filtered, input, fish_size_plot_caption())
+        create_fish_size_plot(data_filtered, input)
     })
     # Fish biomass plot
+    fish_biomass_plot_caption <- reactive({
+        generate_fish_biomass_caption(input)
+    })
+    output$fish_biomass_caption <- renderText({
+        fish_biomass_plot_caption()
+    })
     output$fish_biomass_plot <- renderPlot({
-        fish_biomass_plot_caption <- reactive({
-            generate_fish_biomass_caption(input)
-        })
-        req(input$fish_biomass_choose_locality)
-        req(input$fish_biomass_choose_year)
+        req(input$fish_biomass_choose_locality, input$fish_biomass_choose_year)
         reef_name <- input$fish_biomass_reef_toggle
         df_master_fish_biomass$Year <- as.factor(df_master_fish_biomass$Year)
         df_master_fish_biomass$Locality <- as.factor(df_master_fish_biomass$Locality.x)
@@ -216,15 +205,17 @@ shinyServer(function(input, output) {
             filter(Locality %in% input$fish_biomass_choose_locality, Year %in% input$fish_biomass_choose_year, (Zone == reef_name | reef_name == "All"))
         data_filtered_1 <- data_filtered %>% filter(Biomass_Category == "C")
         data_filtered_2 <- data_filtered %>% filter(Biomass_Category == "H")
-        create_fish_biomass_plot(data_filtered_1, data_filtered_2, input, fish_biomass_plot_caption())
+        create_fish_biomass_plot(data_filtered_1, data_filtered_2, input)
     })
     # Fish count and richness plot by transect
     fish_count_plot_caption <- reactive({
         generate_fish_count_caption(input)
     })
+    output$fish_count_caption <- renderText({
+        fish_count_plot_caption()
+    })
     output$fish_count_plot <- renderPlot({
-        req(input$fish_count_choose_locality)
-        req(input$fish_count_choose_year)
+        req(input$fish_count_choose_locality, input$fish_count_choose_year)
         df_master_fish_count$Year <- as.factor(df_master_fish_count$Year)
         data_filtered <- df_master_fish_count %>%
             filter(Locality %in% input$fish_count_choose_locality, Year %in% input$fish_count_choose_year) %>%
@@ -233,20 +224,22 @@ shinyServer(function(input, output) {
                 Start_Time = hour(hm(Start_Time)),
                 Start_Time = if_else(Start_Time == 23, 11, Start_Time)
             )
-        create_fish_count_plot(data_filtered, input, fish_count_plot_caption())
+        create_fish_count_plot(data_filtered, input)
     })
     # Fish count and richness plot by site
     fish_count_site_plot_caption <- reactive({
         generate_fish_count_site_caption(input)
     })
+    output$fish_count_site_caption <- renderText({
+        fish_count_site_plot_caption()
+    })
     output$fish_count_site_plot <- renderPlot({
-        req(input$fish_count_site_choose_locality)
-        req(input$fish_count_site_choose_year)
+        req(input$fish_count_site_choose_locality, input$fish_count_site_choose_year)
         df_master_fish_count_site$Year <- as.factor(df_master_fish_count_site$Year)
         data_filtered <- df_master_fish_count_site %>%
             filter(Transects == 8) %>%
             filter(Locality %in% input$fish_count_site_choose_locality, Year %in% input$fish_count_site_choose_year)
-        create_fish_count_site_plot(data_filtered, input, fish_count_site_plot_caption())
+        create_fish_count_site_plot(data_filtered, input)
     })
     # Download map
     output$download_map <- downloadHandler(
