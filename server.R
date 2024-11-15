@@ -18,9 +18,6 @@ shinyServer(function(input, output) {
     output$keyYears <- renderInfoBox({
         infoBox(years_count, "Years of Data", icon = shiny::icon(NULL))
     })
-    output$keyLocale <- renderInfoBox({
-        infoBox(localities_count, "Localities Sampled", icon = shiny::icon(NULL))
-    })
     output$keySites <- renderInfoBox({
         infoBox(sites_count, "Sites Sampled", icon = shiny::icon(NULL))
     })
