@@ -18,7 +18,8 @@ create_coral_health_plot <- function(data_filtered, input) {
         stat_summary(fun = mean, geom = "point", shape = 23, size = 3, position = position_dodge(width = 0.75)) +
         scale_y_continuous(breaks = seq(0, 100, by = 10), sec.axis = dup_axis(name = "")) +
         ylim(min = 0, max = 100) +
-        scale_fill_manual(values = palette)
+        scale_fill_manual(values = palette) +
+        guides(fill = guide_legend(nrow = 4, byrow = TRUE))
     plot2 <- ggplot(data_filtered, aes(x = Dead)) +
         geom_density(aes(color = !!sym(group_name)), size = 1) +
         theme_classic() +
@@ -26,7 +27,8 @@ create_coral_health_plot <- function(data_filtered, input) {
         labs(y = "Proportion of Observations", x = "Percent of the Coral Structure Dead") +
         scale_x_continuous(breaks = seq(0, 100, by = 10)) +
         xlim(min = 0, max = 100) +
-        scale_color_manual(values = palette)
+        scale_color_manual(values = palette) +
+        guides(color = guide_legend(nrow = 4, byrow = TRUE))
     ggarrange(plot1, plot2, nrow = 2, heights = c(0.75, 1))
 }
 
@@ -40,7 +42,8 @@ create_coral_disease_plot <- function(data_filtered_1, data_filtered_2, data_fil
             labs(x = x_label, y = y_label) +
             scale_fill_manual(values = palette, name = "") +
             theme(legend.position = "none") +
-            scale_y_continuous(breaks = seq(0, 100, by = 10), sec.axis = dup_axis(name = ""))
+            scale_y_continuous(breaks = seq(0, 100, by = 10), sec.axis = dup_axis(name = "")) +
+            guides(fill = guide_legend(nrow = 4, byrow = TRUE))
     }
     plot1 <- create_plot(data_filtered_1, "Bleaching.x", "Percent", "Bleaching Status", "Percent of Corals", "Bleaching.x")
     plot2 <- create_plot(data_filtered_2, "Bleaching.x", "Percent", "Bleaching Status", "Percent of Bleached Corals", "Bleaching.x")
@@ -69,7 +72,8 @@ create_coral_size_plot <- function(data_filtered, input) {
             )
         ) +
         stat_summary(aes(fill = Metric), fun = mean, geom = "point", shape = 23, size = 3, position = position_dodge(width = 0.75)) +
-        scale_y_continuous(breaks = seq(0, 500, by = 25), sec.axis = dup_axis(name = ""))
+        scale_y_continuous(breaks = seq(0, 500, by = 25), sec.axis = dup_axis(name = "")) +
+        guides(fill = guide_legend(nrow = 4, byrow = TRUE))
 }
 
 # Create plot of coral cover by year ---------------------------
@@ -96,7 +100,8 @@ create_coral_cover_year_plot <- function(data_filtered, input) {
         base_plot +
             aes(fill = group_var) +
             stat_summary(aes(fill = group_var), fun = mean, geom = "point", shape = 23, size = 3, position = position_dodge(width = 0.75)) +
-            scale_fill_manual(name = group_name, values = palette)
+            scale_fill_manual(name = group_name, values = palette) +
+            guides(fill = guide_legend(nrow = 4, byrow = TRUE))
     }
 }
 
@@ -116,13 +121,17 @@ create_coral_cover_species_plot <- function(data_filtered, input) {
             aes(fill = Locality) +
             stat_summary(aes(fill = Locality), fun = mean, geom = "point", shape = 23, size = 3, position = position_dodge(width = 0.75)) +
             scale_fill_manual(name = "Locality", values = palette) +
-            scale_color_manual(values = palette)
+            scale_color_manual(values = palette) +
+            guides(fill = guide_legend(nrow = 4, byrow = TRUE)) +
+            guides(color = guide_legend(nrow = 4, byrow = TRUE))
     } else {
         base_plot +
             aes(fill = Year) +
             stat_summary(aes(fill = Year), fun = mean, geom = "point", shape = 23, size = 3, position = position_dodge(width = 0.75)) +
             scale_fill_manual(name = "Year", values = palette) +
-            scale_color_manual(values = palette)
+            scale_color_manual(values = palette) +
+            guides(fill = guide_legend(nrow = 4, byrow = TRUE)) +
+            guides(color = guide_legend(nrow = 4, byrow = TRUE))
     }
 }
 
@@ -136,7 +145,8 @@ create_benthic_comp_plot <- function(data_filtered, input) {
         gg_theme +
         labs(y = "Percent Benthic Cover") +
         scale_fill_manual(name = group_name, values = palette) +
-        scale_y_continuous(breaks = seq(0, 100, by = 10), sec.axis = dup_axis(name = ""))
+        scale_y_continuous(breaks = seq(0, 100, by = 10), sec.axis = dup_axis(name = "")) +
+        guides(fill = guide_legend(nrow = 4, byrow = TRUE))
 }
 
 # Create plot of fish size ---------------------------
@@ -150,11 +160,12 @@ create_fish_size_plot <- function(data_filtered, input) {
         theme_classic() +
         gg_theme +
         labs(y = "Fish Length (cm)", x = axis_label) +
-        scale_fill_manual(name = paste(means_label, " Mean"), values = palette) +
+        scale_fill_manual(name = means_label, values = palette) +
         stat_summary(aes(fill = !!sym(means_name)), fun = mean, geom = "point", shape = 23, size = 3, position = position_dodge(width = 0.75)) +
         scale_y_continuous(breaks = seq(0, 100, by = 10), sec.axis = dup_axis(name = "")) +
         geom_hline(yintercept = 7.5, linetype = "dashed") +
-        geom_hline(yintercept = 2.5, linetype = "dashed")
+        geom_hline(yintercept = 2.5, linetype = "dashed") +
+        guides(fill = guide_legend(nrow = 4, byrow = TRUE))
 }
 
 # Create plot of fish biomass ---------------------------
@@ -178,7 +189,8 @@ create_fish_biomass_plot <- function(data_filtered_1, data_filtered_2, input) {
         labs(y = "Herbivorous Fish Biomass (g/100m2)", x = axis_name) +
         scale_fill_manual(name = group_name, values = palette) +
         stat_summary(aes(fill = as.factor(!!sym(group_name))), fun = mean, geom = "point", shape = 23, size = 3, position = position_dodge(width = 0.75)) +
-        scale_y_continuous(breaks = seq(0, 30000, by = 5000), sec.axis = dup_axis(name = ""))
+        scale_y_continuous(breaks = seq(0, 30000, by = 5000), sec.axis = dup_axis(name = "")) +
+        guides(fill = guide_legend(nrow = 4, byrow = TRUE))
     ggarrange(plot1, plot2, nrow = 2, heights = c(0.75, 1))
 }
 
@@ -192,7 +204,7 @@ create_fish_count_plot <- function(data_filtered, input) {
         theme_classic() +
         gg_theme +
         labs(y = "Number Fish / Transect", x = "") +
-        scale_fill_manual(name = paste(means_name, " Mean"), values = palette) +
+        scale_fill_manual(name = means_name, values = palette) +
         stat_summary(aes(fill = !!sym(means_name)), fun = mean, geom = "point", shape = 23, size = 3, position = position_dodge(width = 0.75)) +
         scale_y_continuous(breaks = seq(0, 500, by = 50), sec.axis = dup_axis(name = "")) +
         theme(legend.position = "none")
@@ -201,9 +213,10 @@ create_fish_count_plot <- function(data_filtered, input) {
         theme_classic() +
         gg_theme +
         labs(y = "Fish Species / Transect", x = axis_label) +
-        scale_fill_manual(name = paste(means_name, " Mean"), values = palette) +
+        scale_fill_manual(name = means_name, values = palette) +
         stat_summary(aes(fill = !!sym(means_name)), fun = mean, geom = "point", shape = 23, size = 3, position = position_dodge(width = 0.75)) +
-        scale_y_continuous(breaks = seq(0, 30, by = 5), sec.axis = dup_axis(name = ""))
+        scale_y_continuous(breaks = seq(0, 30, by = 5), sec.axis = dup_axis(name = "")) +
+        guides(fill = guide_legend(nrow = 4, byrow = TRUE))
     ggarrange(plot1, plot2, nrow = 2, heights = c(0.75, 1))
 }
 
@@ -216,7 +229,7 @@ create_fish_count_site_plot <- function(data_filtered, input) {
         theme_classic() +
         gg_theme +
         labs(y = "Number Fish / Site", x = "") +
-        scale_fill_manual(name = paste(means_name, " Mean"), values = palette) +
+        scale_fill_manual(name = means_name, values = palette) +
         stat_summary(aes(fill = !!sym(means_name)), fun = mean, geom = "point", shape = 23, size = 3, position = position_dodge(width = 0.75)) +
         scale_y_continuous(breaks = seq(0, 2000, by = 100), sec.axis = dup_axis(name = "")) +
         theme(legend.position = "none")
@@ -225,9 +238,10 @@ create_fish_count_site_plot <- function(data_filtered, input) {
         theme_classic() +
         gg_theme +
         labs(y = "Fish Species / Site", x = axis_name) +
-        scale_fill_manual(name = paste(means_name, " Mean"), values = palette) +
+        scale_fill_manual(name = means_name, values = palette) +
         stat_summary(aes(fill = !!sym(means_name)), fun = mean, geom = "point", shape = 23, size = 3, position = position_dodge(width = 0.75)) +
         scale_y_continuous(breaks = seq(0, 50, by = 5), sec.axis = dup_axis(name = "")) +
-        coord_cartesian(ylim = c(0, 50))
+        coord_cartesian(ylim = c(0, 50)) +
+        guides(fill = guide_legend(nrow = 4, byrow = TRUE))
     ggarrange(plot1, plot2, nrow = 2, heights = c(0.75, 1))
 }

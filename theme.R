@@ -30,7 +30,6 @@ gg_theme <- theme(
     plot.background = element_rect(fill = "white", color = NA),
     legend.background = element_rect(fill = "white", color = NA),
     legend.box.background = element_rect(fill = "white", color = NA),
-    plot.caption = element_text(hjust = 0, size = 14, margin = margin(t = 10)),
     panel.grid.major.y = element_line(color = "grey85", size = 0.5)
 )
 
