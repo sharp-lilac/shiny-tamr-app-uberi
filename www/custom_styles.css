@@ -73,8 +73,25 @@
     }
 }
 
-/*UBERI Logo*/
+/* UBERI Logo */
 .uberi-logo {
     justify-self: center;
+    height: 50px;
     width: 150px;
+}
+
+/* Fix header & sidebar position*/
+.main-sidebar {
+    position: fixed !important;
+}
+
+.main-header {
+    position: fixed !important;
+    width: 100%;
+    z-index: 1030;
+    max-height: 50px;
+}
+
+.content-wrapper {
+    padding-top: 25px;
 }
