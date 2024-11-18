@@ -6,19 +6,19 @@ library(shiny)
 # Source objects ---------------------------
 source("theme.R")
 source("data_prepare.R")
-source("plot_functions.R")
-source("caption_functions.R")
+source("functions_plots.R")
+source("functions_captions.R")
 
 # Define server ---------------------------
 shinyServer(function(input, output) {
     # Key data summary Boxes
-    output$keyCollectors <- renderInfoBox({
+    output$number_collectors_box <- renderInfoBox({
         infoBox(collectors_count, "Data Collectors", icon = shiny::icon(NULL))
     })
-    output$keyYears <- renderInfoBox({
+    output$number_years_box <- renderInfoBox({
         infoBox(years_count, "Years of Data", icon = shiny::icon(NULL))
     })
-    output$keySites <- renderInfoBox({
+    output$number_sites_box <- renderInfoBox({
         infoBox(sites_count, "Sites Sampled", icon = shiny::icon(NULL))
     })
     # Coral health by year, locality, genus plot
@@ -313,7 +313,7 @@ shinyServer(function(input, output) {
             ggsave(file, plot = coral_cover_year_plot(), width = 15, height = 8)
         }
     )
-    # Download coral cover specie plot
+    # Download coral cover species plot
     output$coral_cover_species_download <- downloadHandler(
         filename = function() {
             paste("coral_cover_species_plot", Sys.Date(), ".png", sep = "")

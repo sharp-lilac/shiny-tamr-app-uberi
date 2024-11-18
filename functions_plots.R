@@ -1,4 +1,4 @@
-## plot_functions.R
+## functions_plots.R
 
 # Load packages ---------------------------
 library(ggplot2)

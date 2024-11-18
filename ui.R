@@ -80,9 +80,9 @@ ui <- dashboardPage(
                             column(
                                 width = 9,
                                 div(
-                                    infoBoxOutput("keyCollectors"),
-                                    infoBoxOutput("keyYears"),
-                                    infoBoxOutput("keySites")
+                                    infoBoxOutput("number_collectors_box"),
+                                    infoBoxOutput("number_years_box"),
+                                    infoBoxOutput("number_sites_box")
                                 ) %>% tagAppendAttributes(class = "keyBoxes")
                             )
                         ),
@@ -176,7 +176,7 @@ ui <- dashboardPage(
                         )
                     ),
                     tabPanel(
-                        h3("Disease and Bleaching"),
+                        h3("Disease & Bleaching"),
                         fluidRow(column(width = 12, div(style = "height: 20px;"))),
                         sidebarLayout(
                             sidebarPanel(

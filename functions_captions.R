@@ -1,4 +1,4 @@
-## caption_functions.R
+## functions_captions.R
 
 # Source Objects ---------------------------
 caption_text <- paste(readLines("text/captions.txt"))
