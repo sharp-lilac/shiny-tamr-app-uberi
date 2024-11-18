@@ -46,7 +46,8 @@ ui <- dashboardPage(
                 menuSubItem("Dryad Data", href = link_text[4]),
                 menuSubItem("GitHub Repository", href = link_text[6])
             ),
-            menuItem("Map", tabName = "page_5", icon = icon("map"))
+            menuItem("Map", tabName = "page_5", icon = icon("map")),
+            menuItem("Feedback", tabName = "page_6", icon = icon("exclamation-triangle"))
         )
     ),
     dashboardBody(
@@ -782,6 +783,27 @@ ui <- dashboardPage(
                             br(),
                             p(map_text[3], br(), "http://www.biodiversity.bz/")
                         )
+                    )
+                )
+            ),
+            tabItem(
+                tabName = "page_6",
+                h2("Provide Feedback!"),
+                fluidRow(column(width = 12, div(style = "height: 20px;"))),
+                p("Do you have any suggestions or comments for the people who made this app? Feel free to provide your feedback below."),
+                fluidRow(
+                    column(
+                        width = 12,
+                        textAreaInput("feedback_text",
+                            label = "",
+                            placeholder = "...",
+                            width = "100%",
+                            height = "200px",
+                            resize = "vertical"
+                        ),
+                        actionButton("clear_feedback", label = "Clear", class = "btn-warning"),
+                        actionButton("submit_feedback", label = "Submit", class = "btn-success"),
+                        div(style = "height: 20px;")
                     )
                 )
             )
