@@ -789,7 +789,23 @@ ui <- dashboardPage(
             tabItem(
                 tabName = "page_6",
                 h2("Provide Feedback!"),
-                fluidRow(column(width = 12, div(style = "height: 20px;")))
+                fluidRow(column(width = 12, div(style = "height: 20px;"))),
+                p("Do you have any suggestions or comments for the people who made this app? Feel free to provide your feedback below."),
+                fluidRow(
+                    column(
+                        width = 12,
+                        textAreaInput("feedback_text",
+                            label = "",
+                            placeholder = "...",
+                            width = "100%",
+                            height = "200px",
+                            resize = "vertical"
+                        ),
+                        actionButton("clear_feedback", label = "Clear", class = "btn-warning"),
+                        actionButton("submit_feedback", label = "Submit", class = "btn-success"),
+                        div(style = "height: 20px;")
+                    )
+                )
             )
         )
     )
