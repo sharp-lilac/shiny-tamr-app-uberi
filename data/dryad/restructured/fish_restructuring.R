@@ -60,7 +60,7 @@ df_master_fish_biomass <- df_master_fish_clean %>%
     left_join(df_ref_sites, by = "Site")
 # Create fish count and richness dataframe
 df_master_fish_count <- df_master_fish_clean %>%
-    group_by(Year, Locality, Site, Uniq_Transect, Start_Time) %>%
+    group_by(Year, Locality, Site, Uniq_Transect, Start_Time, Collector) %>%
     summarize(
         Count = sum(Observations),
         Richness = length(unique(Fish_Scientific[Observations > 0]))
@@ -73,8 +73,9 @@ df_master_fish_count_site <- df_master_fish_clean %>%
         Richness = length(unique(Fish_Scientific[Observations > 0]))
     )
 
+
 # Write new data to repository for access ---------------------------
-write.csv(df_master_fish_biomass, "data/dryad/restructured/Master_Fish_Biomass.csv")
-write.csv(df_master_fish_size, "data/dryad/restructured/Master_Fish_Size.csv")
-write.csv(df_master_fish_count, "data/dryad/restructured/Master_Fish_Count.csv")
-write.csv(df_master_fish_count_site, "data/dryad/restructured/Master_Fish_Count_Site.csv")
+write.csv(df_master_fish_biomass, "data/dryad/restructured/Master_Fish_Biomass.csv", row.names = FALSE)
+write.csv(df_master_fish_size, "data/dryad/restructured/Master_Fish_Size.csv", row.names = FALSE)
+write.csv(df_master_fish_count, "data/dryad/restructured/Master_Fish_Count.csv", row.names = FALSE)
+write.csv(df_master_fish_count_site, "data/dryad/restructured/Master_Fish_Count_Site.csv", row.names = FALSE)

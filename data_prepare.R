@@ -35,12 +35,12 @@ df_benthic_percents <- df_master_benthic_clean %>%
     group_by(Uniq_Transect) %>%
     summarise(Total_Points = n()) %>%
     right_join(df_master_benthic_clean, by = "Uniq_Transect") %>%
-    group_by(Year, Locality, Site, Zone, Uniq_Transect, Org_Name, Species, Organism, AGRRA_Bucket, Bucket2_Name) %>%
-    summarise(Count = n(), Total_Points = first(Total_Points)) %>%
+    group_by(Year, Locality, Site, Zone, Uniq_Transect, Org_Name, Species, Organism, AGRRA_Bucket) %>%
+    summarise(Count = n(), Total_Points = first(Total_Points), .groups = "keep") %>%
     mutate(Percent = (Count / Total_Points) * 100)
 df_benthic_percents_coral <- df_benthic_percents %>%
     group_by(Year, Locality, Site, Uniq_Transect) %>%
-    summarize(Percent_Coral = sum(Percent[AGRRA_Bucket == "Coral"], na.rm = TRUE))
+    summarize(Percent_Coral = sum(Percent[AGRRA_Bucket == "Coral"], na.rm = TRUE), .groups = "keep")
 df_coral_size <- df_master_coral_clean %>%
     select(Year, Locality, Organism, Genus, Org_Name, Max_Length, Max_Width, Max_Height) %>%
     filter(!is.na(Genus)) %>%
@@ -65,7 +65,7 @@ df_coral_disease <- df_master_coral_clean %>%
     )
 
 # Prepare key vectors ---------------------------
-collectors_count <- length(unique(c(df_master_benthic$Collector, df_master_fish_biomass$Collector, df_master_coral$Collector)))
+collectors_count <- length(unique(c(df_master_benthic$Collector, df_master_fish_count$Collector, df_master_coral$Collector)))
 sites_count <- length(unique(c(df_master_benthic$Site, df_master_fish_biomass$Site, df_master_coral$Site)))
 localities_count <- length(unique(c(df_master_benthic_clean$Locality)))
 years_count <- length(unique(c(df_master_benthic$Year, df_master_fish_biomass$Year, df_master_coral$Year)))
