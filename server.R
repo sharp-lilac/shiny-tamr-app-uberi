@@ -372,12 +372,13 @@ shinyServer(function(input, output) {
     observeEvent(input$clear_feedback, {
         updateTextAreaInput(session = getDefaultReactiveDomain(), "feedback_text", value = "")
     })
+
     observeEvent(input$submit_feedback, {
         feedback <- input$feedback_text
-        if (nchar(feedback) > 1000) {
+        if (nchar(feedback) > 5000) {
             showModal(modalDialog(
                 title = "Error",
-                "Your feedback exceeds the 1000-character limit. Please shorten it.",
+                "Your feedback exceeds the 5000-character limit. Please shorten it.",
                 easyClose = TRUE,
                 footer = NULL
             ))
@@ -385,26 +386,39 @@ shinyServer(function(input, output) {
             password <- Sys.getenv("EMAIL_PASSWORD")
             sender_email <- Sys.getenv("SENDER_EMAIL")
             recipient_email <- Sys.getenv("RECIPIENT_EMAIL")
-            send.mail(
-                from = sender_email,
-                to = recipient_email,
-                subject = "New Feedback: Shiny TAMR",
-                body = feedback,
-                smtp = list(
-                    host.name = "smtp.gmail.com", port = 465,
-                    user.name = sender_email,
-                    passwd = password, ssl = TRUE
-                ),
-                authenticate = TRUE,
-                send = TRUE
+
+            tryCatch(
+                {
+                    send.mail(
+                        from = sender_email,
+                        to = recipient_email,
+                        subject = "New Feedback: Shiny TAMR",
+                        body = feedback,
+                        smtp = list(
+                            host.name = "smtp.gmail.com", port = 465,
+                            user.name = sender_email,
+                            passwd = password, ssl = TRUE
+                        ),
+                        authenticate = TRUE,
+                        send = TRUE
+                    )
+                    showModal(modalDialog(
+                        title = "Submitted",
+                        "Thank you for your feedback! We have received it.",
+                        easyClose = TRUE,
+                        footer = NULL
+                    ))
+                    updateTextAreaInput(session = getDefaultReactiveDomain(), "feedback_text", value = "")
+                },
+                error = function(e) {
+                    showModal(modalDialog(
+                        title = "Error",
+                        paste("Something went wrong. Please try again later.\nError details: ", e$message),
+                        easyClose = TRUE,
+                        footer = NULL
+                    ))
+                }
             )
-            showModal(modalDialog(
-                title = "Submitted",
-                "Thank you for your feedback! We have received it.",
-                easyClose = TRUE,
-                footer = NULL
-            ))
-            updateTextAreaInput(session = getDefaultReactiveDomain(), "feedback_text", value = "")
         }
     })
 })
