@@ -15,7 +15,10 @@ link_text <- paste(readLines("text/links.txt"))
 
 # Define ui ---------------------------
 ui <- dashboardPage(
-    dashboardHeader(title = "Explore TAMR"),
+    dashboardHeader(
+        title = "Explore TAMR",
+        tags$li(class = "dropdown", tags$img(src = "images/UBERI_logo.png", class = "uberi-logo1"))
+    ),
     dashboardSidebar(
         sidebarMenu(
             menuItem("Home", tabName = "home", icon = icon("home")),
@@ -44,6 +47,10 @@ ui <- dashboardPage(
                 menuSubItem("GitHub Repository", href = link_text[6])
             ),
             menuItem("Map", tabName = "page_5", icon = icon("map"))
+        ),
+        tags$div(
+            style = "position: absolute; bottom: 10px; width: 100%;",
+            tags$img(src = "images/UBERI_logo.png", width = "100%", class = "uberi-logo2")
         )
     ),
     dashboardBody(
