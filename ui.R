@@ -15,7 +15,10 @@ link_text <- paste(readLines("text/links.txt"))
 
 # Define ui ---------------------------
 ui <- dashboardPage(
-    dashboardHeader(title = "Explore TAMR"),
+    dashboardHeader(
+        title = "Explore TAMR",
+        tags$li(class = "dropdown", tags$img(src = "images/UBERI_logo.png", class = "uberi-logo"))
+    ),
     dashboardSidebar(
         sidebarMenu(
             menuItem("Home", tabName = "home", icon = icon("home")),

@@ -72,3 +72,9 @@
         max-width: 33%;
     }
 }
+
+/*UBERI Logo*/
+.uberi-logo {
+    justify-self: center;
+    width: 150px;
+}
