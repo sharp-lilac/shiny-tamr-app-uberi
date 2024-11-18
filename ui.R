@@ -213,7 +213,8 @@ ui <- dashboardPage(
                                         selectedTextFormat = "count > 3"
                                     ),
                                     multiple = TRUE
-                                )
+                                ),
+                                downloadButton("coral_disease_download", "Download Plot")
                             ),
                             mainPanel(
                                 plotOutput(outputId = "coral_disease_plot", height = "1100px") %>%
@@ -276,7 +277,8 @@ ui <- dashboardPage(
                             outline = TRUE,
                             status = "primary",
                             icon = icon("check")
-                        )
+                        ),
+                        downloadButton("coral_size_download", "Download Plot"),
                     ),
                     mainPanel(
                         plotOutput(outputId = "coral_size_plot", height = "700px") %>%
@@ -336,7 +338,8 @@ ui <- dashboardPage(
                                     outline = TRUE,
                                     status = "primary",
                                     icon = icon("check")
-                                )
+                                ),
+                                downloadButton("coral_cover_year_download", "Download Plot"),
                             ),
                             mainPanel(
                                 plotOutput(outputId = "coral_cover_year_plot", height = "700px") %>%
@@ -406,7 +409,8 @@ ui <- dashboardPage(
                                         selectedTextFormat = "count > 3",
                                         liveSearch = TRUE
                                     )
-                                )
+                                ),
+                                downloadButton("coral_cover_species_download", "Download Plot"),
                             ),
                             mainPanel(
                                 plotOutput(outputId = "coral_cover_species_plot", height = "700px") %>%
@@ -477,7 +481,8 @@ ui <- dashboardPage(
                             outline = TRUE,
                             status = "primary",
                             icon = icon("check")
-                        )
+                        ),
+                        downloadButton("benthic_comp_download", "Download Plot"),
                     ),
                     mainPanel(
                         plotOutput(outputId = "benthic_comp_plot", height = "700px") %>%
@@ -547,7 +552,8 @@ ui <- dashboardPage(
                             outline = TRUE,
                             status = "primary",
                             icon = icon("check")
-                        )
+                        ),
+                        downloadButton("fish_size_download", "Download Plot"),
                     ),
                     mainPanel(
                         plotOutput(outputId = "fish_size_plot", height = "700px") %>%
@@ -614,7 +620,8 @@ ui <- dashboardPage(
                             outline = TRUE,
                             status = "primary",
                             icon = icon("check")
-                        )
+                        ),
+                        downloadButton("fish_biomass_download", "Download Plot"),
                     ),
                     mainPanel(
                         plotOutput(outputId = "fish_biomass_plot", height = "1100px") %>%
@@ -675,7 +682,8 @@ ui <- dashboardPage(
                                     outline = TRUE,
                                     status = "primary",
                                     icon = icon("check")
-                                )
+                                ),
+                                downloadButton("fish_count_download", "Download Plot"),
                             ),
                             mainPanel(
                                 plotOutput(outputId = "fish_count_plot", height = "1000px") %>%
@@ -732,7 +740,8 @@ ui <- dashboardPage(
                                     outline = TRUE,
                                     status = "primary",
                                     icon = icon("check")
-                                )
+                                ),
+                                downloadButton("fish_count_site_download", "Download Plot"),
                             ),
                             mainPanel(
                                 plotOutput(outputId = "fish_count_site_plot", height = "1000px") %>%

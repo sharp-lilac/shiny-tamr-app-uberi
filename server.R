@@ -44,7 +44,7 @@ shinyServer(function(input, output) {
     output$coral_disease_caption <- renderText({
         coral_disease_plot_caption()
     })
-    output$coral_disease_plot <- renderPlot({
+    coral_disease_plot <- reactive({
         req(input$coral_disease_choose_locality, input$coral_disease_choose_year, input$coral_disease_choose_genus)
         data_filtered <- df_coral_disease %>%
             filter(Locality %in% input$coral_disease_choose_locality, Year %in% input$coral_disease_choose_year, Genus %in% input$coral_disease_choose_genus)
@@ -76,6 +76,9 @@ shinyServer(function(input, output) {
             mutate(Percent = round(Count / sum(Count) * 100))
         create_coral_disease_plot(data_filtered_1, data_filtered_2, data_filtered_3, data_filtered_4, input)
     })
+    output$coral_disease_plot <- renderPlot({
+        coral_disease_plot()
+    })
     # Coral size by year, locality, genus plot
     coral_size_plot_caption <- reactive({
         generate_coral_size_caption(input)
@@ -83,11 +86,14 @@ shinyServer(function(input, output) {
     output$coral_size_caption <- renderText({
         coral_size_plot_caption()
     })
-    output$coral_size_plot <- renderPlot({
+    coral_size_plot <- reactive({
         req(input$coral_size_choose_locality, input$coral_size_choose_year, input$coral_size_choose_genus)
         data_filtered <- df_coral_size %>%
             filter(Locality %in% input$coral_size_choose_locality, Year %in% input$coral_size_choose_year, Genus %in% input$coral_size_choose_genus)
         create_coral_size_plot(data_filtered, input)
+    })
+    output$coral_size_plot <- renderPlot({
+        coral_size_plot()
     })
     # Coral cover by year plot
     coral_cover_year_plot_caption <- reactive({
@@ -96,7 +102,7 @@ shinyServer(function(input, output) {
     output$coral_cover_year_caption <- renderText({
         coral_cover_year_plot_caption()
     })
-    output$coral_cover_year_plot <- renderPlot({
+    coral_cover_year_plot <- reactive({
         req(input$coral_cover_year_choose_locality, input$coral_cover_year_choose_year)
         data_filtered <- df_benthic_percents_coral %>%
             filter(Locality %in% input$coral_cover_year_choose_locality, Year %in% input$coral_cover_year_choose_year)
@@ -108,6 +114,9 @@ shinyServer(function(input, output) {
         }
         create_coral_cover_year_plot(data_filtered, input)
     })
+    output$coral_cover_year_plot <- renderPlot({
+        coral_cover_year_plot()
+    })
     # Coral cover by species plot
     coral_cover_species_plot_caption <- reactive({
         generate_coral_cover_species_caption(input)
@@ -115,7 +124,7 @@ shinyServer(function(input, output) {
     output$coral_cover_species_caption <- renderText({
         coral_cover_species_plot_caption()
     })
-    output$coral_cover_species_plot <- renderPlot({
+    coral_cover_species_plot <- reactive({
         req(input$coral_cover_species_choose_locality, input$coral_cover_species_choose_year)
         data_filtered <- df_benthic_percents %>%
             filter(AGRRA_Bucket == "Coral", !is.na(Species)) %>%
@@ -134,6 +143,9 @@ shinyServer(function(input, output) {
             filter(Organism %in% top_organisms)
         create_coral_cover_species_plot(data_filtered, input)
     })
+    output$coral_cover_species_plot <- renderPlot({
+        coral_cover_species_plot()
+    })
     output$coral_cover_species_table <- DT::renderDataTable({
         df_ref_organisms %>%
             filter(AGRRA_Bucket == "Coral", !is.na(Species)) %>%
@@ -147,7 +159,7 @@ shinyServer(function(input, output) {
     output$benthic_comp_caption <- renderText({
         benthic_comp_plot_caption()
     })
-    output$benthic_comp_plot <- renderPlot({
+    benthic_comp_plot <- reactive({
         req(input$benthic_comp_choose_locality, input$benthic_comp_choose_year)
         group_name <- input$benthic_comp_xaxis_toggle
         cat_name <- input$benthic_comp_cat_toggle
@@ -170,6 +182,9 @@ shinyServer(function(input, output) {
             ungroup()
         create_benthic_comp_plot(data_filtered, input)
     })
+    output$benthic_comp_plot <- renderPlot({
+        benthic_comp_plot()
+    })
     # Fish size plot
     fish_size_plot_caption <- reactive({
         generate_fish_size_caption(input)
@@ -177,7 +192,7 @@ shinyServer(function(input, output) {
     output$fish_size_caption <- renderText({
         fish_size_plot_caption()
     })
-    output$fish_size_plot <- renderPlot({
+    fish_size_plot <- reactive({
         req(input$fish_size_choose_locality, input$fish_size_choose_year, input$fish_size_choose_family)
         df_master_fish_size$Year <- as.factor(df_master_fish_size$Year)
         data_filtered <- df_master_fish_size %>%
@@ -189,6 +204,9 @@ shinyServer(function(input, output) {
             )
         create_fish_size_plot(data_filtered, input)
     })
+    output$fish_size_plot <- renderPlot({
+        fish_size_plot()
+    })
     # Fish biomass plot
     fish_biomass_plot_caption <- reactive({
         generate_fish_biomass_caption(input)
@@ -196,7 +214,7 @@ shinyServer(function(input, output) {
     output$fish_biomass_caption <- renderText({
         fish_biomass_plot_caption()
     })
-    output$fish_biomass_plot <- renderPlot({
+    fish_biomass_plot <- reactive({
         req(input$fish_biomass_choose_locality, input$fish_biomass_choose_year)
         reef_name <- input$fish_biomass_reef_toggle
         df_master_fish_biomass$Year <- as.factor(df_master_fish_biomass$Year)
@@ -207,6 +225,9 @@ shinyServer(function(input, output) {
         data_filtered_2 <- data_filtered %>% filter(Biomass_Category == "H")
         create_fish_biomass_plot(data_filtered_1, data_filtered_2, input)
     })
+    output$fish_biomass_plot <- renderPlot({
+        fish_biomass_plot()
+    })
     # Fish count and richness plot by transect
     fish_count_plot_caption <- reactive({
         generate_fish_count_caption(input)
@@ -214,7 +235,7 @@ shinyServer(function(input, output) {
     output$fish_count_caption <- renderText({
         fish_count_plot_caption()
     })
-    output$fish_count_plot <- renderPlot({
+    fish_count_plot <- reactive({
         req(input$fish_count_choose_locality, input$fish_count_choose_year)
         df_master_fish_count$Year <- as.factor(df_master_fish_count$Year)
         data_filtered <- df_master_fish_count %>%
@@ -226,6 +247,9 @@ shinyServer(function(input, output) {
             )
         create_fish_count_plot(data_filtered, input)
     })
+    output$fish_count_plot <- renderPlot({
+        fish_count_plot()
+    })
     # Fish count and richness plot by site
     fish_count_site_plot_caption <- reactive({
         generate_fish_count_site_caption(input)
@@ -233,13 +257,16 @@ shinyServer(function(input, output) {
     output$fish_count_site_caption <- renderText({
         fish_count_site_plot_caption()
     })
-    output$fish_count_site_plot <- renderPlot({
+    fish_count_site_plot <- reactive({
         req(input$fish_count_site_choose_locality, input$fish_count_site_choose_year)
         df_master_fish_count_site$Year <- as.factor(df_master_fish_count_site$Year)
         data_filtered <- df_master_fish_count_site %>%
             filter(Transects == 8) %>%
             filter(Locality %in% input$fish_count_site_choose_locality, Year %in% input$fish_count_site_choose_year)
         create_fish_count_site_plot(data_filtered, input)
+    })
+    output$fish_count_site_plot <- renderPlot({
+        fish_count_site_plot()
     })
     # Download map
     output$download_map <- downloadHandler(
@@ -250,7 +277,6 @@ shinyServer(function(input, output) {
             file.copy("www/images/Turneffe_Map.jpg", file)
         }
     )
-
     # Download coral health plot
     output$coral_health_download <- downloadHandler(
         filename = function() {
@@ -258,6 +284,87 @@ shinyServer(function(input, output) {
         },
         content = function(file) {
             ggsave(file, plot = coral_health_plot(), width = 15, height = 15)
+        }
+    )
+    # Download coral disease plot
+    output$coral_disease_download <- downloadHandler(
+        filename = function() {
+            paste("coral_disease_plot", Sys.Date(), ".png", sep = "")
+        },
+        content = function(file) {
+            ggsave(file, plot = coral_disease_plot(), width = 15, height = 12)
+        }
+    )
+    # Download coral size explore plot
+    output$coral_size_download <- downloadHandler(
+        filename = function() {
+            paste("coral_size_plot", Sys.Date(), ".png", sep = "")
+        },
+        content = function(file) {
+            ggsave(file, plot = coral_size_plot(), width = 15, height = 8)
+        }
+    )
+    # Download coral over year plot
+    output$coral_cover_year_download <- downloadHandler(
+        filename = function() {
+            paste("coral_cover_year_plot", Sys.Date(), ".png", sep = "")
+        },
+        content = function(file) {
+            ggsave(file, plot = coral_cover_year_plot(), width = 15, height = 8)
+        }
+    )
+    # Download coral cover specie plot
+    output$coral_cover_species_download <- downloadHandler(
+        filename = function() {
+            paste("coral_cover_species_plot", Sys.Date(), ".png", sep = "")
+        },
+        content = function(file) {
+            ggsave(file, plot = coral_cover_species_plot(), width = 15, height = 8)
+        }
+    )
+    # Download benthic comp plot
+    output$benthic_comp_download <- downloadHandler(
+        filename = function() {
+            paste("benthic_comp_plot", Sys.Date(), ".png", sep = "")
+        },
+        content = function(file) {
+            ggsave(file, plot = benthic_comp_plot(), width = 15, height = 8)
+        }
+    )
+    # Download fish size plot
+    output$fish_size_download <- downloadHandler(
+        filename = function() {
+            paste("fish_size_plot", Sys.Date(), ".png", sep = "")
+        },
+        content = function(file) {
+            ggsave(file, plot = fish_size_plot(), width = 15, height = 8)
+        }
+    )
+    # Download fish biomass plot
+    output$fish_biomass_download <- downloadHandler(
+        filename = function() {
+            paste("fish_biomass_plot", Sys.Date(), ".png", sep = "")
+        },
+        content = function(file) {
+            ggsave(file, plot = fish_biomass_plot(), width = 18, height = 16)
+        }
+    )
+    # Download fish count plot
+    output$fish_count_download <- downloadHandler(
+        filename = function() {
+            paste("fish_count_plot", Sys.Date(), ".png", sep = "")
+        },
+        content = function(file) {
+            ggsave(file, plot = fish_count_plot(), width = 15, height = 13)
+        }
+    )
+    # Download fish count by site plot
+    output$fish_count_site_download <- downloadHandler(
+        filename = function() {
+            paste("fish_count_site_plot", Sys.Date(), ".png", sep = "")
+        },
+        content = function(file) {
+            ggsave(file, plot = fish_count_site_plot(), width = 15, height = 13)
         }
     )
 })
