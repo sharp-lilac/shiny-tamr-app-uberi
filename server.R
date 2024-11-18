@@ -346,7 +346,7 @@ shinyServer(function(input, output) {
             paste("fish_biomass_plot", Sys.Date(), ".png", sep = "")
         },
         content = function(file) {
-            ggsave(file, plot = fish_biomass_plot(), width = 15, height = 13)
+            ggsave(file, plot = fish_biomass_plot(), width = 18, height = 16)
         }
     )
     # Download fish count plot
