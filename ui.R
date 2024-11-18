@@ -46,7 +46,8 @@ ui <- dashboardPage(
                 menuSubItem("Dryad Data", href = link_text[4]),
                 menuSubItem("GitHub Repository", href = link_text[6])
             ),
-            menuItem("Map", tabName = "page_5", icon = icon("map"))
+            menuItem("Map", tabName = "page_5", icon = icon("map")),
+            menuItem("Feedback", tabName = "page_6", icon = icon("exclamation-triangle"))
         )
     ),
     dashboardBody(
@@ -784,6 +785,11 @@ ui <- dashboardPage(
                         )
                     )
                 )
+            ),
+            tabItem(
+                tabName = "page_6",
+                h2("Provide Feedback!"),
+                fluidRow(column(width = 12, div(style = "height: 20px;")))
             )
         )
     )
