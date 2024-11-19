@@ -42,6 +42,7 @@ ui <- dashboardPage(
                 menuSubItem("UB-ERI Website", href = link_text[1]),
                 menuSubItem("AGRRA Website", href = link_text[2]),
                 menuSubItem("HRHP Website", href = link_text[5]),
+                menuSubItem("RRI Partnership", href = link_text[7]),
                 menuSubItem("MBRS SMP Methods", href = link_text[3]),
                 menuSubItem("Dryad Data", href = link_text[4]),
                 menuSubItem("GitHub Repository", href = link_text[6])
@@ -74,8 +75,8 @@ ui <- dashboardPage(
                                     class = "section-box",
                                     p(home_text[2]),
                                     p(home_text[3]),
-                                    uiOutput("show_more_text"),
-                                    actionButton("show_more", "Show More")
+                                    uiOutput("show_more_text1"),
+                                    actionButton("show_more1", "Show More")
                                 )
                             )
                         ),
@@ -90,23 +91,27 @@ ui <- dashboardPage(
                                 ) %>% tagAppendAttributes(class = "keyBoxes")
                             )
                         ),
-                        h3("Project Collaborators"),
+                        br(),
+                        h3("Collaborators and Funding"),
                         fluidRow(
                             column(
                                 width = 9,
                                 div(
                                     class = "section-box alternate",
-                                    p(home_text[7]), p(home_text[8])
+                                    p(home_text[7]),
+                                    uiOutput("show_more_text2"),
+                                    actionButton("show_more2", "Show More")
                                 )
                             )
                         ),
+                        br(),
                         h3("Access Our Data"),
                         fluidRow(
                             column(
                                 width = 9,
                                 div(
                                     class = "section-box alternate-2",
-                                    p(home_text[9])
+                                    p(home_text[12])
                                 )
                             )
                         )

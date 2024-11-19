@@ -13,17 +13,33 @@ home_text <- paste(readLines("text/home.txt"))
 
 # Define server ---------------------------
 shinyServer(function(input, output) {
-    # Show more button
-    show_more_text_value <- reactiveVal(FALSE)
-    observeEvent(input$show_more, {
-        show_more_text_value(!show_more_text_value())
+    # Show more button2
+    show_more_text_value1 <- reactiveVal(FALSE)
+    observeEvent(input$show_more1, {
+        show_more_text_value1(!show_more_text_value1())
     })
-    output$show_more_text <- renderUI({
-        if (show_more_text_value()) {
+    output$show_more_text1 <- renderUI({
+        if (show_more_text_value1()) {
             tagList(
                 p(home_text[4]),
                 p(home_text[5]),
                 p(home_text[6])
+            )
+        } else {
+            NULL
+        }
+    })
+    show_more_text_value2 <- reactiveVal(FALSE)
+    observeEvent(input$show_more2, {
+        show_more_text_value2(!show_more_text_value2())
+    })
+    output$show_more_text2 <- renderUI({
+        if (show_more_text_value2()) {
+            tagList(
+                p(home_text[8]),
+                p(home_text[9]),
+                p(home_text[10]),
+                p(home_text[11])
             )
         } else {
             NULL

@@ -15,6 +15,12 @@ Jake L. Snaddon, Director, University of Belize Environmental Research Institute
 The University of Belize\
 Turneffe Atoll Sustainability Association
 
+## Funding:
+Development of this web app was funded in part by the Reef Resilience Initiative, a global partnership, which uses the reef resilience framework of Ecosystems, Community, and Governance, to increase the resilience of World Heritage reef sites across the world. The funding awarded to the University of Belize Environmental Research Institute alongside the Turneffe Atoll Sustainability Association  is to inplement the project ‘Strengthening coral reef resilience through science for adaptive management and stakeholder engagement, to respond to long-term threats in the Turneffe Atoll Marine Reserve.’ 
+
+Part of this project is compiling and communicating coral reef monitoring data in a variety of formats, for key audiences. This web app is intended to communicate coral reef monitoring data to students, the general public, and curious stakeholders wish to expand their understanding of the reef, and ask/answer questions. It does not required a background in coding, data analysis, or even marine biology to use and ‘play’ with the app, encouraging inquiry around reef health.
+
+
 ## Acknowledgements:
 Data were collected by surveyors in collaboration with, affiliation with, or as a part of job duty for the UB-ERI. Data surveyors and collaborators include (alphabetically):
 
