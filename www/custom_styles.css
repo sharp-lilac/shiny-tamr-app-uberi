@@ -6,6 +6,20 @@
     border: 1px solid #000;
 }
 
+/* Sidebar toggle */
+.main-header .sidebar-toggle {
+    font-size: 30px !important;
+    padding: 3px 5px !important;
+}
+
+.main-header .sidebar-toggle:hover {
+    background-color: transparent !important; 
+}
+
+.main-header .sidebar-toggle:active {
+    background-color: transparent !important; 
+}
+
 /* Custom styles for boxes */
 .section-box {
     background-color: #c5ebf8;
