@@ -72,7 +72,10 @@ ui <- dashboardPage(
                                 width = 9,
                                 div(
                                     class = "section-box",
-                                    p(home_text[2]), p(home_text[3]), p(home_text[4]), p(home_text[5])
+                                    p(home_text[2]),
+                                    p(home_text[3]),
+                                    uiOutput("show_more_text"),
+                                    actionButton("show_more", "Show More")
                                 )
                             )
                         ),
@@ -93,7 +96,7 @@ ui <- dashboardPage(
                                 width = 9,
                                 div(
                                     class = "section-box alternate",
-                                    p(home_text[6]), p(home_text[7])
+                                    p(home_text[7]), p(home_text[8])
                                 )
                             )
                         ),
@@ -103,7 +106,7 @@ ui <- dashboardPage(
                                 width = 9,
                                 div(
                                     class = "section-box alternate-2",
-                                    p(home_text[8])
+                                    p(home_text[9])
                                 )
                             )
                         )

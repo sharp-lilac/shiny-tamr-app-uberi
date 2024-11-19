@@ -9,9 +9,26 @@ source("theme.R")
 source("data_prepare.R")
 source("functions_plots.R")
 source("functions_captions.R")
+home_text <- paste(readLines("text/home.txt"))
 
 # Define server ---------------------------
 shinyServer(function(input, output) {
+    # Show more button
+    show_more_text_value <- reactiveVal(FALSE)
+    observeEvent(input$show_more, {
+        show_more_text_value(!show_more_text_value())
+    })
+    output$show_more_text <- renderUI({
+        if (show_more_text_value()) {
+            tagList(
+                p(home_text[4]),
+                p(home_text[5]),
+                p(home_text[6])
+            )
+        } else {
+            NULL
+        }
+    })
     # Key data summary Boxes
     output$number_collectors_box <- renderInfoBox({
         infoBox(collectors_count, "Data Collectors", icon = shiny::icon(NULL))
