@@ -12,7 +12,16 @@ source("functions_captions.R")
 home_text <- paste(readLines("text/home.txt"))
 
 # Define server ---------------------------
-shinyServer(function(input, output) {
+shinyServer(function(input, output, session) {
+    # Quick tab change
+    observeEvent(input$coral_explorer_nav, {
+        updateTabItems(session, inputId = "tabs", selected = "page_1-1")
+    })
+    observeEvent(input$benthic_explorer_nav, {
+        updateTabItems(session, inputId = "tabs", selected = "page_2")
+    })
+    observeEvent(input$fish_explorer_nav, {
+        updateTabItems(session, inputId = "tabs", selected = "page_3-1")
     # Show more button2
     show_more_text_value1 <- reactiveVal(FALSE)
     observeEvent(input$show_more1, {
