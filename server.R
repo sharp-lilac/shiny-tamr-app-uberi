@@ -2,12 +2,14 @@
 
 # Load packages ---------------------------
 library(shiny)
+library(mailR)
 
 # Source objects ---------------------------
 source("theme.R")
 source("data_prepare.R")
 source("functions_plots.R")
 source("functions_captions.R")
+home_text <- paste(readLines("text/home.txt"))
 
 # Define server ---------------------------
 shinyServer(function(input, output, session) {
@@ -20,6 +22,37 @@ shinyServer(function(input, output, session) {
     })
     observeEvent(input$fish_explorer_nav, {
         updateTabItems(session, inputId = "tabs", selected = "page_3-1")
+    # Show more button2
+    show_more_text_value1 <- reactiveVal(FALSE)
+    observeEvent(input$show_more1, {
+        show_more_text_value1(!show_more_text_value1())
+    })
+    output$show_more_text1 <- renderUI({
+        if (show_more_text_value1()) {
+            tagList(
+                p(home_text[4]),
+                p(home_text[5]),
+                p(home_text[6])
+            )
+        } else {
+            NULL
+        }
+    })
+    show_more_text_value2 <- reactiveVal(FALSE)
+    observeEvent(input$show_more2, {
+        show_more_text_value2(!show_more_text_value2())
+    })
+    output$show_more_text2 <- renderUI({
+        if (show_more_text_value2()) {
+            tagList(
+                p(home_text[8]),
+                p(home_text[9]),
+                p(home_text[10]),
+                p(home_text[11])
+            )
+        } else {
+            NULL
+        }
     })
     # Key data summary Boxes
     output$number_collectors_box <- renderInfoBox({
@@ -377,4 +410,57 @@ shinyServer(function(input, output, session) {
             ggsave(file, plot = fish_count_site_plot(), width = 15, height = 13)
         }
     )
+    # Manage feedback form
+    observeEvent(input$clear_feedback, {
+        updateTextAreaInput(session = getDefaultReactiveDomain(), "feedback_text", value = "")
+    })
+
+    observeEvent(input$submit_feedback, {
+        feedback <- input$feedback_text
+        if (nchar(feedback) > 5000) {
+            showModal(modalDialog(
+                title = "Error",
+                "Your feedback exceeds the 5000-character limit. Please shorten it.",
+                easyClose = TRUE,
+                footer = NULL
+            ))
+        } else {
+            password <- Sys.getenv("EMAIL_PASSWORD")
+            sender_email <- Sys.getenv("SENDER_EMAIL")
+            recipient_email <- Sys.getenv("RECIPIENT_EMAIL")
+
+            tryCatch(
+                {
+                    send.mail(
+                        from = sender_email,
+                        to = recipient_email,
+                        subject = "New Feedback: Shiny TAMR",
+                        body = feedback,
+                        smtp = list(
+                            host.name = "smtp.gmail.com", port = 465,
+                            user.name = sender_email,
+                            passwd = password, ssl = TRUE
+                        ),
+                        authenticate = TRUE,
+                        send = TRUE
+                    )
+                    showModal(modalDialog(
+                        title = "Submitted",
+                        "Thank you for your feedback! We have received it.",
+                        easyClose = TRUE,
+                        footer = NULL
+                    ))
+                    updateTextAreaInput(session = getDefaultReactiveDomain(), "feedback_text", value = "")
+                },
+                error = function(e) {
+                    showModal(modalDialog(
+                        title = "Error",
+                        paste("Something went wrong. Please try again later.\nError details: ", e$message),
+                        easyClose = TRUE,
+                        footer = NULL
+                    ))
+                }
+            )
+        }
+    })
 })
