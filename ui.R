@@ -362,7 +362,7 @@ ui <- dashboardPage(
                                     inputId = "coral_cover_year_choose_year",
                                     label = "Select Years:",
                                     choices = years,
-                                    selected = years,
+                                    selected = c(2021, 2023),
                                     options = pickerOptions(
                                         actionsBox = TRUE,
                                         size = 10,
@@ -592,7 +592,7 @@ ui <- dashboardPage(
                             inputId = "fish_size_means_toggle",
                             label = "Select Group for Mean:",
                             choices = fish_choices[1:3],
-                            selected = "Year",
+                            selected = "Fish_Family",
                             outline = TRUE,
                             status = "primary",
                             icon = icon("check")
@@ -642,7 +642,7 @@ ui <- dashboardPage(
                             inputId = "fish_biomass_xaxis_toggle",
                             label = "Select X-Axis:",
                             choices = c("Locality", "Year"),
-                            selected = "Locality",
+                            selected = "Year",
                             outline = TRUE,
                             status = "primary",
                             icon = icon("check")

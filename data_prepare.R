@@ -56,13 +56,31 @@ df_coral_disease <- df_master_coral_clean %>%
             levels = c("P", "PB", "BL", "UB", "MISSING"),
             labels = c("Pale", "Pale Bleached", "Bleached", "Unbleached", "Unknown")
         ),
-        Name = factor(Name, levels = c(
-            "Aspergillosis", "Black Band Disease", "Blue Spots", "Dark Spots Disease",
-            "Dark Spots Disease I", "Dark Spots Disease II", "Stony coral tissue loss disease",
-            "White Band Disease", "White Plague Disease", "White Spot Patch Disease",
-            "Yellow Band Disease", "No disease"
-        ))
+        Name = case_when(
+            Name == "Aspergillosis" ~ "Aspergillosis",
+            Name == "Black Band Disease" ~ "Black Band",
+            Name == "Blue Spots" ~ "Blue Spot",
+            Name == "Dark Spots Disease" ~ "Dark Spot",
+            Name == "Dark Spots Disease I" ~ "Dark Spot I",
+            Name == "Dark Spots Disease II" ~ "Dark Spot II",
+            Name == "Stony coral tissue loss disease" ~ "SCTLD",
+            Name == "White Band Disease" ~ "White Band",
+            Name == "White Plague Disease" ~ "White Plague",
+            Name == "White Spot Patch Disease" ~ "White Spot Patch",
+            Name == "Yellow Band Disease" ~ "Yellow Band",
+            Name == "No disease" ~ "No Disease",
+            TRUE ~ Name
+        ),
+        Name = factor(Name,
+            levels = c(
+                "Aspergillosis", "Black Band", "Blue Spot", "Dark Spot",
+                "Dark Spot I", "Dark Spot II", "SCTLD",
+                "White Band", "White Plague", "White Spot Patch",
+                "Yellow Band", "No Disease"
+            )
+        )
     )
+
 
 # Prepare key vectors ---------------------------
 collectors_count <- length(unique(c(df_master_benthic$Collector, df_master_fish_count$Collector, df_master_coral$Collector)))
