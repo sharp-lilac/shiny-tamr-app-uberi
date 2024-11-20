@@ -17,3 +17,4 @@ df_ref_disease <- vroom::vroom("data/dryad/Ref_Diseases_Coral.csv", na = nas, sh
 df_ref_collec <- vroom::vroom("data/dryad/Ref_Collectors_Turneffe.csv", na = nas, show_col_types = FALSE)
 df_ref_organisms <- vroom::vroom("data/dryad/Ref_Organisms_Benthic.csv", na = nas, show_col_types = FALSE)
 df_ref_sites <- vroom::vroom("data/dryad/Ref_Sites_Turneffe.csv", na = nas, show_col_types = FALSE)
+reef_localities_surveyed_table <- vroom::vroom("data/Reef_Localities_Surveyed.csv", na = nas, show_col_types = FALSE)

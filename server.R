@@ -311,6 +311,29 @@ shinyServer(function(input, output) {
             file.copy("www/images/Turneffe_Map.jpg", file)
         }
     )
+
+    # Localities Data Table
+    output$reef_localities_surveyed_table <- DT::renderDataTable({
+        reef_localities_surveyed_table %>%
+            DT::datatable(
+                caption = HTML(paste(readLines("text/map.txt"))[5]),
+                options = list(
+                    pageLength = 11,
+                    lengthChange = FALSE,
+                    searching = FALSE,
+                    paging = FALSE,
+                    info = FALSE,
+                    dom = "t",
+                    columnDefs = list(
+                        list(targets = 0, visible = FALSE),
+                        list(targets = 3, width = "200px"),
+                        list(targets = 4, width = "150px"),
+                        list(targets = 6, width = "125px")
+                    )
+                )
+            )
+    })
+
     # Download coral health plot
     output$coral_health_download <- downloadHandler(
         filename = function() {

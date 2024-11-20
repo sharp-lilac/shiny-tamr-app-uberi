@@ -778,7 +778,18 @@ ui <- dashboardPage(
                         )
                     )
                 ),
-                div(style = "float:left;", img(src = "images/Turneffe_Map.jpg", class = "responsive-img")),
+                fluidRow(
+                    column(
+                        width = 4,
+                        div(style = "float:left;", img(src = "images/Turneffe_Map.jpg", class = "responsive-img"))
+                    ),
+                    column(
+                        width = 8,
+                        div(
+                            DT::dataTableOutput(outputId = "reef_localities_surveyed_table")
+                        )
+                    )
+                ),
                 fluidRow(column(width = 12, div(style = "height: 20px;"))),
                 downloadButton("download_map", "Download Map"),
                 actionButton("open_map", label = tagList(icon("map"), "View on Google Maps"), onclick = paste0("window.open('", map_text[4], "', '_blank');")),
