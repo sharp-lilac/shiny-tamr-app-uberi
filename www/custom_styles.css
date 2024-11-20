@@ -35,7 +35,7 @@
     border: 1px solid #000;
     color: #FFFFFF;
     justify-self: center;
-    font-size: 20px;
+    font-size: 15px;
 }
 
 .bttn-jelly.bttn-primary {
@@ -43,13 +43,13 @@
     border: 1px solid #000;
     color: black;
     justify-self: center;
-    font-size: 20px;
+    font-size: 15px;
 }
 
 .button-container {
     display: flex;
     justify-content: flex-start;
-    gap: 20px;
+    gap: 12px;
     align-items: center;
 }
 

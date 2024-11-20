@@ -13,7 +13,7 @@ source("functions_captions.R")
 shinyServer(function(input, output, session) {
     # Quick tab change
     observeEvent(input$coral_explorer_nav, {
-        updateTabItems(session, inputId = "tabs", selected = "page_1-1")
+        updateTabItems(session, inputId = "tabs", selected = "page_1-2")
     })
     observeEvent(input$benthic_explorer_nav, {
         updateTabItems(session, inputId = "tabs", selected = "page_2")
@@ -75,12 +75,12 @@ shinyServer(function(input, output, session) {
             mutate(Percent = round(Count / sum(Count) * 100))
         data_filtered_3 <- data_filtered %>%
             filter(Name != "NA") %>%
-            mutate(Name = case_when(Name == "No disease" ~ "No disease", TRUE ~ paste0(strrep(" ", 40), "Disease"))) %>%
+            mutate(Name = case_when(Name == "No Disease" ~ "No Disease", TRUE ~ paste0(strrep(" ", 40), "Disease"))) %>%
             group_by(Name) %>%
             summarise(Count = n()) %>%
             mutate(Percent = (Count / sum(Count) * 100))
         data_filtered_4 <- data_filtered %>%
-            filter(Name != "No disease" & Name != "NA") %>%
+            filter(Name != "No Disease" & Name != "NA") %>%
             group_by(Name) %>%
             summarise(Count = n()) %>%
             mutate(Percent = round(Count / sum(Count) * 100))

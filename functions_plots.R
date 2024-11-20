@@ -14,7 +14,7 @@ create_coral_health_plot <- function(data_filtered, input) {
         theme_classic() +
         gg_theme +
         theme(legend.position = "none") +
-        labs(y = "Percent of the Coral Structure Dead") +
+        labs(y = "% Coral Structure Dead") +
         stat_summary(fun = mean, geom = "point", shape = 23, size = 3, position = position_dodge(width = 0.75)) +
         scale_y_continuous(breaks = seq(0, 100, by = 10), sec.axis = dup_axis(name = "")) +
         ylim(min = 0, max = 100) +
@@ -24,7 +24,7 @@ create_coral_health_plot <- function(data_filtered, input) {
         geom_density(aes(color = !!sym(group_name)), size = 1) +
         theme_classic() +
         gg_theme +
-        labs(y = "Proportion of Observations", x = "Percent of the Coral Structure Dead") +
+        labs(y = "Proportion", x = "% Coral Structure Dead") +
         scale_x_continuous(breaks = seq(0, 100, by = 10)) +
         xlim(min = 0, max = 100) +
         scale_color_manual(values = palette) +
@@ -39,7 +39,8 @@ create_coral_disease_plot <- function(data_filtered_1, data_filtered_2, data_fil
             geom_col() +
             theme_classic() +
             gg_theme +
-            labs(x = x_label, y = y_label) +
+            theme(axis.text.x = element_text(face = "bold", angle = 90, vjust = 1, hjust = 1, size = 14)) +
+            labs(x = "", y = y_label) +
             scale_fill_manual(values = palette, name = "") +
             theme(legend.position = "none") +
             scale_y_continuous(breaks = seq(0, 100, by = 10), sec.axis = dup_axis(name = "")) +
@@ -47,8 +48,8 @@ create_coral_disease_plot <- function(data_filtered_1, data_filtered_2, data_fil
     }
     plot1 <- create_plot(data_filtered_1, "Bleaching.x", "Percent", "Bleaching Status", "Percent of Corals", "Bleaching.x")
     plot2 <- create_plot(data_filtered_2, "Bleaching.x", "Percent", "Bleaching Status", "Percent of Bleached Corals", "Bleaching.x")
-    plot3 <- create_plot(data_filtered_3, "Name", "Percent", "Disease", "Percent of Corals", "Name") + theme(plot.margin = margin(b = 30))
-    plot4 <- create_plot(data_filtered_4, "Name", "Percent", "Disease", "Percent of Diseased Coral", "Name") + theme(plot.margin = margin(b = 30))
+    plot3 <- create_plot(data_filtered_3, "Name", "Percent", "Disease", "Percent of Corals", "Name")
+    plot4 <- create_plot(data_filtered_4, "Name", "Percent", "Disease", "Percent of Diseased Coral", "Name") + theme(plot.margin = margin(b = 80))
     plot_group1 <- ggarrange(plot1, plot2, nrow = 1)
     plot_group2 <- ggarrange(plot3, plot4, nrow = 1)
     ggarrange(plot_group1, plot_group2, nrow = 2)
@@ -144,7 +145,7 @@ create_benthic_comp_plot <- function(data_filtered, input) {
         theme_classic() +
         gg_theme +
         labs(y = "Percent Benthic Cover") +
-        scale_fill_manual(name = group_name, values = palette) +
+        scale_fill_manual(name = "", values = palette) +
         scale_y_continuous(breaks = seq(0, 100, by = 10), sec.axis = dup_axis(name = "")) +
         guides(fill = guide_legend(nrow = 4, byrow = TRUE))
 }
