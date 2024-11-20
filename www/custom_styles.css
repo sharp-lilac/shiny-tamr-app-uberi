@@ -94,6 +94,10 @@
 }
 
 /* Fix header & sidebar position*/
+.main-sidebar {
+    position: fixed !important;
+}
+
 .main-header {
     position: fixed !important;
     width: 100%;
