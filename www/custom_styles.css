@@ -6,6 +6,20 @@
     border: 1px solid #000;
 }
 
+/* Sidebar toggle */
+.main-header .sidebar-toggle {
+    font-size: 30px !important;
+    padding: 3px 5px !important;
+}
+
+.main-header .sidebar-toggle:hover {
+    background-color: transparent !important; 
+}
+
+.main-header .sidebar-toggle:active {
+    background-color: transparent !important; 
+}
+
 /* Custom styles for boxes */
 .section-box {
     background-color: #c5ebf8;
@@ -44,12 +58,14 @@
     color: black;
     justify-self: center;
     font-size: 15px;
+    font-size: 20px;
 }
 
 .button-container {
     display: flex;
     justify-content: flex-start;
     gap: 12px;
+    gap: 20px;
     align-items: center;
 }
 
@@ -101,15 +117,33 @@
     height: auto;
 }
 
-/* Responsive images on large screens*/
 @media (min-width: 992px) {
     .responsive-img {
         max-width: 33%;
     }
 }
 
-/*UBERI Logo*/
+/* UBERI Logo */
 .uberi-logo {
     justify-self: center;
+    height: 50px;
     width: 150px;
+}
+
+/* Fix header & sidebar position*/
+.main-header {
+    position: fixed !important;
+    width: 100%;
+    z-index: 1030;
+    max-height: none; 
+}
+
+.content-wrapper {
+    padding-top: 25px; 
+}
+
+@media (max-width: 768px) {
+    .content-wrapper {
+        padding-top: calc(75px + 1em); 
+    }
 }

@@ -17,7 +17,7 @@ link_text <- paste(readLines("text/links.txt"))
 ui <- dashboardPage(
     dashboardHeader(
         title = "Explore TAMR",
-        tags$li(class = "dropdown", tags$img(src = "images/UBERI_logo.png", class = "uberi-logo"))
+        tags$li(class = "dropdown", tags$img(src = "images/UBERI_Logo.png", class = "uberi-logo"))
     ),
     dashboardSidebar(
         sidebarMenu(
@@ -43,11 +43,13 @@ ui <- dashboardPage(
                 menuSubItem("UB-ERI Website", href = link_text[1]),
                 menuSubItem("AGRRA Website", href = link_text[2]),
                 menuSubItem("HRHP Website", href = link_text[5]),
+                menuSubItem("RRI Partnership", href = link_text[7]),
                 menuSubItem("MBRS SMP Methods", href = link_text[3]),
                 menuSubItem("Dryad Data", href = link_text[4]),
                 menuSubItem("GitHub Repository", href = link_text[6])
             ),
-            menuItem("Map", tabName = "page_5", icon = icon("map"))
+            menuItem("Map", tabName = "page_5", icon = icon("map")),
+            menuItem("Feedback", tabName = "page_6", icon = icon("exclamation-triangle"))
         )
     ),
     dashboardBody(
@@ -103,7 +105,10 @@ ui <- dashboardPage(
                                 width = 9,
                                 div(
                                     class = "section-box",
-                                    p(home_text[2]), p(home_text[3]), p(home_text[4]), p(home_text[5])
+                                    p(home_text[2]),
+                                    p(home_text[3]),
+                                    uiOutput("show_more_text1"),
+                                    actionButton("show_more1", "Show More")
                                 )
                             )
                         ),
@@ -118,23 +123,27 @@ ui <- dashboardPage(
                                 ) %>% tagAppendAttributes(class = "keyBoxes")
                             )
                         ),
-                        h3("Project Collaborators"),
+                        br(),
+                        h3("Collaborators and Funding"),
                         fluidRow(
                             column(
                                 width = 9,
                                 div(
                                     class = "section-box alternate",
-                                    p(home_text[6]), p(home_text[7])
+                                    p(home_text[7]),
+                                    uiOutput("show_more_text2"),
+                                    actionButton("show_more2", "Show More")
                                 )
                             )
                         ),
+                        br(),
                         h3("Access Our Data"),
                         fluidRow(
                             column(
                                 width = 9,
                                 div(
                                     class = "section-box alternate-2",
-                                    p(home_text[8])
+                                    p(home_text[12])
                                 )
                             )
                         )
@@ -804,6 +813,7 @@ ui <- dashboardPage(
                 div(style = "float:left;", img(src = "images/Turneffe_Map.jpg", class = "responsive-img")),
                 fluidRow(column(width = 12, div(style = "height: 20px;"))),
                 downloadButton("download_map", "Download Map"),
+                actionButton("open_map", label = tagList(icon("map"), "View on Google Maps"), onclick = paste0("window.open('", map_text[4], "', '_blank');")),
                 fluidRow(column(width = 12, div(style = "height: 20px;"))),
                 fluidRow(
                     column(
@@ -814,6 +824,27 @@ ui <- dashboardPage(
                             br(),
                             p(map_text[3], br(), "http://www.biodiversity.bz/")
                         )
+                    )
+                )
+            ),
+            tabItem(
+                tabName = "page_6",
+                h2("Provide Feedback!"),
+                fluidRow(column(width = 12, div(style = "height: 20px;"))),
+                p("Do you have any suggestions or comments for the people who made this app? Feel free to provide your feedback below."),
+                fluidRow(
+                    column(
+                        width = 12,
+                        textAreaInput("feedback_text",
+                            label = "",
+                            placeholder = "...",
+                            width = "100%",
+                            height = "200px",
+                            resize = "vertical"
+                        ),
+                        actionButton("clear_feedback", label = "Clear", class = "btn-warning"),
+                        actionButton("submit_feedback", label = "Submit", class = "btn-success"),
+                        div(style = "height: 20px;")
                     )
                 )
             )
