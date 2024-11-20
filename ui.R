@@ -21,6 +21,7 @@ ui <- dashboardPage(
     ),
     dashboardSidebar(
         sidebarMenu(
+            id = "tabs",
             menuItem("Home", tabName = "home", icon = icon("home")),
             menuItem("Explore Coral",
                 tabName = "page_1", icon = icon("magnifying-glass"),
@@ -65,6 +66,37 @@ ui <- dashboardPage(
                             icon("exclamation-triangle", class = "text-warning"),
                             p(tags$strong(home_text[1]))
                         ),
+                        fluidRow(column(width = 12, div(style = "height: 20px;"))),
+                        fluidRow(
+                            column(
+                                width = 9,
+                                div(
+                                    class = "button-container",
+                                    actionBttn(
+                                        inputId = "coral_explorer_nav",
+                                        label = "Explore Coral!",
+                                        style = "jelly",
+                                        color = "primary",
+                                        icon = tags$img(src = "images/coral_icon.png", class = "small-icon")
+                                    ),
+                                    actionBttn(
+                                        inputId = "benthic_explorer_nav",
+                                        label = "Explore Benthos!",
+                                        style = "jelly",
+                                        color = "primary",
+                                        icon = tags$img(src = "images/benthic_icon.png", class = "small-icon")
+                                    ),
+                                    actionBttn(
+                                        inputId = "fish_explorer_nav",
+                                        label = "Explore Fish!",
+                                        style = "jelly",
+                                        color = "primary",
+                                        icon = tags$img(src = "images/fish_icon.png", class = "small-icon")
+                                    )
+                                )
+                            )
+                        ),
+                        fluidRow(column(width = 12, div(style = "height: 20px;"))),
                         h3("Our Long-Term Reef Monitoring Data"),
                         fluidRow(
                             column(

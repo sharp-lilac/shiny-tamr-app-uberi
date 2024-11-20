@@ -10,7 +10,17 @@ source("functions_plots.R")
 source("functions_captions.R")
 
 # Define server ---------------------------
-shinyServer(function(input, output) {
+shinyServer(function(input, output, session) {
+    # Quick tab change
+    observeEvent(input$coral_explorer_nav, {
+        updateTabItems(session, inputId = "tabs", selected = "page_1-1")
+    })
+    observeEvent(input$benthic_explorer_nav, {
+        updateTabItems(session, inputId = "tabs", selected = "page_2")
+    })
+    observeEvent(input$fish_explorer_nav, {
+        updateTabItems(session, inputId = "tabs", selected = "page_3-1")
+    })
     # Key data summary Boxes
     output$number_collectors_box <- renderInfoBox({
         infoBox(collectors_count, "Data Collectors", icon = shiny::icon(NULL))

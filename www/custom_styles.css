@@ -25,6 +25,41 @@
     border: 1px solid #000;
 }
 
+/* Custom styles for buttons */
+.bttn,
+.bttn-lg,
+.bttn-md,
+.bttn-sm,
+.bttn-xs {
+    background-color: #d8e6cf;
+    border: 1px solid #000;
+    color: #FFFFFF;
+    justify-self: center;
+    font-size: 20px;
+}
+
+.bttn-jelly.bttn-primary {
+    background-color: #d8e6cf;
+    border: 1px solid #000;
+    color: black;
+    justify-self: center;
+    font-size: 20px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: flex-start;
+    gap: 20px;
+    align-items: center;
+}
+
+/* Small image styling */
+.small-icon {
+    width: 25px;
+    height: auto;
+    justify-self: center;
+}
+
 /*Key data boxes*/
 .keyBoxes .info-box {
     min-height: 0;
