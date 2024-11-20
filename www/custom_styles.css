@@ -105,10 +105,6 @@
     padding-top: 25px;
 }
 
-.main-header {
-    height: 100%;
-}
-
 @media (max-width: 768px) {
     .content-wrapper {
         padding-top: calc(75px + 1em);
