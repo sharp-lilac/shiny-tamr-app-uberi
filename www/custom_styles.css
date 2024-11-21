@@ -168,3 +168,45 @@
         padding-top: calc(75px + 1em);
     }
 }
+
+.nav-tabs a {
+    background-color: #f1d1c1 !important;
+    color: black;
+    border: solid black 1px !important;
+}
+
+
+/* Highlight Sidebar Items */
+.highlight-side-tab {
+    background-color: #cbd5c5;
+}
+
+.highlight-side-tab>a {
+    background-color: #B8D0A8 !important;
+    color: black !important;
+}
+
+.highlight-side-tab>a:hover {
+    background-color: #9cb68a !important;
+}
+
+.highlight-side-tab.active>a {
+    background-color: #9cb68a !important;
+}
+
+.highlight-side-tab ul {
+    background-color: #cbd5c5 !important;
+}
+
+.highlight-side-tab li a {
+    background-color: #cbd5c5 !important;
+    color: black !important;
+}
+
+.highlight-side-tab li a:hover {
+    color: white !important;
+}
+
+.highlight-side-tab>ul>.active>a {
+    color: white !important;
+}

@@ -28,16 +28,16 @@ ui <- dashboardPage(
                 menuSubItem("Coral Health", tabName = "page_1-2"),
                 menuSubItem("Coral Size", tabName = "page_1-1"),
                 menuSubItem("Coral Cover", tabName = "page_1-3")
-            ),
+            ) %>% tagAppendAttributes(class = "highlight-side-tab"),
             menuItem("Explore Benthos",
                 tabName = "page_2", icon = icon("magnifying-glass")
-            ),
+            ) %>% tagAppendAttributes(class = "highlight-side-tab"),
             menuItem("Explore Fish",
                 tabName = "page_3", icon = icon("magnifying-glass"),
                 menuSubItem("Fish Size", tabName = "page_3-1"),
                 menuSubItem("Fish Biomass", tabName = "page_3-2"),
                 menuSubItem("Fish Observations", tabName = "page_3-3")
-            ),
+            ) %>% tagAppendAttributes(class = "highlight-side-tab"),
             menuItem("Quick Links",
                 tabName = "page_4", icon = icon("location-arrow"),
                 menuSubItem("UB-ERI Website", href = link_text[1]),
