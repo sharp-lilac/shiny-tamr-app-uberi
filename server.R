@@ -22,6 +22,7 @@ shinyServer(function(input, output, session) {
     })
     observeEvent(input$fish_explorer_nav, {
         updateTabItems(session, inputId = "tabs", selected = "page_3-1")
+    })
     # Show more buttons
     show_more_text_value1 <- reactiveVal(FALSE)
     observeEvent(input$show_more1, {
