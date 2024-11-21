@@ -150,4 +150,6 @@
 
 .nav-tabs a {
     background-color: #f1d1c1 !important;
+    color: black;
+    border: solid black 1px !important;
 }
