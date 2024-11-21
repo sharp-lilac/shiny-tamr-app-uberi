@@ -804,6 +804,15 @@ ui <- dashboardPage(
                             p(map_text[3], br(), "http://www.biodiversity.bz/")
                         )
                     )
+                ),
+                h2("Table of Locality Descriptions"),
+                fluidRow(
+                    column(
+                        width = 8,
+                        div(
+                            DT::dataTableOutput(outputId = "reef_localities_surveyed_table")
+                        )
+                    )
                 )
             ),
             tabItem(

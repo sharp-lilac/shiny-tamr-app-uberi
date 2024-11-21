@@ -311,7 +311,6 @@ shinyServer(function(input, output) {
             file.copy("www/images/Turneffe_Map.jpg", file)
         }
     )
-
     # Localities Data Table
     output$reef_localities_surveyed_table <- DT::renderDataTable({
         reef_localities_surveyed_table %>%
@@ -326,14 +325,16 @@ shinyServer(function(input, output) {
                     dom = "t",
                     columnDefs = list(
                         list(targets = 0, visible = FALSE),
-                        list(targets = 3, width = "200px"),
-                        list(targets = 4, width = "150px"),
-                        list(targets = 6, width = "125px")
+                        list(targets = 1, width = "100px"),
+                        list(targets = 2, width = "50px"),
+                        list(targets = 3, width = "75px"),
+                        list(targets = 4, width = "50px"),
+                        list(targets = 5, width = "50px"),
+                        list(targets = 6, width = "50px")
                     )
                 )
             )
     })
-
     # Download coral health plot
     output$coral_health_download <- downloadHandler(
         filename = function() {
