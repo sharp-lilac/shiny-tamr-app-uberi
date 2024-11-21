@@ -13,11 +13,11 @@
 }
 
 .main-header .sidebar-toggle:hover {
-    background-color: transparent !important; 
+    background-color: transparent !important;
 }
 
 .main-header .sidebar-toggle:active {
-    background-color: transparent !important; 
+    background-color: transparent !important;
 }
 
 /* Custom styles for boxes */
@@ -135,15 +135,19 @@
     position: fixed !important;
     width: 100%;
     z-index: 1030;
-    max-height: none; 
+    max-height: none;
 }
 
 .content-wrapper {
-    padding-top: 25px; 
+    padding-top: 25px;
 }
 
 @media (max-width: 768px) {
     .content-wrapper {
-        padding-top: calc(75px + 1em); 
+        padding-top: calc(75px + 1em);
     }
+}
+
+.nav-tabs a {
+    background-color: #f1d1c1 !important;
 }
