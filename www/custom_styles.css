@@ -47,26 +47,43 @@
 .bttn-xs {
     background-color: #d8e6cf;
     border: 1px solid #000;
+    min-width: 80px;
+    border-radius: 8px;
     color: #FFFFFF;
     justify-self: center;
-    font-size: 15px;
+    font-size: 18px;
 }
 
-.bttn-jelly.bttn-primary {
+.bttn-simple.bttn-primary {
     background-color: #d8e6cf;
     border: 1px solid #000;
+    min-width: 80px;
+    border-radius: 8px;
     color: black;
     justify-self: center;
-    font-size: 15px;
-    font-size: 20px;
+    font-size: 18px;
+    padding-right: 30px;
 }
 
 .button-container {
     display: flex;
     justify-content: flex-start;
-    gap: 12px;
     gap: 20px;
     align-items: center;
+}
+
+@media (max-width: 768px) {
+    .button-container {
+        display: flex;
+        flex-direction: column; 
+        gap: 10px; 
+    }
+
+    .button-container .bttn,
+    .button-container .bttn-simple {
+        width: 100%; 
+        text-align: center; 
+    }
 }
 
 /* Small image styling */

@@ -65,7 +65,6 @@ ui <- dashboardPage(
                         br(),
                         div(
                             style = "display: flex; align-items: left;",
-                            icon("exclamation-triangle", class = "text-warning"),
                             p(tags$strong(home_text[1]))
                         ),
                         fluidRow(column(width = 12, div(style = "height: 20px;"))),
@@ -76,22 +75,22 @@ ui <- dashboardPage(
                                     class = "button-container",
                                     actionBttn(
                                         inputId = "coral_explorer_nav",
-                                        label = "Explore Coral!",
-                                        style = "jelly",
+                                        label = "Explore Coral",
+                                        style = "simple",
                                         color = "primary",
                                         icon = tags$img(src = "images/coral_icon.png", class = "small-icon")
                                     ),
                                     actionBttn(
                                         inputId = "benthic_explorer_nav",
-                                        label = "Explore Benthos!",
-                                        style = "jelly",
+                                        label = "Explore Benthos",
+                                        style = "simple",
                                         color = "primary",
                                         icon = tags$img(src = "images/benthic_icon.png", class = "small-icon")
                                     ),
                                     actionBttn(
                                         inputId = "fish_explorer_nav",
-                                        label = "Explore Fish!",
-                                        style = "jelly",
+                                        label = "Explore Fish",
+                                        style = "simple",
                                         color = "primary",
                                         icon = tags$img(src = "images/fish_icon.png", class = "small-icon")
                                     )
@@ -217,7 +216,7 @@ ui <- dashboardPage(
                         )
                     ),
                     tabPanel(
-                        h3("Disease & Bleaching"),
+                        h3("Disease"),
                         fluidRow(column(width = 12, div(style = "height: 20px;"))),
                         sidebarLayout(
                             sidebarPanel(
