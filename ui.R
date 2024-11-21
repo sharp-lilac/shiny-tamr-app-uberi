@@ -798,7 +798,7 @@ ui <- dashboardPage(
             ),
             tabItem(
                 tabName = "page_5",
-                h2("Map of Turneffe Atoll Marine Reserve"),
+                h2("Turneffe Atoll Marine Reserve"),
                 fluidRow(column(width = 12, div(style = "height: 20px;"))),
                 fluidRow(
                     column(
