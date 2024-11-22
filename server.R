@@ -19,16 +19,38 @@ shinyServer(function(input, output, session) {
         echart_master_fish_count <- df_master_fish_count %>%
             select(Year, Count) %>%
             mutate(Year = as.factor(Year))
+
+        outliers_data <- echart_master_fish_count %>%
+            group_by(Year) %>%
+            summarize(Outliers = list(get_outliers(Count))) %>%
+            unnest(cols = Outliers)
+
+        means_data <- echart_master_fish_count %>%
+            group_by(Year) %>%
+            summarize(Means = mean(Count))
+
         echart_master_fish_count |>
             group_by(Year) |>
-            e_charts() |>
-            e_boxplot(Count, colorBy = data, legendHoverLink = TRUE) |>
+            e_charts(Year, elementId = "chart1") |>
+            e_theme_custom("www/echart_theme.json") |>
+            e_boxplot(Count,colorBy = data,
+                outliers = FALSE,
+                colorBy = data, legendHoverLink = TRUE
+            ) |>
             e_x_axis(name = "Year", data = unique(echart_master_fish_count$Year)) |>
-            e_y_axis(name = "Count of Fish per Transect") |>
+            e_y_axis(name = "Number Fish / Transect", nameTextStyle = list(color = "black")) |>
             e_tooltip(trigger = "item") |>
             e_color(palette) |>
-            e_datazoom()
+            e_datazoom() |>
+            e_data(outliers_data, Year) |>
+            e_scatter(Outliers, colorBy = data,symbol_size = 4, symbol = "circle") |>
+            e_color(palette) |>
+            e_legend(show = F) |>
+            e_data(means_data, Year) |>
+            e_scatter(Means, colorBy = data, symbol_size = 10, symbol = "triangle") |>
+            e_color(palette)
     })
+
     # Quick tab change
     observeEvent(input$coral_explorer_nav, {
         updateTabItems(session, inputId = "tabs", selected = "page_1-2")

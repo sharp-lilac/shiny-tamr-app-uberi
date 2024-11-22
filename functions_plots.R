@@ -6,6 +6,12 @@ library(ggpubr)
 library(grid)
 library(lubridate)
 
+# Create function to compute outliers ---------------------------
+get_outliers <- function(values) {
+    stats <- boxplot.stats(values)
+    return(stats$out)
+}
+
 # Create plot of coral health by year, locality, species ---------------------------
 create_coral_health_plot <- function(data_filtered, input) {
     group_name <- input$coral_health_group_toggle
