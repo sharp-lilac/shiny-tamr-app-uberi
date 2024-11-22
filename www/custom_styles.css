@@ -75,14 +75,14 @@
 @media (max-width: 768px) {
     .button-container {
         display: flex;
-        flex-direction: column; 
-        gap: 10px; 
+        flex-direction: column;
+        gap: 10px;
     }
 
     .button-container .bttn,
     .button-container .bttn-simple {
-        width: 100%; 
-        text-align: center; 
+        width: 100%;
+        text-align: center;
     }
 }
 
@@ -209,4 +209,9 @@
 
 .highlight-side-tab>ul>.active>a {
     color: white !important;
+}
+
+/* Localities DT */
+.locality-dt {
+    overflow-x: scroll;
 }
