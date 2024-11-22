@@ -3,6 +3,7 @@
 # Load packages ---------------------------
 library(shiny)
 library(mailR)
+library(echarts4r)
 
 # Source objects ---------------------------
 source("theme.R")
@@ -13,6 +14,21 @@ home_text <- paste(readLines("text/home.txt"))
 
 # Define server ---------------------------
 shinyServer(function(input, output, session) {
+    # Java plot
+    output$java_plot <- renderEcharts4r({
+        echart_master_fish_count <- df_master_fish_count %>%
+            select(Year, Count) %>%
+            mutate(Year = as.factor(Year))
+        echart_master_fish_count |>
+            group_by(Year) |>
+            e_charts() |>
+            e_boxplot(Count, colorBy = data, legendHoverLink = TRUE) |>
+            e_x_axis(name = "Year", data = unique(echart_master_fish_count$Year)) |>
+            e_y_axis(name = "Count of Fish per Transect") |>
+            e_tooltip(trigger = "item") |>
+            e_color(palette) |>
+            e_datazoom()
+    })
     # Quick tab change
     observeEvent(input$coral_explorer_nav, {
         updateTabItems(session, inputId = "tabs", selected = "page_1-2")

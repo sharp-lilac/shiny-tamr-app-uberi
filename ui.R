@@ -5,6 +5,7 @@ library(shiny)
 library(shinydashboard)
 library(shinyWidgets)
 library(shinycssloaders)
+library(echarts4r)
 
 # Source Objects ---------------------------
 source("theme.R")
@@ -68,6 +69,7 @@ ui <- dashboardPage(
                             p(tags$strong(home_text[1]))
                         ),
                         fluidRow(column(width = 12, div(style = "height: 20px;"))),
+                        echarts4rOutput("java_plot"),
                         fluidRow(
                             column(
                                 width = 9,
