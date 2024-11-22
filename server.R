@@ -25,16 +25,13 @@ shinyServer(function(input, output, session) {
     })
     # Show more buttons
     show_more_text_value1 <- reactiveVal(FALSE)
-    observeEvent(input$show_more1,
-        {
-            new_label <- ifelse(
-                show_more_text_value1() == FALSE, "Show Less", "Show More"
-            )
-            updateActionButton(session, "show_more1", label = new_label)
-            show_more_text_value1(!show_more_text_value1())
-        },
-        ignoreInit = TRUE
-    )
+    observeEvent(input$show_more1, {
+        new_label <- ifelse(
+            show_more_text_value1() == FALSE, "Show Less", "Show More"
+        )
+        updateActionButton(session, "show_more1", label = new_label)
+        show_more_text_value1(!show_more_text_value1())
+    })
     output$show_more_text1 <- renderUI({
         if (show_more_text_value1()) {
             tagList(
