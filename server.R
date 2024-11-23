@@ -31,9 +31,11 @@ shinyServer(function(input, output, session) {
 
         echart_master_fish_count |>
             group_by(Year) |>
-            e_charts(Year, elementId = "chart1") |>
+            e_charts(Year) |>
             e_theme_custom("www/echart_theme.json") |>
-            e_boxplot(Count,colorBy = data,
+            e_boxplot(Count,
+                z = 1,
+                colorBy = data,
                 outliers = FALSE,
                 colorBy = data, legendHoverLink = TRUE
             ) |>
@@ -41,13 +43,12 @@ shinyServer(function(input, output, session) {
             e_y_axis(name = "Number Fish / Transect", nameTextStyle = list(color = "black")) |>
             e_tooltip(trigger = "item") |>
             e_color(palette) |>
-            e_datazoom() |>
             e_data(outliers_data, Year) |>
-            e_scatter(Outliers, colorBy = data,symbol_size = 4, symbol = "circle") |>
+            e_scatter(Outliers, colorBy = data, symbol_size = 4, symbol = "circle") |>
             e_color(palette) |>
             e_legend(show = F) |>
             e_data(means_data, Year) |>
-            e_scatter(Means, colorBy = data, symbol_size = 10, symbol = "triangle") |>
+            e_scatter(Means, z = 2, colorBy = data, symbol_size = 10, symbol = "triangle") |>
             e_color(palette)
     })
 
