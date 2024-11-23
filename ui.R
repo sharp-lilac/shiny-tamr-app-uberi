@@ -842,7 +842,7 @@ ui <- dashboardPage(
                         width = 9,
                         div(
                             DT::dataTableOutput(outputId = "reef_localities_surveyed_table")
-                        )
+                        ) %>% tagAppendAttributes(class = "locality-dt")
                     )
                 )
             ),
