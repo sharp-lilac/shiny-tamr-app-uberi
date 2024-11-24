@@ -14,7 +14,6 @@ home_text <- paste(readLines("text/home.txt"))
 
 # Define server ---------------------------
 shinyServer(function(input, output, session) {
-    # Java plot
     output$java_plot <- renderEcharts4r({
         echart_master_fish_count <- df_master_fish_count %>%
             select(Year, Count) %>%
@@ -33,12 +32,7 @@ shinyServer(function(input, output, session) {
             group_by(Year) |>
             e_charts(Year) |>
             e_theme_custom("www/echart_theme.json") |>
-            e_boxplot(Count,
-                z = 1,
-                colorBy = data,
-                outliers = FALSE,
-                colorBy = data, legendHoverLink = TRUE
-            ) |>
+            e_boxplot(Count, z = 1, colorBy = data, outliers = FALSE) |>
             e_x_axis(name = "Year", data = unique(echart_master_fish_count$Year)) |>
             e_y_axis(name = "Number Fish / Transect", nameTextStyle = list(color = "black")) |>
             e_tooltip(trigger = "item") |>
@@ -46,7 +40,7 @@ shinyServer(function(input, output, session) {
             e_data(outliers_data, Year) |>
             e_scatter(Outliers, colorBy = data, symbol_size = 4, symbol = "circle") |>
             e_color(palette) |>
-            e_legend(show = F) |>
+            e_legend(show = T) |>
             e_data(means_data, Year) |>
             e_scatter(Means, z = 2, colorBy = data, symbol_size = 10, symbol = "triangle") |>
             e_color(palette)
