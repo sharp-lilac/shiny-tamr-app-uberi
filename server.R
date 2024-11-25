@@ -3,6 +3,8 @@
 # Load packages ---------------------------
 library(shiny)
 library(mailR)
+library(echarty)
+library(dplyr)
 
 # Source objects ---------------------------
 source("theme.R")
@@ -13,6 +15,23 @@ home_text <- paste(readLines("text/home.txt"))
 
 # Define server ---------------------------
 shinyServer(function(input, output, session) {
+    list_fish_count <- df_master_fish_count %>%
+        mutate(Locality = gsub(" ", "_", Locality)) %>%
+        group_by(Locality, Year) %>%
+        summarise(box_stats = list(boxplot.stats(Count)$stats), .groups = "drop") %>%
+        group_by(Locality) %>%
+        summarise(yearly_stats = list(setNames(box_stats, unique(Year))), .groups = "drop") %>%
+        deframe()
+
+    ds <- df_master_fish_count %>%
+        mutate(
+            Locality = gsub(" ", "_", Locality),
+            Year = as.factor(Year), Locality = as.factor(Locality)
+        ) %>%
+        relocate(Year, Count, Locality) %>%
+        group_by(Locality) %>%
+        ec.data(format = "boxplot", layout = "v")
+
     # Quick tab change
     observeEvent(input$coral_explorer_nav, {
         updateTabItems(session, inputId = "tabs", selected = "page_1-2")
