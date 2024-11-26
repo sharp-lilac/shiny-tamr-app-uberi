@@ -5,6 +5,7 @@ library(shiny)
 library(mailR)
 library(echarty)
 library(dplyr)
+library(echarts4r)
 
 # Source objects ---------------------------
 source("theme.R")
@@ -15,22 +16,23 @@ home_text <- paste(readLines("text/home.txt"))
 
 # Define server ---------------------------
 shinyServer(function(input, output, session) {
-    list_fish_count <- df_master_fish_count %>%
-        mutate(Locality = gsub(" ", "_", Locality)) %>%
-        group_by(Locality, Year) %>%
-        summarise(box_stats = list(boxplot.stats(Count)$stats), .groups = "drop") %>%
-        group_by(Locality) %>%
-        summarise(yearly_stats = list(setNames(box_stats, unique(Year))), .groups = "drop") %>%
-        deframe()
-
-    ds <- df_master_fish_count %>%
-        mutate(
-            Locality = gsub(" ", "_", Locality),
-            Year = as.factor(Year), Locality = as.factor(Locality)
+    output$boxplot <- ecs.render({
+        ds <- df_master_fish_count %>%
+            mutate(
+                Year = as.factor(Year), Locality = as.factor(Locality)
+            ) %>%
+            relocate(Year, Count, Locality) %>%
+            group_by(Locality) %>%
+            ec.data(format = "boxplot", layout = "v", outliers = TRUE)
+        ec.init(
+            load = "custom",
+            dataset = ds$dataset, series = ds$series, xAxis = ds$xAxis, yAxis = ds$yAxis,
+            legend = list(show = TRUE), tooltip = list(show = TRUE)
         ) %>%
-        relocate(Year, Count, Locality) %>%
-        group_by(Locality) %>%
-        ec.data(format = "boxplot", layout = "v")
+            ec.theme(ec_theme$name, ec_theme$code)
+    })
+
+
 
     # Quick tab change
     observeEvent(input$coral_explorer_nav, {

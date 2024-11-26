@@ -5,6 +5,7 @@ library(shiny)
 library(shinydashboard)
 library(shinyWidgets)
 library(shinycssloaders)
+library(echarty)
 
 # Source Objects ---------------------------
 source("theme.R")
@@ -98,6 +99,7 @@ ui <- dashboardPage(
                             )
                         ),
                         fluidRow(column(width = 12, div(style = "height: 20px;"))),
+                        column(12, ecs.output("boxplot") %>% withSpinner(type = 8, color = palette[4])),
                         h3("Our Long-Term Reef Monitoring Data"),
                         fluidRow(
                             column(
