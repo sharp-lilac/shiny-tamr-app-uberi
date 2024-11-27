@@ -4,6 +4,7 @@
 library(shiny)
 library(mailR)
 library(echarts4r)
+library(purrr)
 
 # Source objects ---------------------------
 source("theme.R")
@@ -15,35 +16,72 @@ home_text <- paste(readLines("text/home.txt"))
 # Define server ---------------------------
 shinyServer(function(input, output, session) {
     output$java_plot <- renderEcharts4r({
-        echart_master_fish_count <- df_master_fish_count %>%
-            select(Year, Count) %>%
+        df_master_fish_count <- df_master_fish_count %>%
             mutate(Year = as.factor(Year))
+
+
+        ec_master_fish_count <- df_master_fish_count %>%
+            select(Year, Count, Locality) %>%
+            mutate(Year = as.factor(Year)) %>%
+            complete(Year, Locality, fill = list(Count = NA))
 
         outliers_data <- echart_master_fish_count %>%
             group_by(Year) %>%
             summarize(Outliers = list(get_outliers(Count))) %>%
             unnest(cols = Outliers)
 
-        means_data <- echart_master_fish_count %>%
+        means_data <- ec_master_fish_count %>%
             group_by(Year) %>%
-            summarize(Means = mean(Count))
+            summarize(Means = mean(Count, na.rm = TRUE), .groups = "drop")
 
-        echart_master_fish_count |>
-            group_by(Year) |>
-            e_charts(Year) |>
-            e_theme_custom("www/echart_theme.json") |>
-            e_boxplot(Count, z = 1, colorBy = data, outliers = FALSE) |>
-            e_x_axis(name = "Year", data = unique(echart_master_fish_count$Year)) |>
-            e_y_axis(name = "Number Fish / Transect", nameTextStyle = list(color = "black")) |>
-            e_tooltip(trigger = "item") |>
-            e_color(palette) |>
-            e_data(outliers_data, Year) |>
-            e_scatter(Outliers, colorBy = data, symbol_size = 4, symbol = "circle") |>
-            e_color(palette) |>
-            e_legend(show = T) |>
-            e_data(means_data, Year) |>
-            e_scatter(Means, z = 2, colorBy = data, symbol_size = 10, symbol = "triangle") |>
-            e_color(palette)
+        locality_year_means <- ec_master_fish_count %>%
+            group_by(Locality, Year) %>%
+            summarize(LocalityYearMean = mean(Count, na.rm = TRUE), .groups = "drop")
+
+        ec_master_fish_count %>%
+            group_by(Locality) %>%
+            e_charts(Year) %>%
+            e_theme_custom("www/echart_theme.json") %>%
+            e_boxplot_group(serie = "Count", group = Locality) %>%
+            e_x_axis(name = "Year") %>%
+            e_y_axis(name = "Count") %>%
+            e_tooltip(
+                formatter = htmlwidgets::JS("
+            function(params) {
+                if (params.componentType === 'series' && params.seriesType === 'scatter') {
+                    return '<b>Annual Mean</b><br>' +
+                           'Year: ' + params.name + '<br>' +
+                           'Mean: ' + params.value[1];
+                } else {
+                    const localityYearMean = params.data[5]; // Locality-Year mean stored at index 5
+                    return '<b>Groups</b><br>' +
+                           'Year: ' + params.name + '<br>' +
+                           'Locality: ' + params.seriesName + '<br>' +
+                           '<hr style=\"margin: 5px 0; border: none; border-top: 1px solid #ccc;\" />' +
+                           '<b>Boxplot Stats</b><br>' +
+                           'Min: ' + params.data[0] + '<br>' +
+                           'Q1: ' + params.data[1] + '<br>' +
+                           'Median: ' + params.data[2] + '<br>' +
+                           'Mean: '+ localityYearMean + '<br>' +
+                           'Q3: ' + params.data[3] + '<br>' +
+                           'Max: ' + params.data[4] + '<br>'
+                }
+            }
+        ")
+            ) %>%
+            e_legend(
+                show = TRUE,
+                itemWidth = 8,
+                itemHeight = 8,
+                itemStyle = list(borderColor = "black"),
+                selectedMode = TRUE
+            ) %>%
+            e_data(means_data, Year) %>%
+            e_scatter(Means,
+                colorBy = "series",
+                symbol = "triangle", symbol_size = 12, z = 2,
+                color = palette[32]
+            )
     })
 
     # Quick tab change

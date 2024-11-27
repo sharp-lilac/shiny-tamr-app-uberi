@@ -12,6 +12,58 @@ get_outliers <- function(values) {
     return(stats$out)
 }
 
+# Create function to generate grouped echart boxplot ---------------------------
+# Credit to @munoztd0 (GitHub) for function
+e_boxplot_group <- function(e, serie, name = NULL, outliers = TRUE, ...) {
+    if (missing(serie)) {
+        stop("must pass serie", call. = FALSE)
+    }
+
+    # Prepare group names
+    group_names <- if (!is.null(name)) name else names(e$x$data)
+
+    # Reset series
+    e$x$opts$series <- list()
+
+    # Prepare categories from all data groups
+    categories <- unique(unlist(lapply(e$x$data, function(data) data[[e$x$mapping$x]])))
+
+    # Iterate through groups
+    for (i in seq_along(e$x$data)) {
+        current_data <- e$x$data[[i]]
+
+        # Calculate boxplot stats for each category
+        category_boxplots <- lapply(categories, function(cat) {
+            if (cat %in% current_data[[e$x$mapping$x]]) {
+                cat_data <- current_data[current_data[[e$x$mapping$x]] == cat, ]
+                boxplot.stats(cat_data[[serie]])$stats
+            } else {
+                # Return an empty boxplot for missing categories
+                rep(NA, 5)
+            }
+        })
+
+        # Add series for the group
+        series_item <- list(
+            name = group_names[i],
+            type = "boxplot",
+            data = category_boxplots
+        )
+        e$x$opts$series[[i]] <- series_item
+    }
+
+    # Set x-axis categories
+    e$x$opts$xAxis[[1]]$data <- categories
+    e$x$opts$xAxis[[1]]$type <- "category"
+
+    # Add legend
+    e$x$opts$legend$data <- as.list(group_names)
+    e$x$opts$legend$show <- TRUE
+    e
+}
+
+
+
 # Create plot of coral health by year, locality, species ---------------------------
 create_coral_health_plot <- function(data_filtered, input) {
     group_name <- input$coral_health_group_toggle
