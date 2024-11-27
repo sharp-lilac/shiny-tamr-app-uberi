@@ -20,6 +20,27 @@ shinyServer(function(input, output, session) {
             mutate(Year = as.factor(Year))
 
 
+
+
+        data <- data.frame(
+            category = rep(LETTERS[1:5], each = 100),
+            value = rnorm(500, mean = rep(1:5, each = 100), sd = 1:5),
+            gender = sample(c("M", "F"), 500, replace = TRUE)
+        )
+
+        plot <- data |>
+            group_by(gender) |>
+            e_charts(category) |>
+            e_boxplot_group(serie = "value") |>
+            e_x_axis(name = "Category") |>
+            e_y_axis(name = "Value") |>
+            e_tooltip(trigger = "axis") |>
+            e_legend(show = TRUE)
+
+        plot
+
+
+
         ec_master_fish_count <- df_master_fish_count %>%
             select(Year, Count, Locality) %>%
             mutate(Year = as.factor(Year)) %>%
@@ -42,7 +63,8 @@ shinyServer(function(input, output, session) {
             group_by(Locality) %>%
             e_charts(Year) %>%
             e_theme_custom("www/echart_theme.json") %>%
-            e_boxplot_group(serie = "Count", group = Locality) %>%
+            e_boxplot_group(serie = "Count", outliers = TRUE) %>%
+            e_legend(show = T) |>
             e_x_axis(name = "Year") %>%
             e_y_axis(name = "Count") %>%
             e_tooltip(

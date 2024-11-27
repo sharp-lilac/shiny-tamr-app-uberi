@@ -14,51 +14,78 @@ get_outliers <- function(values) {
 
 # Create function to generate grouped echart boxplot ---------------------------
 # Credit to @munoztd0 (GitHub) for function
+.get_outliers <- function(e, serie, i) {
+    x <- .get_data(e, serie, i)
+
+    boxplot.stats(x)$out
+}
+
+.build_outliers <- function(e, out) {
+    x <- length(e$x$opts$series[[1]]$data) - 1
+    x <- rep(x, length(out))
+    matrix <- cbind(x, out)
+    apply(unname(matrix), 1, as.list)
+}
+
+.add_outliers <- function(e, serie, i) {
+    outliers <- .get_outliers(e, serie, i)
+    outliers <- .build_outliers(e, outliers)
+}
+
 e_boxplot_group <- function(e, serie, name = NULL, outliers = TRUE, ...) {
     if (missing(serie)) {
         stop("must pass serie", call. = FALSE)
     }
 
-    # Prepare group names
+    # Prepare group names if available
     group_names <- if (!is.null(name)) name else names(e$x$data)
 
-    # Reset series
+    # Reset series to ensure clean rendering
     e$x$opts$series <- list()
 
-    # Prepare categories from all data groups
-    categories <- unique(unlist(lapply(e$x$data, function(data) data[[e$x$mapping$x]])))
-
-    # Iterate through groups
+    # Iterate through grouped data
     for (i in seq_along(e$x$data)) {
+        # Extract data for current group
         current_data <- e$x$data[[i]]
 
-        # Calculate boxplot stats for each category
-        category_boxplots <- lapply(categories, function(cat) {
-            if (cat %in% current_data[[e$x$mapping$x]]) {
+        # Compute boxplot statistics for each category if there are multiple categories
+        if (is.null(e$x$mapping$x)) {
+            categories <- serie
+            category_boxplots <- list(boxplot.stats(current_data[[serie]])$stats)
+        } else {
+            categories <- unique(current_data[[e$x$mapping$x]])
+
+            category_boxplots <- lapply(categories, function(cat) {
                 cat_data <- current_data[current_data[[e$x$mapping$x]] == cat, ]
                 boxplot.stats(cat_data[[serie]])$stats
-            } else {
-                # Return an empty boxplot for missing categories
-                rep(NA, 5)
-            }
-        })
+            })
+        }
 
-        # Add series for the group
+        # Create series for each group
         series_item <- list(
             name = group_names[i],
             type = "boxplot",
             data = category_boxplots
         )
+
+        # Add series
         e$x$opts$series[[i]] <- series_item
+
+        # Add outliers if requested
+
+        if (isTRUE(outliers)) {
+            e <- .add_outliers(e, serie, i)
+        }
     }
 
-    # Set x-axis categories
+    # Set x-axis with all categories
     e$x$opts$xAxis[[1]]$data <- categories
     e$x$opts$xAxis[[1]]$type <- "category"
 
     # Add legend
     e$x$opts$legend$data <- as.list(group_names)
     e$x$opts$legend$show <- TRUE
+
     e
 }
 
